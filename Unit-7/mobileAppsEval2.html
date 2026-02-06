@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced App Evaluation Lab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #020617; color: #f8fafc; }
+        .phone-frame { width: 260px; height: 520px; border: 10px solid #1e293b; border-radius: 32px; position: relative; overflow: hidden; background: #000; box-shadow: 0 0 40px rgba(0,0,0,0.5); transition: all 0.5s ease; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1); }
+        .app-card { cursor: pointer; border: 2px solid transparent; transition: 0.3s; }
+        .app-card:hover { border-color: #3b82f6; background: #1e293b; }
+        .active-app { border-color: #3b82f6; background: #1e293b; box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
+        .tech-pill { font-size: 0.65rem; padding: 2px 8px; border-radius: 4px; background: #334155; color: #94a3b8; font-weight: bold; }
+    </style>
+</head>
+<body class="p-4 md:p-10">
+
+    <header class="mb-10">
+        <div class="flex items-center gap-4 mb-2">
+            <span class="bg-blue-600 text-white px-3 py-1 rounded text-xs font-bold uppercase tracking-widest">Case Study Lab</span>
+            <h1 class="text-4xl font-extrabold italic">Mobile Interface <span class="text-blue-500 underline decoration-2">Archetypes</span></h1>
+        </div>
+        <p class="text-slate-400 max-w-3xl">Evaluate how the intersection of <strong>Target User</strong>, <strong>Platform Tech</strong>, and <strong>Business Purpose</strong> creates different UI outcomes.</p>
+    </header>
+
+    <div class="grid grid-cols-12 gap-6">
+        
+        <div class="col-span-12 lg:col-span-3 space-y-3 overflow-y-auto max-h-[700px] pr-2">
+            <div onclick="updateApp('routemaster')" id="card-routemaster" class="app-card active-app p-4 rounded-xl glass">
+                <p class="text-2xl mb-1">🛰️</p>
+                <h3 class="font-bold text-sm">Route-Master 3D</h3>
+                <div class="flex gap-1 mt-2 flex-wrap">
+                    <span class="tech-pill">AR</span><span class="tech-pill">GPS</span><span class="tech-pill">5G</span>
+                </div>
+            </div>
+            <div onclick="updateApp('silver')" id="card-silver" class="app-card p-4 rounded-xl glass">
+                <p class="text-2xl mb-1">👵</p>
+                <h3 class="font-bold text-sm">SilverConnect</h3>
+                <div class="flex gap-1 mt-2 flex-wrap">
+                    <span class="tech-pill">VOICE</span><span class="tech-pill">ACCESSIBLE</span>
+                </div>
+            </div>
+            <div onclick="updateApp('pulse')" id="card-pulse" class="app-card p-4 rounded-xl glass">
+                <p class="text-2xl mb-1">⚡</p>
+                <h3 class="font-bold text-sm">PulseStream</h3>
+                <div class="flex gap-1 mt-2 flex-wrap">
+                    <span class="tech-pill">SENSORS</span><span class="tech-pill">LOW-LATENCY</span>
+                </div>
+            </div>
+            <div onclick="updateApp('kidz')" id="card-kidz" class="app-card p-4 rounded-xl glass text-blue-300">
+                <p class="text-2xl mb-1">🎨</p>
+                <h3 class="font-bold text-sm">KidZ-Learn</h3>
+                <div class="flex gap-1 mt-2 flex-wrap">
+                    <span class="tech-pill">OFFLINE</span><span class="tech-pill">LOCKED-UI</span>
+                </div>
+            </div>
+            <div onclick="updateApp('fieldspec')" id="card-fieldspec" class="app-card p-4 rounded-xl glass text-orange-300">
+                <p class="text-2xl mb-1">⚒️</p>
+                <h3 class="font-bold text-sm">FieldSpec Pro</h3>
+                <div class="flex gap-1 mt-2 flex-wrap">
+                    <span class="tech-pill">OLED-SAVER</span><span class="tech-pill">SATELLITE</span>
+                </div>
+            </div>
+            <div onclick="updateApp('chef')" id="card-chef" class="app-card p-4 rounded-xl glass text-green-300">
+                <p class="text-2xl mb-1">👨‍🍳</p>
+                <h3 class="font-bold text-sm">ChefHands Free</h3>
+                <div class="flex gap-1 mt-2 flex-wrap">
+                    <span class="tech-pill">GESTURE</span><span class="tech-pill">BRIGHTNESS+</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-span-12 lg:col-span-4 flex flex-col items-center">
+            <div class="phone-frame" id="phone-content">
+                </div>
+            <p class="mt-4 text-xs font-mono text-slate-500 uppercase tracking-widest">Prototype Hardware: iPhone 15 Pro</p>
+        </div>
+
+        <div class="col-span-12 lg:col-span-5 space-y-6">
+            <div class="glass p-8 rounded-3xl border-l-4 border-blue-500">
+                <h2 id="app-name" class="text-3xl font-black mb-2">Route-Master 3D</h2>
+                <p id="app-purpose" class="text-slate-400 italic mb-6">"To help users navigate complex indoor/outdoor spaces using real-time AR."</p>
+                
+                <div class="grid grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <h4 class="text-xs font-bold text-blue-500 mb-2 uppercase">Target User</h4>
+                        <p id="user-profile" class="text-sm">Tourists and commuters in unfamiliar, dense urban areas.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-blue-500 mb-2 uppercase">Core Technology</h4>
+                        <p id="tech-profile" class="text-sm">Real-time AR depth mapping and 5G connectivity.</p>
+                    </div>
+                </div>
+
+                <div class="bg-black/30 p-4 rounded-xl">
+                    <h4 class="text-xs font-bold text-yellow-500 mb-3 uppercase">Design Rationale (Evaluation Evidence)</h4>
+                    <ul id="rationale-list" class="text-sm space-y-2 text-slate-300">
+                        <li>• Feature X exists because...</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bg-emerald-900/10 border border-emerald-500/20 p-4 rounded-xl">
+                <p class="text-xs text-emerald-500 font-bold mb-1">DISTINCTION PROMPT:</p>
+                <p class="text-sm italic" id="distinction-prompt">How would a sudden loss of 5G impact the functionality of this specific UI layout?</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const appData = {
+            routemaster: {
+                name: "Route-Master 3D",
+                purpose: "Immersive navigation in high-density urban areas.",
+                user: "Tourists/Commuters with 'one-hand free' needs while walking.",
+                tech: "AR Core, High-Precision GPS, LIDAR sensors.",
+                prompt: "If the camera is blocked, does the app have a fallback '2D' mode? Why?",
+                rationale: [
+                    "AR arrows reduce 'mental mapping' for unconfident travelers.",
+                    "Portrait orientation allows for natural 'scanning' movement.",
+                    "Requires high-end GPU; excludes budget hardware users."
+                ],
+                ui: `<div class="h-full bg-slate-900 flex flex-col"><div class="h-2/3 bg-blue-500/20 flex items-center justify-center text-xs text-center p-8">[CAM FEED: FLOATING ARROWS]</div><div class="p-6 bg-slate-800 flex-1 border-t-2 border-blue-500"><div class="h-4 w-24 bg-blue-500 rounded mb-4"></div><p class="text-xl font-bold">NEXT: TURN LEFT</p><p class="text-xs text-slate-400 mt-2 italic">5G Signal: Strong</p></div></div>`
+            },
+            silver: {
+                name: "SilverConnect",
+                purpose: "Social connection for elderly users with reduced mobility.",
+                user: "Users aged 75+ with potential visual or motor impairment.",
+                tech: "High-Contrast UI, Voice-to-Text APIs.",
+                prompt: "Why are the buttons 'Primary Colors' rather than stylish pastels?",
+                rationale: [
+                    "Large hit-boxes (70px+) prevent 'mis-clicks' from shaky hands.",
+                    "Zero nested menus; all top-level functions are visible at once.",
+                    "Text-to-speech feedback confirms every button press."
+                ],
+                ui: `<div class="h-full bg-white flex flex-col p-6 space-y-4"><div class="bg-blue-600 p-8 rounded-3xl text-center text-white text-2xl font-black">CALL<br>DOCTOR</div><div class="bg-green-600 p-8 rounded-3xl text-center text-white text-2xl font-black">FAMILY<br>PHOTOS</div><div class="bg-orange-500 p-8 rounded-3xl text-center text-white text-2xl font-black">TALK TO<br>MESSAGES</div></div>`
+            },
+            pulse: {
+                name: "PulseStream",
+                purpose: "Live fitness coaching with real-time biometric feedback.",
+                user: "Athletes using external wearable hardware.",
+                tech: "Bluetooth LE, WebRTC (Low Latency Video).",
+                prompt: "How does 'Bluetooth Latency' affect the user's perception of their performance?",
+                rationale: [
+                    "Dark Mode reduces OLED battery drain during 60-min workouts.",
+                    "Live data overlay (BPM) updates every 500ms for accuracy.",
+                    "Requires Bluetooth 5.0; will not pair with older sensors."
+                ],
+                ui: `<div class="h-full bg-black flex flex-col"><div class="h-1/2 bg-red-900/40 flex items-center justify-center">[LIVE COACH]</div><div class="p-4 flex-1"><div class="flex justify-between items-center mb-8"><span class="text-red-500 text-4xl font-black italic">158</span><span class="text-slate-500 text-xs uppercase">BPM</span></div><div class="h-2 w-full bg-slate-800 rounded-full"><div class="w-3/4 h-2 bg-red-500 rounded-full"></div></div><p class="text-center text-[10px] mt-2 text-slate-500 uppercase">Target Zone: Peak</p></div></div>`
+            },
+            kidz: {
+                name: "KidZ-Learn",
+                purpose: "Safe, offline educational games for rural environments.",
+                user: "Children (3-6) in areas with no/low internet access.",
+                tech: "Aggressive caching, sandbox mode (blocks OS gestures).",
+                prompt: "How does the lack of text help the user, and why is 'Offline First' a tech constraint?",
+                rationale: [
+                    "Icon-only navigation (Animals/Shapes) removes language barriers.",
+                    "Parental 'lock' prevents accidental exiting of the app.",
+                    "Heavy assets (Video/Sound) are pre-loaded to avoid buffering."
+                ],
+                ui: `<div class="h-full bg-yellow-400 flex flex-wrap p-4 gap-4 items-center justify-center"><div class="w-20 h-20 bg-orange-500 rounded-2xl shadow-lg border-4 border-white"></div><div class="w-20 h-20 bg-blue-500 rounded-2xl shadow-lg border-4 border-white"></div><div class="w-20 h-20 bg-green-500 rounded-2xl shadow-lg border-4 border-white"></div><div class="w-20 h-20 bg-purple-500 rounded-2xl shadow-lg border-4 border-white"></div></div>`
+            },
+            fieldspec: {
+                name: "FieldSpec Pro",
+                purpose: "Engineering survey tool for remote/underground sites.",
+                user: "Professional engineers wearing gloves or in high-glare environments.",
+                tech: "Satellite data sync, extreme battery-saver mode.",
+                prompt: "Why would this app use 'Haptic Feedback' (vibrations) as a primary signal?",
+                rationale: [
+                    "High-contrast Yellow-on-Black UI for visibility in sunlight.",
+                    "One-handed toggle switches designed for gloved input.",
+                    "Syncs data via satellite when 4G/5G is unavailable."
+                ],
+                ui: `<div class="h-full bg-black flex flex-col p-6"><div class="border-2 border-yellow-500 p-4 mb-4 text-yellow-500 font-mono text-xs">SENSOR STATUS: ACTIVE</div><div class="flex-1 border border-slate-800 rounded-lg bg-slate-900/50 mb-4"></div><button class="w-full py-6 bg-yellow-500 text-black font-black uppercase text-xl">LOG DATA POINT</button></div>`
+            },
+            chef: {
+                name: "ChefHands Free",
+                purpose: "Interactive recipe guide for active, 'messy' environments.",
+                user: "Home cooks with dirty/wet hands and high cognitive load.",
+                tech: "Proximity sensor, Voice recognition, Screen-on lock.",
+                prompt: "How does the 'Screen Always On' feature impact battery life and tech choice?",
+                rationale: [
+                    "Proximity sensors allow 'waving' to flip pages without touching.",
+                    "Screen-dimming is disabled to prevent user from touching the phone.",
+                    "Voice commands ignore background noise (Sizzling/Fans)."
+                ],
+                ui: `<div class="h-full bg-emerald-50 flex flex-col"><div class="h-1/3 bg-slate-200"></div><div class="p-6 text-slate-800"><h2 class="font-bold text-2xl mb-2">Step 4: Seasoning</h2><p class="text-sm">Wave hand left to right to see next step.</p><div class="mt-10 p-4 border-2 border-dashed border-emerald-300 rounded text-center text-xs text-emerald-600 font-bold">WAVE TO FLIP PAGE</div></div></div>`
+            }
+        };
+
+        function updateApp(key) {
+            const data = appData[key];
+            document.getElementById('app-name').innerText = data.name;
+            document.getElementById('app-purpose').innerText = `"${data.purpose}"`;
+            document.getElementById('user-profile').innerText = data.user;
+            document.getElementById('tech-profile').innerText = data.tech;
+            document.getElementById('distinction-prompt').innerText = data.prompt;
+            document.getElementById('phone-content').innerHTML = data.ui;
+            
+            const list = document.getElementById('rationale-list');
+            list.innerHTML = data.rationale.map(r => `<li>• ${r}</li>`).join('');
+
+            document.querySelectorAll('.app-card').forEach(c => c.classList.remove('active-app'));
+            document.getElementById(`card-${key}`).classList.add('active-app');
+        }
+
+        // Init
+        updateApp('routemaster');
+    </script>
+</body>
+</html>

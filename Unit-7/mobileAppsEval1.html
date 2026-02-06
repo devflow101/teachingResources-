@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Prototype Evaluation Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap');
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #05070a; color: #e2e8f0; }
+        .phone-frame { width: 280px; height: 560px; border: 12px solid #1e293b; border-radius: 36px; position: relative; overflow: hidden; background: #000; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        .app-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .app-btn:hover { transform: translateY(-5px); border-color: #3b82f6; }
+        .active-app { border-color: #3b82f6; background: rgba(59, 130, 246, 0.1); }
+        .feature-tag { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 99px; font-size: 0.75rem; }
+    </style>
+</head>
+<body class="p-8">
+
+    <header class="mb-12 text-center">
+        <h1 class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400">Prototype Analysis Lab</h1>
+        <p class="text-slate-400 mt-4 text-lg">Evaluate how purpose, technology, and user needs shape these interfaces.</p>
+    </header>
+
+    <div class="grid grid-cols-12 gap-10 max-w-7xl mx-auto">
+        
+        <div class="col-span-12 lg:col-span-4 space-y-4">
+            <h2 class="text-sm font-bold uppercase tracking-widest text-slate-500 mb-4">Select Prototype</h2>
+            
+            <button onclick="showApp('routemaster')" id="btn-routemaster" class="app-btn w-full text-left p-5 rounded-2xl border border-slate-800 glass active-app">
+                <div class="flex items-center gap-4">
+                    <span class="text-3xl">🛰️</span>
+                    <div>
+                        <h3 class="font-bold text-xl">Route-Master 3D</h3>
+                        <p class="text-xs text-slate-400">AR Navigation & Transit</p>
+                    </div>
+                </div>
+            </button>
+
+            <button onclick="showApp('silverconnect')" id="btn-silverconnect" class="app-btn w-full text-left p-5 rounded-2xl border border-slate-800 glass">
+                <div class="flex items-center gap-4">
+                    <span class="text-3xl">👵</span>
+                    <div>
+                        <h3 class="font-bold text-xl">SilverConnect</h3>
+                        <p class="text-xs text-slate-400">Simplified Senior Social Hub</p>
+                    </div>
+                </div>
+            </button>
+
+            <button onclick="showApp('pulsestream')" id="btn-pulsestream" class="app-btn w-full text-left p-5 rounded-2xl border border-slate-800 glass">
+                <div class="flex items-center gap-4">
+                    <span class="text-3xl">⚡</span>
+                    <div>
+                        <h3 class="font-bold text-xl">PulseStream</h3>
+                        <p class="text-xs text-slate-400">Live HIIT Training</p>
+                    </div>
+                </div>
+            </button>
+
+            <div class="mt-10 p-6 rounded-2xl bg-blue-900/20 border border-blue-500/30">
+                <h4 class="font-bold text-blue-400 mb-2 underline">Evaluation Task:</h4>
+                <p class="text-sm leading-relaxed text-slate-300">
+                    Pick <strong>one</strong> app and explain why a specific UI choice (e.g., button size) matches a <strong>Technology Constraint</strong> (e.g., Screen size) and a <strong>User Need</strong>.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-span-12 lg:col-span-4 flex justify-center">
+            <div class="phone-frame" id="phone-screen">
+                </div>
+        </div>
+
+        <div class="col-span-12 lg:col-span-4 space-y-6">
+            <div class="bg-slate-900/50 p-6 rounded-3xl border border-slate-800">
+                <h2 class="text-sm font-bold uppercase tracking-widest text-slate-500 mb-4">Implementation Specs</h2>
+                <div id="app-specs" class="space-y-4">
+                    </div>
+            </div>
+
+            <div class="bg-emerald-900/10 p-6 rounded-3xl border border-emerald-500/20">
+                <h2 class="text-sm font-bold uppercase tracking-widest text-emerald-500 mb-4">Intended Purpose</h2>
+                <p id="app-purpose" class="text-slate-300 italic">"Purpose text goes here..."</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const apps = {
+            routemaster: {
+                name: "Route-Master 3D",
+                purpose: "To provide immersive, turn-by-turn navigation using Augmented Reality to ensure users never miss a turn in complex cities.",
+                tech: ["AR Core / AR Kit", "High-Precision GPS", "Continuous Camera Stream", "5G Required"],
+                ui: `
+                    <div class="h-full flex flex-col bg-slate-800">
+                        <div class="h-2/3 bg-blue-500 flex items-center justify-center text-xs p-4 text-center">
+                            [LIVE CAMERA FEED WITH FLOATING 3D ARROWS]
+                        </div>
+                        <div class="p-4 bg-slate-900 flex-1">
+                            <div class="h-2 w-full bg-slate-700 rounded mb-4"></div>
+                            <h4 class="font-bold text-white text-lg">Turn Right in 20m</h4>
+                            <p class="text-slate-400 text-xs">High Speed Connection: Stable</p>
+                            <div class="mt-4 flex gap-2">
+                                <div class="w-10 h-10 bg-blue-600 rounded-full"></div>
+                                <div class="w-10 h-10 bg-slate-700 rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                rationale: [
+                    "Floating AR arrows reduce cognitive load for 'The Explorer'.",
+                    "Requires modern GPU; will crash on older phones.",
+                    "Portrait-only lock to prevent camera orientation errors."
+                ]
+            },
+            silverconnect: {
+                name: "SilverConnect",
+                purpose: "To reduce isolation in the elderly by providing a friction-free, high-visibility communication platform.",
+                tech: ["Voice-to-Text API", "High Contrast Mode", "Low Processor Overhead", "Large Hit-Box Algorithms"],
+                ui: `
+                    <div class="h-full flex flex-col bg-white">
+                        <div class="p-6 bg-slate-100 border-b flex justify-between">
+                            <span class="text-black font-bold">HOME</span>
+                            <span class="text-blue-600 font-bold">HELP?</span>
+                        </div>
+                        <div class="p-4 space-y-4">
+                            <button class="w-full py-12 bg-green-500 rounded-2xl text-white text-2xl font-bold shadow-xl">CALL FAMILY</button>
+                            <button class="w-full py-12 bg-blue-500 rounded-2xl text-white text-2xl font-bold shadow-xl">MESSAGES</button>
+                            <button class="w-full py-6 bg-orange-400 rounded-2xl text-white text-xl font-bold">TALK TO TYPE</button>
+                        </div>
+                    </div>
+                `,
+                rationale: [
+                    "Uses massive buttons (Hit-boxes) for users with reduced motor skills.",
+                    "High contrast (Black on White) for visual impairment.",
+                    "Simple linear navigation; no hidden menus."
+                ]
+            },
+            pulsestream: {
+                name: "PulseStream",
+                purpose: "Professional grade live workout streaming that syncs heart-rate data in real-time between coaches and athletes.",
+                tech: ["WebRTC (Low Latency)", "Bluetooth LE (Heart Sensors)", "Background Processing", "Adaptive Bitrate"],
+                ui: `
+                    <div class="h-full flex flex-col bg-black">
+                        <div class="h-1/2 bg-red-600 flex items-center justify-center text-white">
+                            LIVE TRAINER STREAM
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-6">
+                                <span class="text-red-500 text-3xl font-bold">142 BPM</span>
+                                <div class="w-12 h-12 border-2 border-red-500 rounded-full flex items-center justify-center text-[10px]">SYNC</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="h-20 bg-slate-800 rounded"></div>
+                                <div class="h-20 bg-slate-800 rounded"></div>
+                            </div>
+                            <button class="mt-4 w-full py-2 bg-red-600 rounded font-bold">LEAVE CLASS</button>
+                        </div>
+                    </div>
+                `,
+                rationale: [
+                    "Background processing allows sensor sync even if user switches apps.",
+                    "Dark Mode reduces battery drain during long OLED screen sessions.",
+                    "Bluetooth LE requirements exclude very old hardware."
+                ]
+            }
+        };
+
+        function showApp(appKey) {
+            const app = apps[appKey];
+            document.getElementById('phone-screen').innerHTML = app.ui;
+            document.getElementById('app-purpose').innerText = app.purpose;
+            
+            // Highlight Buttons
+            document.querySelectorAll('.app-btn').forEach(b => b.classList.remove('active-app'));
+            document.getElementById(`btn-${appKey}`).classList.add('active-app');
+
+            // Specs
+            let specsHTML = '';
+            app.tech.forEach(t => {
+                specsHTML += `<div class="feature-tag inline-block mr-2 mb-2 text-slate-300"># ${t}</div>`;
+            });
+            specsHTML += `<div class="mt-6 border-t border-slate-800 pt-4">`;
+            app.rationale.forEach(r => {
+                specsHTML += `<p class="text-xs text-slate-400 mb-2">• ${r}</p>`;
+            });
+            specsHTML += `</div>`;
+            document.getElementById('app-specs').innerHTML = specsHTML;
+        }
+
+        // Initialize
+        showApp('routemaster');
+    </script>
+</body>
+</html>
