@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Mission Control: App Evaluation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0f1a; }
+        .glass-card { background: rgba(23, 31, 50, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+        .active-tab { border-bottom: 4px solid #ef4444; color: white; }
+        .timer-glow { text-shadow: 0 0 20px rgba(239, 68, 68, 0.5); }
+    </style>
+</head>
+<body class="text-slate-200 p-6">
+
+    <div class="flex justify-between items-center mb-8">
+        <div>
+            <h1 class="text-3xl font-extrabold tracking-tight">Mission Control: <span class="text-red-500">YouTube Evaluation</span></h1>
+            <p class="text-slate-400">Unit: Mobile App Development & Design Principles</p>
+        </div>
+        <div class="glass-card px-8 py-4 rounded-2xl text-center">
+            <div id="timerDisplay" class="text-4xl font-black text-red-500 timer-glow">15:00</div>
+            <button onclick="toggleTimer()" id="timerBtn" class="text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-white transition">Start Activity</button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-12 gap-6">
+        
+        <div class="col-span-12 lg:col-span-4 space-y-6">
+            <div class="glass-card p-6 rounded-3xl">
+                <h2 class="text-xl font-bold mb-4">Select User Persona</h2>
+                <div class="space-y-3">
+                    <button onclick="setPersona('A')" id="btnA" class="w-full text-left p-4 rounded-xl border border-transparent hover:bg-slate-800 transition flex items-center gap-4 active-tab">
+                        <span class="text-2xl">🏃‍♂️</span>
+                        <div>
+                            <p class="font-bold">User A: The On-the-Go</p>
+                            <p class="text-xs text-slate-500">Fast, 1-Handed, Busy</p>
+                        </div>
+                    </button>
+                    <button onclick="setPersona('B')" id="btnB" class="w-full text-left p-4 rounded-xl border border-transparent hover:bg-slate-800 transition flex items-center gap-4">
+                        <span class="text-2xl">🛋️</span>
+                        <div>
+                            <p class="font-bold">User B: The Explorer</p>
+                            <p class="text-xs text-slate-500">Researcher, High Tech, Calm</p>
+                        </div>
+                    </button>
+                    <button onclick="setPersona('C')" id="btnC" class="w-full text-left p-4 rounded-xl border border-transparent hover:bg-slate-800 transition flex items-center gap-4">
+                        <span class="text-2xl">👴</span>
+                        <div>
+                            <p class="font-bold">User C: The Unconfident</p>
+                            <p class="text-xs text-slate-500">Older Tech, High Friction</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 rounded-3xl border-l-4 border-yellow-500">
+                <h3 class="font-bold text-yellow-500 mb-2 italic">Pro-Tip for Students:</h3>
+                <p id="proTip" class="text-sm text-slate-300">Think about how "Auto-generated captions" help User A in a loud train station!</p>
+            </div>
+        </div>
+
+        <div class="col-span-12 lg:col-span-8 space-y-6">
+            <div class="glass-card p-8 rounded-3xl h-full">
+                <div class="flex justify-between items-start mb-6">
+                    <h2 id="personaTitle" class="text-4xl font-black">User A: Key Constraints</h2>
+                    <span id="personaBadge" class="bg-red-500/20 text-red-400 px-3 py-1 rounded-full text-xs font-bold uppercase">Priority: Speed</span>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-slate-500 uppercase text-xs font-bold tracking-widest mb-4">Tech Obstacles</h4>
+                        <ul id="techList" class="space-y-3">
+                            <li class="flex items-center gap-2"><span class="text-red-500">✕</span> Shaky 4G/5G Connection</li>
+                            <li class="flex items-center gap-2"><span class="text-red-500">✕</span> Small Hit-Boxes (Fat Finger syndrome)</li>
+                            <li class="flex items-center gap-2"><span class="text-red-500">✕</span> High Ambient Light (Glare)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-slate-500 uppercase text-xs font-bold tracking-widest mb-4">Design Wins</h4>
+                        <ul id="winsList" class="space-y-3 text-green-400">
+                            <li class="flex items-center gap-2">✓ Bottom Navigation Bar</li>
+                            <li class="flex items-center gap-2">✓ Double-tap to seek</li>
+                            <li class="flex items-center gap-2">✓ Offline Downloads</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-12 pt-8 border-t border-slate-700">
+                    <h4 class="text-center text-slate-500 uppercase text-xs font-bold mb-6">Distinction-Level Reasoning Formula</h4>
+                    <div class="bg-black/40 p-6 rounded-2xl font-mono text-sm leading-relaxed">
+                        "The <span class="text-blue-400">[Specific Feature]</span> addresses <span id="formulaUser" class="text-red-400">User A's</span> 
+                        limited <span class="text-green-400">[Physical/Tech Constraint]</span> by allowing them to 
+                        <span class="text-yellow-400">[Benefit]</span>, which fulfills the app's purpose of easy content access."
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const data = {
+            A: {
+                title: "User A: The On-the-Go",
+                badge: "Priority: Speed",
+                color: "#ef4444",
+                tech: ["Shaky 4G/5G Connection", "Small Hit-Boxes", "High Ambient Light (Glare)"],
+                wins: ["Bottom Navigation Bar", "Double-tap to seek", "Offline Downloads"],
+                tip: "Think about how 'Auto-generated captions' help User A in a loud train station!"
+            },
+            B: {
+                title: "User B: The Explorer",
+                badge: "Priority: Features",
+                color: "#a855f7",
+                tech: ["Data Overload in UI", "Battery Drain (4K)", "Complex Settings Menus"],
+                wins: ["Personalized Algorithms", "Picture-in-Picture mode", "Community Tab Engagement"],
+                tip: "User B loves the 'Stats for Nerds' feature. Why is that buried in a sub-menu?"
+            },
+            C: {
+                title: "User C: The Unconfident",
+                badge: "Priority: Clarity",
+                color: "#94a3b8",
+                tech: ["Accidental 'Gestures'", "Slow Processor Lag", "Small Icon Clarity"],
+                wins: ["Clear Labelled Icons", "Voice Search Feature", "Simple 'Home' button"],
+                tip: "User C often misses small 'X' buttons on ads. How does that impact their experience?"
+            }
+        };
+
+        function setPersona(p) {
+            const pData = data[p];
+            document.getElementById('personaTitle').innerText = pData.title;
+            document.getElementById('personaBadge').innerText = pData.badge;
+            document.getElementById('personaBadge').style.color = pData.color;
+            document.getElementById('proTip').innerText = pData.tip;
+            document.getElementById('formulaUser').innerText = `User ${p}`;
+            
+            // Update Lists
+            document.getElementById('techList').innerHTML = pData.tech.map(t => `<li class="flex items-center gap-2"><span class="text-red-500">✕</span> ${t}</li>`).join('');
+            document.getElementById('winsList').innerHTML = pData.wins.map(w => `<li class="flex items-center gap-2 text-green-400">✓ ${w}</li>`).join('');
+            
+            // Update Tabs
+            ['A', 'B', 'C'].forEach(id => {
+                document.getElementById(`btn${id}`).classList.remove('active-tab');
+            });
+            document.getElementById(`btn${p}`).classList.add('active-tab');
+        }
+
+        // Timer Logic
+        let timeLeft = 900; 
+        let timerRunning = false;
+        let interval;
+
+        function toggleTimer() {
+            if (timerRunning) {
+                clearInterval(interval);
+                document.getElementById('timerBtn').innerText = "Resume Activity";
+            } else {
+                interval = setInterval(() => {
+                    timeLeft--;
+                    let mins = Math.floor(timeLeft / 60);
+                    let secs = timeLeft % 60;
+                    document.getElementById('timerDisplay').innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                    if (timeLeft <= 0) clearInterval(interval);
+                }, 1000);
+                document.getElementById('timerBtn').innerText = "Pause Timer";
+            }
+            timerRunning = !timerRunning;
+        }
+    </script>
+</body>
+</html>
