@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastery Hub: Season Ticket Excel Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --primary: #6366f1;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            scroll-behavior: smooth;
+        }
+
+        .nav-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+
+        .formula-highlight {
+            animation: pulse-border 2s 1;
+        }
+
+        @keyframes pulse-border {
+            0% {
+                border-color: #e2e8f0;
+            }
+
+            50% {
+                border-color: #6366f1;
+                box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+            }
+
+            100% {
+                border-color: #e2e8f0;
+            }
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #7dd3fc;
+            border-radius: 1rem;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body class="text-slate-800">
+
+    <header class="bg-slate-900 text-white pt-16 pb-32 px-6">
+        <div class="max-w-6xl mx-auto text-center">
+            <h1 class="text-5xl font-extrabold mb-4 tracking-tight">The Excel Formula Map</h1>
+            <p class="text-slate-400 text-lg mb-12 max-w-2xl mx-auto">Don't know the formula name? Select your project
+                goal below to reveal the tools you need.</p>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div onclick="scrollToSection('sec-1')" class="nav-card bg-slate-800 p-5 rounded-2xl">
+                    <i class="fas fa-calculator text-blue-400 text-2xl mb-3"></i>
+                    <p class="text-[10px] font-bold uppercase tracking-widest">Basic Math</p>
+                </div>
+                <div onclick="scrollToSection('sec-2')" class="nav-card bg-slate-800 p-5 rounded-2xl">
+                    <i class="fas fa-calendar-alt text-emerald-400 text-2xl mb-3"></i>
+                    <p class="text-[10px] font-bold uppercase tracking-widest">Date Logic</p>
+                </div>
+                <div onclick="scrollToSection('sec-3')" class="nav-card bg-slate-800 p-5 rounded-2xl">
+                    <i class="fas fa-search-dollar text-purple-400 text-2xl mb-3"></i>
+                    <p class="text-[10px] font-bold uppercase tracking-widest">Data Lookups</p>
+                </div>
+                <div onclick="scrollToSection('sec-4')" class="nav-card bg-slate-800 p-5 rounded-2xl">
+                    <i class="fas fa-brain text-indigo-400 text-2xl mb-3"></i>
+                    <p class="text-[10px] font-bold uppercase tracking-widest">Decisions</p>
+                </div>
+                <div onclick="scrollToSection('sec-5')" class="nav-card bg-slate-800 p-5 rounded-2xl">
+                    <i class="fas fa-fingerprint text-pink-400 text-2xl mb-3"></i>
+                    <p class="text-[10px] font-bold uppercase tracking-widest">ID Generation</p>
+                </div>
+                <div onclick="scrollToSection('sec-6')" class="nav-card bg-slate-800 p-5 rounded-2xl">
+                    <i class="fas fa-chart-bar text-orange-400 text-2xl mb-3"></i>
+                    <p class="text-[10px] font-bold uppercase tracking-widest">Statistics</p>
+                </div>
+                <div onclick="scrollToSection('sec-7')" class="nav-card bg-slate-800 p-5 rounded-2xl">
+                    <i class="fas fa-list-check text-yellow-400 text-2xl mb-3"></i>
+                    <p class="text-[10px] font-bold uppercase tracking-widest">Data Entry</p>
+                </div>
+                <div onclick="scrollToSection('sec-9')" class="nav-card bg-slate-800 p-5 rounded-2xl">
+                    <i class="fas fa-check-double text-rose-400 text-2xl mb-3"></i>
+                    <p class="text-[10px] font-bold uppercase tracking-widest">Validation</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto -mt-16 px-6 pb-20">
+
+        <section class="bg-white rounded-3xl shadow-2xl p-8 mb-12 border-l-8 border-indigo-500">
+            <h2 class="text-2xl font-bold mb-4 flex items-center">
+                <i class="fas fa-project-diagram mr-3 text-indigo-500"></i>
+                Master Approval Logic (Formula #9)
+            </h2>
+            <div class="flex flex-col md:flex-row gap-4 items-center text-sm">
+                <div class="bg-slate-50 p-5 rounded-2xl border flex-1 w-full">
+                    <span class="text-[10px] font-bold text-indigo-600 uppercase">Check 1</span>
+                    <h4 class="font-bold mt-1">Payment Received?</h4>
+                    <p class="text-slate-500 mt-2">IF S2="YES", proceed to Check 2. If "NO", immediately Reject.</p>
+                </div>
+
+                <div class="hidden md:block text-slate-300">
+                    <i class="fas fa-arrow-right text-2xl"></i>
+                </div>
+                <div class="md:hidden text-slate-300">
+                    <i class="fas fa-arrow-down text-2xl"></i>
+                </div>
+
+                <div class="bg-slate-50 p-5 rounded-2xl border flex-1 w-full">
+                    <span class="text-[10px] font-bold text-indigo-600 uppercase">Check 2</span>
+                    <h4 class="font-bold mt-1">Flexibility Choice</h4>
+                    <p class="text-slate-500 mt-2">Is the stand choice blank? If so, they are flexible. Proceed.</p>
+                </div>
+
+                <div class="hidden md:block text-slate-300">
+                    <i class="fas fa-arrow-right text-2xl"></i>
+                </div>
+                <div class="md:hidden text-slate-300">
+                    <i class="fas fa-arrow-down text-2xl"></i>
+                </div>
+
+                <div class="bg-slate-50 p-5 rounded-2xl border flex-1 w-full">
+                    <span class="text-[10px] font-bold text-indigo-600 uppercase">Check 3</span>
+                    <h4 class="font-bold mt-1">Available?</h4>
+                    <p class="text-slate-500 mt-2">Is their chosen stand actually in stock? Proceed if TRUE.</p>
+                </div>
+            </div>
+        </section>
+
+        <div id="content" class="space-y-16">
+        </div>
+
+        <section class="mt-20 bg-slate-900 rounded-3xl p-10 text-white shadow-2xl">
+            <h2 class="text-2xl font-bold mb-8 flex items-center">
+                <i class="fas fa-exclamation-triangle text-yellow-400 mr-3"></i>
+                Emergency Room: Common Error Fixes
+            </h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="border-l-2 border-slate-700 pl-6">
+                    <h4 class="font-bold text-yellow-400">#VALUE!</h4>
+                    <p class="text-slate-400 text-sm mt-1">You used text where a number belongs. Check if your cells
+                        contain words like "10 seats" instead of just "10".</p>
+                </div>
+                <div class="border-l-2 border-slate-700 pl-6">
+                    <h4 class="font-bold text-yellow-400">#REF!</h4>
+                    <p class="text-slate-400 text-sm mt-1">A cell or sheet the formula was looking at has been deleted.
+                        Undo or relink your references.</p>
+                </div>
+                <div class="border-l-2 border-slate-700 pl-6">
+                    <h4 class="font-bold text-yellow-400">#NAME?</h4>
+                    <p class="text-slate-400 text-sm mt-1">Excel doesn't recognize the function name. Check for typos
+                        like "=SUMM" or missing quotes around text.</p>
+                </div>
+                <div class="border-l-2 border-slate-700 pl-6">
+                    <h4 class="font-bold text-yellow-400">#N/A</h4>
+                    <p class="text-slate-400 text-sm mt-1">The lookup couldn't find a match. Check for extra spaces in
+                        your pricing table or misspelled names.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const formulas = [
+            {
+                id: "sec-1", category: "Basic Math", color: "blue",
+                items: [{ n: 1, name: "Simple Subtraction", formula: "=E2-F2", use: "Working out remaining seats (Total - Allocated).", hint: "Ensure the bigger number comes first." }]
+            },
+            {
+                id: "sec-2", category: "Date & Age Logic", color: "emerald",
+                items: [
+                    { n: 2, name: "Calculate Age", formula: "=DATEDIF(F2,TODAY(),\"Y\")", use: "Finding current age from DOB for ticket types.", hint: "DOB must be formatted as a date, not text." },
+                    { n: 3, name: "Set 1-Year Expiry", formula: "=DATE(YEAR(TODAY())+1,MONTH(TODAY()),DAY(TODAY()))", use: "Creating annual validity dates automatically.", hint: "Format the cell as 'Date' (DD/MM/YYYY)." }
+                ]
+            },
+            {
+                id: "sec-3", category: "Data Lookups", color: "purple",
+                items: [
+                    { n: 4, name: "Verify Existence", formula: "=COUNTIFS(Ticket_Pricing_Data!A:A,I2,Ticket_Pricing_Data!C:C,H2)", use: "Checking if a stand/type combo exists in pricing list.", hint: "If result is 0, the combination does not exist." },
+                    { n: 5, name: "Sum Availability", formula: "=SUMIFS(Ticket_Pricing_Data!G:G,Ticket_Pricing_Data!A:A,I2,Ticket_Pricing_Data!C:C,H2)", use: "Adding up seats remaining for a specific combination.", hint: "Used to check if seats > 0 before processing." }
+                ]
+            },
+            {
+                id: "sec-4", category: "Logic & Decisions", color: "indigo",
+                items: [
+                    { n: 6, name: "Basic Status Check", formula: "=IF(R2=\"TRUE\",\"Available\",\"Not Available\")", use: "Converting computer logic into human messages.", hint: "Text must always be in \"quotes\"." },
+                    { n: 7, name: "Flexible Request (OR)", formula: "=IF(OR(I2=\"\",R2=\"TRUE\"),\"Proceed\",\"Stop\")", use: "Accepting if stand is blank OR if requested seat is free.", hint: "OR means at least one condition must pass." },
+                    { n: 8, name: "Nested IF (Payment Check)", formula: "=IF(S2=\"YES\",IF(R2=\"TRUE\",\"Success\",\"Rejected\"),\"Rejected\")", use: "Multi-step check: Payment first, then Availability.", hint: "Excel only checks the second part if payment is YES." },
+                    { n: 9, name: "Master Approval Logic", formula: "=IF(S2=\"YES\",IF(OR(I2=\"\",R2=\"TRUE\"),\"Successful\",\"Rejected\"),\"Rejected\")", use: "The complete logic for your application status column.", hint: "Handles mandatory payment, flexibility, and stock." }
+                ]
+            },
+            {
+                id: "sec-5", category: "ID Generation", color: "rose",
+                items: [
+                    { n: 10, name: "Unique Reference Code", formula: "=IF(L2=\"Successful\",\"TKT-\"&TEXT(ROW()-1,\"0000\"),\"\")", use: "Auto-generating sequential IDs (TKT-0001).", hint: "ROW()-1 ignores the header to start at 0001." },
+                    { n: 11, name: "Conditional Allocation", formula: "=IF(L2=\"Successful\",IF(I2<>\"\",I2,\"Auto-Allocate\"),\"\")", use: "Showing the stand name or 'Auto' for flexible users.", hint: "<> means 'is not blank'." }
+                ]
+            },
+            {
+                id: "sec-6", category: "Stats & Counting", color: "orange",
+                items: [
+                    { n: 12, name: "Total Application Count", formula: "=COUNTA(Ticket_Applications!A:A)-1", use: "Counting every person in your list.", hint: "Minus 1 to remove the header from your total." },
+                    { n: 13, name: "Success Tally", formula: "=COUNTIF(Ticket_Applications!L:L,\"Successful\")", use: "Counting how many tickets were actually sold.", hint: "Check column L for the exact word 'Successful'." },
+                    { n: 14, name: "Revenue (Single Rule)", formula: "=SUMIF(Ticket_Applications!L:L,\"Successful\",Ticket_Applications!K:K)", use: "Total money made from successful apps only.", hint: "Automatically ignores rejected/unpaid rows." },
+                    { n: 15, name: "Revenue (Multi-Rule)", formula: "=SUMIFS(Ticket_Applications!K:K,Ticket_Applications!H:H,\"Adult\",Ticket_Applications!L:L,\"Successful\")", use: "Total income for specific ticket types (e.g. Adult).", hint: "Sum Column, Criteria Column, Match Word." }
+                ]
+            },
+            {
+                id: "sec-7", category: "Data Entry Tools", color: "yellow",
+                items: [
+                    { n: 16, name: "Dropdown Lists", formula: "Data Tab -> Data Validation -> List", use: "Controlling what users can type into a cell.", hint: "Prevents typing errors in Ticket Types and Stands." },
+                    { n: 17, name: "Color-Coding Rules", formula: "Home Tab -> Conditional Formatting", use: "Making 'Successful' green and 'Rejected' red.", hint: "Makes your status column easy to scan." }
+                ]
+            },
+            {
+                id: "sec-9", category: "Advanced Validation", color: "rose",
+                items: [
+                    { n: 18, name: "Blank Check Logic", formula: "=IF(I2=\"\",\"N/A\",IF(COUNTIFS(...)>0,\"TRUE\",\"FALSE\"))", use: "Checking optional fields without creating errors.", hint: "\"\" means blank; \" \" is NOT blank." },
+                    { n: 19, name: "Existence + Blank Check", formula: "=IF(I2=\"\",\"N/A\",IF(COUNTIFS(Data!A:A,I2,Data!C:C,H2)>0,\"TRUE\",\"FALSE\"))", use: "Verifying if a selection exists in your price table.", hint: "Shows N/A if they didn't pick anything." },
+                    { n: 20, name: "Availability + Blank Check", formula: "=IF(I2=\"\",\"N/A\",IF(SUMIFS(Data!G:G,Data!A:A,I2,Data!C:C,H2)>0,\"TRUE\",\"FALSE\"))", use: "Checking stock only if a request was made.", hint: "Crucial for preventing overbooking." }
+                ]
+            }
+        ];
+
+        function escapeHtml(text) {
+            if (!text) return text;
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function render() {
+            const container = document.getElementById('content');
+            formulas.forEach((section, sIndex) => {
+                const sectDiv = document.createElement('div');
+                sectDiv.id = section.id;
+                sectDiv.className = "bg-white p-8 rounded-3xl shadow-sm border border-slate-100 transition-all";
+                sectDiv.innerHTML = `
+                    <h3 class="text-xs font-black uppercase tracking-widest text-${section.color}-600 mb-6 flex items-center">
+                        <span class="w-2 h-2 rounded-full bg-${section.color}-600 mr-3"></span> ${section.category}
+                    </h3>
+                    <div class="space-y-12">
+                        ${section.items.map((f, iIndex) => `
+                            <div>
+                                <div class="flex justify-between items-start mb-4">
+                                    <h4 class="text-lg font-bold text-slate-800">Formula #${f.n}: ${escapeHtml(f.name)}</h4>
+                                    <button onclick="copy(${sIndex}, ${iIndex}, this)" class="text-[10px] font-bold text-slate-400 hover:text-indigo-600 tracking-tighter uppercase">Copy Formula</button>
+                                </div>
+                                <div class="code-block p-5 mb-4 font-mono text-sm overflow-x-auto"><code>${escapeHtml(f.formula)}</code></div>
+                                <div class="grid md:grid-cols-2 gap-6 text-sm">
+                                    <p><strong class="text-slate-900 block mb-1">When to use:</strong> ${escapeHtml(f.use)}</p>
+                                    <p class="bg-${section.color}-50 p-3 rounded-xl italic border border-${section.color}-100">
+                                        <strong class="text-${section.color}-700 not-italic block mb-1">Project Hint</strong> "${escapeHtml(f.hint)}"
+                                    </p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(sectDiv);
+            });
+        }
+
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            window.scrollTo({ top: el.offsetTop - 120, behavior: 'smooth' });
+            el.classList.add('formula-highlight');
+            setTimeout(() => el.classList.remove('formula-highlight'), 3000);
+        }
+
+        function copy(sIndex, iIndex, btn) {
+            const text = formulas[sIndex].items[iIndex].formula;
+            navigator.clipboard.writeText(text);
+            const original = btn.innerText;
+            btn.innerText = "COPIED!";
+            btn.classList.add('text-green-500');
+            setTimeout(() => { btn.innerText = original; btn.classList.remove('text-green-500'); }, 2000);
+        }
+
+        render();
+    </script>
+</body>
+
+</html>
