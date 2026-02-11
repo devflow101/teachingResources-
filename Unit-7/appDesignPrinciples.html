@@ -3,59 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobile App Design Principles - Interactive Lecture</title>
+    <title>Mobile App Design Principles - Editorial Lecture</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        :root {
+            --magazine-green: #4a675d;
+            --magazine-orange: #f97316;
+            --paper-white: #fafafa;
+        }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--magazine-green); 
+            color: #1a1a1a;
+        }
+        h1, h2, h3, .serif { 
+            font-family: 'Playfair Display', serif; 
+        }
         .slide { display: none; }
-        .slide.active { display: block; animation: fadeIn 0.4s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .slide.active { display: block; animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-        .nav-item.active-nav { background-color: #2563eb; color: white; }
+
+        /* Magazine Style Borders */
+        .editorial-border {
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .editorial-line {
+            height: 1px;
+            background: #000;
+            width: 100%;
+            margin: 1rem 0;
+            opacity: 0.8;
+        }
+        
+        .nav-active {
+            color: var(--magazine-orange) !important;
+            border-left: 4px solid var(--magazine-orange);
+            padding-left: 1rem;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--magazine-green); }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
     </style>
 </head>
 <body class="flex h-screen overflow-hidden">
 
-    <nav class="w-80 bg-slate-900 text-white flex flex-col p-6 overflow-y-auto border-r border-slate-800">
-        <div class="mb-8">
-            <h1 class="text-xl font-bold text-blue-400">App Design Lecture</h1>
-            <p class="text-xs text-slate-500 mt-1 uppercase tracking-widest font-semibold">10 Behavioral Principles</p>
+    <nav class="w-80 bg-[#1a1a1a] text-white flex flex-col p-8 overflow-y-auto">
+        <div class="mb-12">
+            <h1 class="text-3xl font-black italic tracking-tighter text-white border-b-4 border-orange-500 pb-2 inline-block">LECTURE</h1>
+            <p class="text-[10px] uppercase tracking-[0.3em] mt-4 text-gray-400 font-semibold">Mobile App Psychology</p>
         </div>
-        <div class="space-y-1" id="nav-links">
+        <div class="space-y-6" id="nav-links">
             </div>
-        <div class="mt-auto pt-6 text-[10px] text-slate-500 border-t border-slate-800 italic">
-            "Design is not just what it looks like... it's how it works."
-        </div>
     </nav>
 
-    <main class="flex-1 flex flex-col bg-white relative">
-        <div class="h-1.5 bg-slate-200 w-full">
-            <div id="progress-bar" class="h-full bg-blue-500 transition-all duration-500" style="width: 0%"></div>
+    <main class="flex-1 flex flex-col bg-[#fafafa] relative m-4 rounded-3xl overflow-hidden shadow-2xl">
+        <div class="h-1 bg-gray-100 w-full">
+            <div id="progress-bar" class="h-full bg-orange-500 transition-all duration-700" style="width: 0%"></div>
         </div>
 
-        <div id="slides-container" class="flex-1 p-10 overflow-y-auto bg-[#fdfdfd]">
-            <section class="slide active" data-title="Introduction">
-                <div class="max-w-4xl mx-auto text-center mt-24">
-                    <span class="px-4 py-1.5 bg-blue-100 text-blue-700 rounded-full text-xs font-bold tracking-widest uppercase mb-6 inline-block">Instructional Series</span>
-                    <h2 class="text-7xl font-black text-slate-900 leading-tight">The Psychology <br>of <span class="text-blue-600 underline decoration-slate-200 underline-offset-8">Mobile UI</span></h2>
-                    <p class="text-2xl text-slate-500 mt-10 max-w-2xl mx-auto font-light leading-relaxed">
-                        Understanding how intentional design choices shape human behavior and digital habits.
+        <div id="slides-container" class="flex-1 p-16 overflow-y-auto">
+            <section class="slide active">
+                <div class="max-w-4xl mx-auto flex flex-col items-center justify-center min-h-full text-center">
+                    <div class="editorial-line mb-8"></div>
+                    <h2 class="text-8xl font-black text-slate-900 leading-none">THE <br><span class="italic text-orange-500">ART</span> OF <br>NUDGING</h2>
+                    <div class="editorial-line mt-8 mb-12"></div>
+                    <p class="text-xl text-slate-500 max-w-xl mx-auto leading-relaxed">
+                        An editorial deep-dive into the psychological frameworks that power the world's most successful mobile interfaces.
                     </p>
-                    <div class="mt-16 flex justify-center gap-6">
-                        <button onclick="changeSlide(1)" class="bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 rounded-xl font-bold transition-all shadow-xl hover:shadow-blue-200 transform hover:-translate-y-1">Begin Lecture</button>
-                    </div>
+                    <button onclick="changeSlide(1)" class="mt-12 group flex items-center gap-4 text-sm font-bold uppercase tracking-widest hover:text-orange-500 transition">
+                        Enter Gallery <i class="fa-solid fa-arrow-right-long group-hover:translate-x-2 transition"></i>
+                    </button>
                 </div>
             </section>
         </div>
 
-        <footer class="p-6 border-t border-slate-100 flex justify-between items-center bg-white shadow-[0_-4px_20px_rgba(0,0,0,0.03)]">
-            <div class="text-slate-400 text-sm font-semibold tracking-wider" id="slide-counter">INTRO / 11</div>
-            <div class="flex gap-4">
-                <button onclick="prevSlide()" class="p-3 px-6 rounded-lg border border-slate-200 hover:bg-slate-50 transition text-slate-600 font-bold text-sm uppercase tracking-tight">Back</button>
-                <button onclick="nextSlide()" class="p-3 px-8 rounded-lg bg-slate-900 text-white hover:bg-black transition font-bold text-sm uppercase tracking-tight shadow-lg shadow-slate-200">Continue</button>
+        <footer class="px-12 py-8 border-t border-gray-100 flex justify-between items-center bg-white">
+            <div class="flex items-center gap-8">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400" id="slide-counter">Vol. 01 / 10</span>
+                <div class="h-4 w-[1px] bg-gray-200"></div>
+                <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400">Design Ethics & Psychology</span>
+            </div>
+            <div class="flex gap-8">
+                <button onclick="prevSlide()" class="text-xs font-bold uppercase tracking-widest hover:text-orange-500 transition">Prev</button>
+                <button onclick="nextSlide()" class="text-xs font-bold uppercase tracking-widest bg-black text-white px-8 py-3 rounded-full hover:bg-orange-500 transition">Next Slide</button>
             </div>
         </footer>
     </main>
@@ -64,103 +101,103 @@
         const principles = [
             {
                 id: 1,
-                title: "Variable Reward Schedule",
+                title: "Variable Rewards",
                 hint: "Unpredictable rewards create stronger habits than predictable ones.",
-                research: "B.F. Skinner discovered that subjects in a 'Skinner Box' would press a lever most frantically when the reward (food) was given at random intervals rather than every time. This is the foundation of slot machines and social media feeds.",
-                examples: ["<strong>TikTok/Reels:</strong> Swiping down is exactly like pulling a slot machine lever. Will the next video be funny (reward) or boring?", "<strong>Email:</strong> We check our inbox constantly because once in a while, there is an 'important' message among the spam."],
-                challenge: "<strong>Class Challenge: The Phantom Vibration.</strong> Ask the students: How many of you have 'felt' your phone vibrate in your pocket, only to find no notification? This is your brain's anticipation of a variable reward. Why does the 'uncertainty' make us check more often than a guaranteed 'like'?",
-                impact: "Feeds are designed to be 'bottomless' to ensure the user never reaches a natural stopping point while waiting for that next hit of dopamine.",
-                ethics: "Can lead to 'Time Well Wasted.' Designers must ask: Are we helping a user find content, or are we engineering a compulsive loop?"
+                research: "Rooted in B.F. Skinner’s operant conditioning, variable rewards exploit our brain's dopamine spikes during anticipation rather than the reward itself.",
+                examples: ["Instagram/TikTok Infinite Scroll", "Dating App Swiping (Tinder)"],
+                challenge: "<strong>The Phantom Vibration:</strong> Ask the class: Have you ever felt your phone vibrate when it didn't? Why is your brain so desperate for that unpredictable reward?",
+                impact: "Designers use pull-to-refresh and mystery notifications to keep the 'anticipation loop' active indefinitely.",
+                ethics: "Techniques borrowed from gambling; can lead to compulsive behaviors in vulnerable populations."
             },
             {
                 id: 2,
-                title: "Scarcity & Urgency (FOMO)",
+                title: "Scarcity & Urgency",
                 hint: "Items in short supply or for a limited time seem more valuable.",
-                research: "Worchel’s 'Cookie Jar' experiment showed people valued cookies more when they were told the jar was nearly empty. We equate 'hard to get' with 'high quality.'",
-                examples: ["<strong>Booking.com:</strong> 'Only 2 rooms left at this price!'", "<strong>Amazon:</strong> 'Order within 12 mins for Tomorrow delivery.'"],
-                challenge: "<strong>Spot the 'Dark Pattern':</strong> Present this scenario: You see a countdown timer for a sale. If you refresh the page and the timer starts over, is that ethical design or a lie? Discuss: Does fake urgency destroy brand trust in the long run?",
-                impact: "Using high-contrast colors (Red/Orange) for countdowns and 'Low Stock' badges to trigger the 'Fight or Flight' response in the brain.",
-                ethics: "Creating high-stress environments to force a purchase is often considered a 'Dark Pattern' if the scarcity is artificial."
+                research: "Robert Cialdini’s Principle of Scarcity shows that perceived rarity triggers loss aversion and immediate, often irrational, action.",
+                examples: ["Booking.com 'Only 2 rooms left!'", "Flash sales with countdown timers"],
+                challenge: "<strong>The Countdown Check:</strong> If a timer resets when you refresh the page, how does that impact your trust in the brand?",
+                impact: "High-contrast colors (Orange/Red) and countdown graphics create a 'Fight or Flight' response in the buyer.",
+                ethics: "Artificial scarcity is a 'Dark Pattern' that creates unnecessary stress for the user."
             },
             {
                 id: 3,
                 title: "Social Proof",
-                hint: "People look to others to determine 'correct' behavior.",
-                research: "Psychologist Robert Cialdini's principle: We are social animals. If 'everyone' is doing it, our brain assumes it is safe and correct.",
-                examples: ["<strong>App Store:</strong> Star ratings and the 'Top Charts' list.", "<strong>Uber:</strong> Showing a driver's rating and number of trips to establish safety."],
-                challenge: "<strong>The 'Empty Restaurant' Dilemma:</strong> You are in a new city. Two restaurants are side-by-side. One is packed with a line; the other is empty. Which do you choose? Now apply this to apps: Why do we download the app with 1M downloads over a new one with 10 downloads, even if the new one is better?",
-                impact: "Showcasing 'Best Seller' badges, user testimonials, and 'Joined by 5,000 others' text at critical decision points.",
-                ethics: "Paying for fake reviews is a violation of trust and can lead to legal action by consumer protection agencies."
+                hint: "People look to others' behavior to guide their own decisions.",
+                research: "Humans are social animals. In uncertain situations, we assume the 'correct' behavior is whatever the majority is doing.",
+                examples: ["App Store Ratings & Reviews", "Amazon 'Best Seller' Badges"],
+                challenge: "<strong>The Restaurant Test:</strong> You see two identical apps. One has 10,000 downloads and 3 stars; one has 10 downloads and 5 stars. Which do you trust more?",
+                impact: "Visible user counts and 'Friends also liked' sections validate choices and speed up decision-making.",
+                ethics: "Manipulated social proof (fake reviews) is a significant ethical breach and legal risk."
             },
             {
                 id: 4,
-                title: "Commitment & Consistency",
-                hint: "Once we make a small choice, we feel pressure to follow through.",
-                research: "Based on the 'Foot-in-the-Door' technique. People who agree to a small request (signing a petition) are significantly more likely to agree to a larger one later (a donation).",
-                examples: ["<strong>Duolingo:</strong> Asking for your language goal (5 mins/day) before asking you to create an account.", "<strong>Onboarding:</strong> Having users customize their avatar first so they feel 'ownership' of the app."],
-                challenge: "<strong>Scenario Analysis:</strong> Why does a '7-Day Free Trial' work so well? Is it because the service is good, or because once we've spent 7 days setting it up, we feel 'committed' to the effort we already put in?",
-                impact: "Breaking a long sign-up form into 10 small, easy screens rather than one giant page.",
-                ethics: "Exploiting the 'Sunk Cost Fallacy'—making it so hard to leave that users stay out of guilt or effort rather than value."
+                title: "Consistency",
+                hint: "Once we invest, we feel compelled to remain consistent.",
+                research: "The 'Sunk Cost Fallacy' suggests we continue a behavior simply because we've already invested time, money, or effort into it.",
+                examples: ["Duolingo Streaks", "Completing a User Profile"],
+                challenge: "<strong>The Streak Hook:</strong> Would you still use your favorite app if your 365-day 'streak' was deleted tomorrow?",
+                impact: "Low-friction initial tasks (Foot-in-the-door) followed by increasing levels of investment.",
+                ethics: "Exploiting 'sunk costs' to prevent users from leaving products that no longer provide value."
             },
             {
                 id: 5,
                 title: "Friction & Ease",
                 hint: "Lowering friction encourages action; increasing friction stops it.",
-                research: "The Fogg Behavior Model: Behavior = Motivation + Ability + Prompt. If you make the 'Ability' (Ease) high enough, people will act even with low motivation.",
-                examples: ["<strong>Amazon:</strong> '1-Click Buy' is the ultimate removal of friction.", "<strong>iOS:</strong> FaceID to pay means you don't even have to remember a password to spend money."],
-                challenge: "<strong>The 'Friction' Exercise:</strong> Ask students: Why is it one click to 'Subscribe' to a service, but five pages of questions to 'Unsubscribe'? This is 'Strategic Friction.' Is it ethical to make it harder to leave than to join?",
-                impact: "Using 'Smart Defaults' (pre-filling your address) and Biometrics to make spending money feel 'weightless.'",
-                ethics: "When friction is removed from spending but added to canceling, it becomes a 'Roach Motel' dark pattern."
+                research: "The Fogg Behavior Model: Behavior occurs when Motivation, Ability, and Prompt converge. Ability (Ease) is often the most critical factor.",
+                examples: ["Amazon '1-Click' Purchase", "Multi-step account deletion forms"],
+                challenge: "<strong>Strategic Friction:</strong> Is it ethical to make it one-click to buy, but six-clicks (and a phone call) to cancel?",
+                impact: "Removing every possible barrier to spending money (FaceID, saved cards, smart defaults).",
+                ethics: "Intentional 'Roach Motels'—easy to get in, impossible to get out."
             },
             {
                 id: 6,
                 title: "Loss Aversion",
-                hint: "The pain of losing something is twice as powerful as the joy of gaining it.",
-                research: "Kahneman & Tversky's Prospect Theory. We will take bigger risks to *avoid a loss* than we will to *achieve a gain*.",
-                examples: ["<strong>Snapchat:</strong> 'Streaks.' Users aren't messaging for the content; they are messaging to avoid 'losing' the number.", "<strong>Dropbox:</strong> 'Your storage is full. Files may be deleted soon.'"],
-                challenge: "<strong>Think Like a User:</strong> Which notification is more effective? A) 'Earn $10 today if you complete this task!' or B) 'Your $10 reward will expire in 2 hours. Claim it now!' Ask students why 'B' creates more anxiety and action.",
-                impact: "Using 'Countdown to Expiration' and 'Don't Lose Your Progress' messaging in copy.",
-                ethics: "Overusing loss aversion can create a 'Negative Reinforcement' loop where users only use the app out of fear/anxiety."
+                hint: "The pain of losing is twice as powerful as the joy of gaining.",
+                research: "Prospect Theory (Kahneman & Tversky) proves that humans are wired to avoid losses more than they are to pursue equivalent gains.",
+                examples: ["Snapchat Streaks", "'Your discount expires in 1 hour'"],
+                challenge: "<strong>The Fear Factor:</strong> Which motivates you more: 'Earn $5' or 'Don't lose your $5 discount'?",
+                impact: "Framing all copy around what the user stands to lose if they stop using the app.",
+                ethics: "Can create toxic, anxiety-driven engagement patterns rather than value-driven usage."
             },
             {
                 id: 7,
-                title: "Anchoring & Framing",
-                hint: "Initial information sets the standard for everything that follows.",
-                research: "The 'Anchor' effect. If I show you a $2,000 watch first, a $500 watch looks like a 'deal.' If I show you a $50 watch first, the $500 one looks 'expensive.'",
-                examples: ["<strong>Netflix:</strong> Showing the 'Premium' plan next to the 'Basic' plan to make the middle one look like the best value.", "<strong>Sales:</strong> Crossing out $99.00 and writing $49.00."],
-                challenge: "<strong>The Coffee Shop Experiment:</strong> A Small is $3, a Large is $7. Most buy the Small. If you add a 'Medium' for $6.50, people buy the Large because it's 'only 50 cents more' than the Medium. This is a 'Decoy.' How can we use decoys in App Subscriptions?",
-                impact: "Positioning the most profitable option as the 'Recommended' choice in the center of the screen.",
-                ethics: "Using 'Anchoring' to hide the true cost of a service by emphasizing a low monthly fee while hiding the large annual total."
+                title: "Anchoring",
+                hint: "The first piece of information influences all subsequent judgment.",
+                research: "The 'Anchor' effect causes us to rely too heavily on the first piece of information offered when making decisions.",
+                examples: ["Strike-through pricing ($99 $49)", "Subscription tiers (High/Med/Low)"],
+                challenge: "<strong>The Decoy:</strong> If a 'Premium' plan is $100 and 'Basic' is $20, why do companies add a 'Pro' plan at $90?",
+                impact: "Positioning expensive options first to make middle-tier options look like 'bargains.'",
+                ethics: "Using anchoring to mask the true value or high cost of a service."
             },
             {
                 id: 8,
                 title: "Reciprocity",
                 hint: "We feel obligated to give back when we receive something first.",
-                research: "Social psychology shows that when someone gives us a small gift, we feel a powerful 'social debt' to return the favor.",
-                examples: ["<strong>Health Apps:</strong> Giving you a free personalized health report before asking for a subscription.", "<strong>Medium:</strong> Allowing 3 free articles before the paywall."],
-                challenge: "<strong>The 'Free' Trap:</strong> Ask students: Have you ever signed up for a newsletter just because they gave you a 'Free Guide' or '10% Discount Code'? Did you feel more 'loyal' to them afterward, or did you just want the freebie?",
-                impact: "Providing 'Value-First' onboarding. Show the user what the app can do for them *before* asking for their data or money.",
-                ethics: "Is it a gift, or is it bait? Reciprocity becomes unethical when the 'gift' is used to manipulate people into sharing sensitive data."
+                research: "Social norms dictate that we should return favors. In design, giving away 'free' value builds a social debt.",
+                examples: ["Free e-books for email signups", "Unlocking a feature after a 'gift'"],
+                challenge: "<strong>The Gift Trap:</strong> Have you ever felt 'guilty' into staying on a free trial because the company gave you a personalized report?",
+                impact: "Offering value early in the user journey to lower the resistance to later purchase requests.",
+                ethics: "Using 'free' content as bait to harvest sensitive user data."
             },
             {
                 id: 9,
                 title: "Default Effect",
                 hint: "Users rarely change pre-selected options.",
-                research: "In countries where organ donation is the 'Default' (Opt-Out), rates are near 99%. In 'Opt-In' countries, they are often below 15%. Defaults are the most powerful tool in design.",
-                examples: ["<strong>Privacy:</strong> 'Share data with partners' is almost always checked by default.", "<strong>Notifications:</strong> 'Allow all notifications' is usually the default state."],
-                challenge: "<strong>The 'Invisible Choice' Discussion:</strong> If a user doesn't change a setting, did they 'choose' it? Discuss: Should the most 'User-Friendly' (e.g., Privacy-focused) setting always be the default, even if it hurts the company's profit?",
-                impact: "Pre-selecting 'Annual Billing' instead of 'Monthly Billing' on checkout pages.",
-                ethics: "Designing defaults that benefit the company at the expense of the user's privacy or wallet is a major ethical concern."
+                research: "Choice Architecture: The way choices are presented (the 'default' state) determines the outcome for the vast majority of users.",
+                examples: ["Pre-checked 'Opt-in' for newsletters", "Automatic 'Annual' billing selection"],
+                challenge: "<strong>The Privacy Default:</strong> If 'Share my data' is pre-checked, did the user really consent, or did they just ignore the default?",
+                impact: "Designing the most profitable choice as the path of least resistance.",
+                ethics: "Defaults should be 'User-First' (e.g., Privacy by Default) rather than 'Profit-First'."
             },
             {
                 id: 10,
-                title: "Progress & Achievement",
-                hint: "The closer we are to a goal, the harder we work to finish it.",
-                research: "The 'Goal Gradient Effect.' Rats run faster as they get closer to the end of a maze. Humans work harder on a 'loyalty card' if it already has 2 'bonus' stamps on it.",
-                examples: ["<strong>LinkedIn:</strong> The 'Profile Strength' meter that never quite seems to reach 100%.", "<strong>Uber:</strong> Watching the car icon move toward you on the map makes the wait feel like 'progress.'"],
-                challenge: "<strong>The 'Checklist' Hook:</strong> Why is an 'Empty' checklist boring, but a checklist with 1 item already checked off (e.g., 'Account Created') highly motivating? Ask students: Does seeing your 'Streak' or 'Level' actually make the app better, or just more addictive?",
-                impact: "Using progress bars, leveling systems, and badges to gamify mundane tasks.",
-                ethics: "Gamification of high-risk activities (like stock trading or gambling) can lead to reckless user behavior for the sake of 'winning' a badge."
+                title: "Progress Gradient",
+                hint: "We work harder as we get closer to a goal.",
+                research: "The 'Goal Gradient Effect' states that effort increases as the distance to the goal decreases.",
+                examples: ["LinkedIn 'Profile Strength' meters", "Uber car-on-map animations"],
+                challenge: "<strong>The Bonus Start:</strong> Why do loyalty cards with 2 'free' stamps (out of 10) get completed faster than cards with 0 stamps (out of 8)?",
+                impact: "Giving users 'artificial' progress early on to hook them into finishing a task.",
+                ethics: "Using progress bars to manipulate users into sharing more personal data than necessary."
             }
         ];
 
@@ -168,69 +205,70 @@
         const navLinks = document.getElementById('nav-links');
         let currentSlide = 0;
 
-        // Generate Slides and Nav
+        // Generate Content
         principles.forEach((p, index) => {
             const slideIdx = index + 1;
             
-            // Sidebar Nav
+            // Nav Item
             const btn = document.createElement('button');
-            btn.className = `nav-item w-full text-left px-4 py-3 rounded-lg transition-all text-sm font-medium flex items-center gap-3 ${index === 0 ? '' : 'text-slate-400 hover:bg-slate-800'}`;
-            btn.innerHTML = `<span class="w-6 h-6 flex items-center justify-center rounded-md bg-slate-800 text-[10px]">${slideIdx}</span> ${p.title}`;
+            btn.className = `nav-item w-full text-left text-[11px] font-bold uppercase tracking-widest text-gray-500 transition-all hover:text-white`;
+            btn.innerHTML = `<span class="opacity-30 mr-2">0${slideIdx}</span> ${p.title}`;
             btn.onclick = () => changeSlide(slideIdx);
             navLinks.appendChild(btn);
 
-            // Slide Content
+            // Slide
             const section = document.createElement('section');
-            section.className = "slide";
+            section.className = "slide h-full";
             section.innerHTML = `
-                <div class="max-w-5xl mx-auto">
-                    <div class="flex items-center gap-5 mb-10">
-                        <span class="bg-blue-600 text-white w-12 h-12 flex items-center justify-center rounded-xl font-black text-xl shadow-lg shadow-blue-100">${p.id}</span>
-                        <h2 class="text-5xl font-extrabold text-slate-900 tracking-tight">${p.title}</h2>
+                <div class="max-w-5xl mx-auto h-full flex flex-col">
+                    <div class="flex items-baseline justify-between mb-2">
+                        <h2 class="text-6xl font-black italic text-slate-900">${p.title}</h2>
+                        <span class="text-5xl font-black text-orange-500 opacity-20">0${p.id}</span>
                     </div>
-                    
-                    <p class="text-2xl text-slate-400 mb-12 font-light italic leading-relaxed">"${p.hint}"</p>
+                    <div class="editorial-line bg-orange-500 h-1"></div>
+                    <p class="text-xl serif italic text-slate-500 mb-12">"${p.hint}"</p>
 
-                    <div class="flex gap-4 border-b border-slate-100 mb-10">
-                        <button onclick="showTab(this, 'res-${p.id}')" class="tab-btn active px-6 py-4 border-b-2 border-blue-600 text-blue-600 font-bold text-sm uppercase tracking-widest">Research</button>
-                        <button onclick="showTab(this, 'ex-${p.id}')" class="tab-btn px-6 py-4 text-slate-400 font-bold text-sm uppercase tracking-widest hover:text-slate-600">Deep Dive</button>
-                        <button onclick="showTab(this, 'imp-${p.id}')" class="tab-btn px-6 py-4 text-slate-400 font-bold text-sm uppercase tracking-widest hover:text-slate-600">Impact</button>
-                        <button onclick="showTab(this, 'eth-${p.id}')" class="tab-btn px-6 py-4 text-red-400 font-bold text-sm uppercase tracking-widest hover:text-red-600">Ethics</button>
-                    </div>
-
-                    <div id="res-${p.id}" class="tab-content active bg-white p-10 rounded-2xl border border-slate-100 shadow-sm">
-                        <h4 class="font-bold text-slate-800 mb-6 text-xl flex items-center gap-3"><i class="fa-solid fa-flask-vial text-blue-500"></i> The Psychological Root</h4>
-                        <p class="text-slate-600 leading-relaxed text-xl font-light">${p.research}</p>
-                        <div class="mt-8 grid grid-cols-2 gap-6">
-                            ${p.examples.map(ex => `<div class="bg-slate-50 p-5 rounded-xl border border-slate-100 text-slate-700 text-lg">${ex}</div>`).join('')}
-                        </div>
-                    </div>
-
-                    <div id="ex-${p.id}" class="tab-content bg-blue-50 p-10 rounded-2xl border border-blue-100 shadow-inner">
-                        <h4 class="font-bold text-blue-900 mb-6 text-2xl flex items-center gap-3"><i class="fa-solid fa-comments text-blue-600"></i> Classroom Discussion Spark</h4>
-                        <div class="bg-white p-8 rounded-xl shadow-sm border border-blue-100">
-                            <p class="text-blue-900 leading-relaxed text-xl italic">${p.challenge}</p>
-                        </div>
-                        <p class="mt-6 text-blue-700 font-medium">Instruction: Discuss with the person next to you for 2 minutes.</p>
-                    </div>
-
-                    <div id="imp-${p.id}" class="tab-content bg-slate-50 p-10 rounded-2xl border border-slate-100">
-                        <div class="grid grid-cols-2 gap-12">
-                            <div>
-                                <h4 class="font-bold text-slate-800 mb-4 text-lg uppercase tracking-wider border-b pb-2">Designer Strategy</h4>
-                                <p class="text-slate-600 text-lg leading-relaxed">${p.impact}</p>
+                    <div class="grid grid-cols-12 gap-12 flex-1">
+                        <div class="col-span-8">
+                            <div class="flex gap-12 mb-8 border-b border-gray-100">
+                                <button onclick="showTab(this, 'res-${p.id}')" class="tab-btn active pb-4 text-[10px] font-black uppercase tracking-widest border-b-2 border-black">Research</button>
+                                <button onclick="showTab(this, 'ex-${p.id}')" class="tab-btn pb-4 text-[10px] font-black uppercase tracking-widest text-gray-300">Class Discussion</button>
+                                <button onclick="showTab(this, 'eth-${p.id}')" class="tab-btn pb-4 text-[10px] font-black uppercase tracking-widest text-gray-300">Ethics</button>
                             </div>
-                            <div>
-                                <h4 class="font-bold text-slate-800 mb-4 text-lg uppercase tracking-wider border-b pb-2">Business Goal</h4>
-                                <p class="text-slate-600 text-lg leading-relaxed">This strategy is primarily used to drive <strong>long-term retention</strong> and <strong>interaction frequency</strong> by reducing cognitive load.</p>
+
+                            <div id="res-${p.id}" class="tab-content active animate-fadeIn">
+                                <p class="text-2xl leading-relaxed font-light text-slate-700 mb-8">${p.research}</p>
+                                <div class="grid grid-cols-2 gap-4">
+                                    ${p.examples.map(ex => `<div class="p-6 bg-white editorial-border rounded-xl font-bold text-sm uppercase tracking-tight shadow-sm">${ex}</div>`).join('')}
+                                </div>
+                            </div>
+
+                            <div id="ex-${p.id}" class="tab-content">
+                                <div class="bg-orange-500 text-white p-12 rounded-3xl shadow-xl">
+                                    <h4 class="text-xs font-black uppercase tracking-[0.3em] mb-4 text-orange-200">The Challenge</h4>
+                                    <p class="text-3xl serif italic leading-snug">${p.challenge}</p>
+                                </div>
+                            </div>
+
+                            <div id="eth-${p.id}" class="tab-content">
+                                <div class="border-2 border-black p-12">
+                                    <h4 class="text-xs font-black uppercase tracking-[0.3em] mb-6">Critical Reflection</h4>
+                                    <p class="text-xl leading-relaxed text-slate-600">${p.ethics}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div id="eth-${p.id}" class="tab-content bg-red-50 p-10 rounded-2xl border border-red-100">
-                        <h4 class="font-bold text-red-800 mb-6 text-xl flex items-center gap-3"><i class="fa-solid fa-gavel"></i> Ethical Cross-Examination</h4>
-                        <p class="text-red-900 leading-relaxed text-xl font-medium mb-4">${p.ethics}</p>
-                        <p class="text-red-700 opacity-75">Question for the class: Is the convenience of this design worth the potential manipulation of the user?</p>
+                        <div class="col-span-4 bg-gray-50 p-8 rounded-2xl border border-gray-100">
+                            <h4 class="text-[10px] font-black uppercase tracking-widest text-orange-600 mb-6">Design Implementation</h4>
+                            <p class="text-sm leading-relaxed font-medium text-slate-800 mb-8">${p.impact}</p>
+                            <div class="editorial-line"></div>
+                            <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4">Key Keywords</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-white border border-gray-200 text-[9px] font-bold uppercase rounded-full">Cognitive Load</span>
+                                <span class="px-3 py-1 bg-white border border-gray-200 text-[9px] font-bold uppercase rounded-full">Heuristics</span>
+                                <span class="px-3 py-1 bg-white border border-gray-200 text-[9px] font-bold uppercase rounded-full">UI/UX</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             `;
@@ -245,21 +283,13 @@
             currentSlide = index;
             slides[currentSlide].classList.add('active');
             
-            // Update UI
-            document.getElementById('slide-counter').innerText = currentSlide === 0 ? "INTRO / 11" : `${currentSlide} / 10`;
+            document.getElementById('slide-counter').innerText = currentSlide === 0 ? "VOL. 01 / 10" : `PRINCIPLE 0${currentSlide} / 10`;
             document.getElementById('progress-bar').style.width = `${(currentSlide / (slides.length - 1)) * 100}%`;
             
-            // Sidebar update
             navItems.forEach((item, i) => {
-                if (i === currentSlide - 1) {
-                    item.classList.add('active-nav');
-                    item.classList.remove('text-slate-400');
-                } else {
-                    item.classList.remove('active-nav');
-                    item.classList.add('text-slate-400');
-                }
+                if (i === currentSlide - 1) item.classList.add('nav-active');
+                else item.classList.remove('nav-active');
             });
-            
             slidesContainer.scrollTop = 0;
         }
 
@@ -269,13 +299,13 @@
         function showTab(btn, tabId) {
             const parent = btn.closest('section');
             parent.querySelectorAll('.tab-btn').forEach(b => {
-                b.classList.remove('active', 'border-blue-600', 'text-blue-600');
-                b.classList.add('text-slate-400');
+                b.classList.remove('text-black', 'border-black', 'active');
+                b.classList.add('text-gray-300');
             });
             parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             
-            btn.classList.add('active', 'border-blue-600', 'text-blue-600');
-            btn.classList.remove('text-slate-400');
+            btn.classList.add('text-black', 'border-black', 'active');
+            btn.classList.remove('text-gray-300');
             document.getElementById(tabId).classList.add('active');
         }
 
