@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bio-Shield | Adaptive Immune Response Simulator</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050a10;--bg2:#08101c;--panel:rgba(5,18,38,0.94);
+  --border:rgba(0,200,255,0.2);--nb:#00c8ff;--nb-dim:rgba(0,200,255,0.12);
+  --nr:#ff2050;--nr-dim:rgba(255,32,80,0.15);--ng:#00ff99;--ng-dim:rgba(0,255,153,0.12);
+  --ny:#ffd600;--np:#c844ff;--np-dim:rgba(200,68,255,0.12);
+  --tx:#b4d8f4;--td:#4a6a85;--f:'Lexend','Segoe UI',sans-serif;--m:'Share Tech Mono','Courier New',monospace;
+}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--tx);font-family:var(--f);font-size:14px;line-height:1.5}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px);pointer-events:none;z-index:9999}
+body.focus-mode::before{display:none}
+.screen{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center}
+.screen.active{display:flex}
+.nb{color:var(--nb)}.nr{color:var(--nr)}.ng{color:var(--ng)}.ny{color:var(--ny)}.td{color:var(--td)}
+.btn{font-family:var(--f);font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:10px 24px;border:1.5px solid var(--nb);background:var(--nb-dim);color:var(--nb);cursor:pointer;border-radius:3px;transition:all .18s;outline:none}
+.btn:hover{background:rgba(0,200,255,.28);box-shadow:0 0 20px rgba(0,200,255,.35);transform:translateY(-1px)}
+.btn-red{border-color:var(--nr);background:var(--nr-dim);color:var(--nr)}.btn-red:hover{background:rgba(255,32,80,.28);box-shadow:0 0 20px rgba(255,32,80,.35)}
+.btn-green{border-color:var(--ng);background:var(--ng-dim);color:var(--ng)}.btn-green:hover{background:rgba(0,255,153,.28);box-shadow:0 0 20px rgba(0,255,153,.35)}
+.btn-sm{font-size:10px;padding:7px 14px}
+
+/* INTRO */
+#screen-intro{background:radial-gradient(ellipse at 50% 40%,rgba(0,35,65,.5),transparent 65%),var(--bg)}
+.s-content{position:relative;z-index:1;text-align:center;max-width:620px;padding:20px}
+.logo h1{font-size:clamp(32px,7vw,68px);font-weight:700;letter-spacing:.18em;color:var(--nb);text-shadow:0 0 40px rgba(0,200,255,.5),0 0 80px rgba(0,200,255,.2);margin-bottom:4px}
+.logo .sub{font-size:11px;letter-spacing:.3em;color:var(--td);text-transform:uppercase;margin-bottom:10px}
+.logo .badge{display:inline-block;padding:3px 12px;border:1px solid var(--nr);color:var(--nr);font-size:10px;letter-spacing:.18em;border-radius:2px;text-transform:uppercase}
+.s-desc{color:var(--td);margin:16px 0 18px;font-size:13.5px;line-height:1.8}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:20px;text-align:left}
+.feat{padding:10px 12px;border:1px solid var(--border);border-radius:4px;background:var(--panel);font-size:11px;color:var(--td)}
+.feat strong{color:var(--nb);display:block;margin-bottom:2px;font-size:11.5px}
+.s-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* CUTSCENES */
+.cut{max-width:660px;padding:28px 36px;text-align:center;overflow-y:auto;max-height:100vh}
+.cut-phase{font-size:10px;letter-spacing:.28em;color:var(--td);text-transform:uppercase;margin-bottom:7px}
+.cut-title{font-size:24px;font-weight:700;color:var(--nb);margin-bottom:18px;letter-spacing:.07em}
+.cut-vis{width:176px;height:176px;margin:0 auto 18px}
+.cut-body{color:var(--tx);font-size:13.5px;line-height:1.85;margin-bottom:14px}
+.cut-box{background:var(--panel);border:1px solid var(--nb);border-radius:5px;padding:13px 15px;margin-bottom:18px;font-size:12.5px;color:var(--td);text-align:left}
+.cut-box strong{color:var(--ng);display:block;margin-bottom:5px}
+
+/* HUD */
+.hud{display:flex;align-items:center;justify-content:space-between;padding:5px 12px;background:var(--panel);border-bottom:1px solid var(--border);height:48px;flex-shrink:0;gap:10px}
+.hud-l,.hud-r{display:flex;align-items:center;gap:12px;flex:1}
+.hud-r{justify-content:flex-end}
+.hud-c{font-weight:700;font-size:14px;letter-spacing:.18em;color:var(--nb);text-shadow:0 0 14px rgba(0,200,255,.5);text-transform:uppercase}
+.hp-row{display:flex;align-items:center;gap:6px}
+.lbl9{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--td);white-space:nowrap}
+.hp-out{width:120px;height:11px;background:rgba(255,255,255,.04);border:1px solid rgba(0,255,153,.25);border-radius:2px;overflow:hidden}
+.hp-in{height:100%;background:linear-gradient(90deg,#00c85a,#00ff99);box-shadow:0 0 6px rgba(0,255,153,.55);transition:width .5s,background .5s;border-radius:2px}
+.mono{font-family:var(--m);font-size:11px}
+.vbadge{font-size:9px;letter-spacing:.08em;padding:2px 6px;border-radius:2px;text-transform:uppercase}
+.vbadge.sc{border:1px solid var(--ny);color:var(--ny);background:rgba(255,214,0,.1)}
+.vbadge.fo{border:1px solid var(--np);color:var(--np);background:rgba(200,68,255,.1)}
+.ftog{display:flex;align-items:center;gap:4px;cursor:pointer;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--td);user-select:none}
+.mute-btn{background:none;border:1px solid var(--border);color:var(--td);font-size:13px;width:26px;height:26px;border-radius:3px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;padding:0;line-height:1;flex-shrink:0}
+.mute-btn:hover{border-color:var(--nb);color:var(--nb)}
+.mute-btn.muted{border-color:var(--nr);color:var(--nr)}
+.tsw{width:28px;height:15px;background:rgba(255,255,255,.07);border:1px solid var(--border);border-radius:8px;position:relative;transition:background .2s}
+.tsw::after{content:'';position:absolute;width:9px;height:9px;border-radius:50%;background:var(--td);top:2px;left:2px;transition:transform .2s,background .2s}
+.ftog.on .tsw{background:rgba(0,200,255,.25);border-color:var(--nb)}.ftog.on .tsw::after{transform:translateX(13px);background:var(--nb)}
+
+/* GAME BODY */
+.gbody{flex:1;display:flex;overflow:hidden;min-height:0}
+.bfield{flex:1;position:relative;overflow:hidden}
+#gsvg{width:100%;height:100%;display:block}
+
+/* FEED */
+.feed{width:222px;flex-shrink:0;background:var(--panel);border-left:1px solid var(--border);display:flex;flex-direction:column}
+.feed-hdr{padding:6px 10px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--nb);border-bottom:1px solid var(--border);flex-shrink:0}
+.flog{flex:1;overflow-y:auto;padding:5px 9px;font-family:var(--m);font-size:10px;line-height:1.8;color:var(--td)}
+.flog::-webkit-scrollbar{width:2px}.flog::-webkit-scrollbar-thumb{background:var(--border)}
+.le{margin-bottom:2px;animation:ls .22s ease}
+.le.suc{color:var(--ng)}.le.wrn{color:var(--ny)}.le.dan{color:var(--nr)}.le.hlt{color:var(--nb)}
+@keyframes ls{from{opacity:0;transform:translateX(-4px)}to{opacity:1;transform:translateX(0)}}
+body.focus-mode .feed{display:none}
+
+/* BOTTOM */
+.bot{height:152px;flex-shrink:0;background:var(--panel);border-top:1px solid var(--border);display:flex;align-items:stretch}
+.bot-left{width:178px;flex-shrink:0;padding:9px 12px;border-right:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;gap:5px}
+.cd-out{height:6px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:2px;overflow:hidden}
+.cd-in{height:100%;background:var(--nb);box-shadow:0 0 4px var(--nb);transition:width .1s linear;border-radius:2px}
+.tbox{padding:6px 8px;background:rgba(255,32,80,.06);border:1px solid rgba(255,32,80,.16);border-radius:3px;font-size:10.5px;color:var(--td)}
+.tbox strong{color:var(--nr);display:block;font-size:9px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.bclib-wrap{flex:1;display:flex;align-items:center;padding:0 6px;gap:0;overflow:hidden}
+.bclib-lbl{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--td);writing-mode:vertical-rl;transform:rotate(180deg);margin-right:5px;flex-shrink:0}
+.bclib{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;overflow-x:auto;padding:5px 0}
+.bclib::-webkit-scrollbar{height:2px}.bclib::-webkit-scrollbar-thumb{background:var(--border)}
+.bcc{flex-shrink:0;width:100px;height:132px;background:rgba(0,22,50,.7);border:1.5px solid rgba(0,200,255,.16);border-radius:6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:8px 6px;transition:all .18s;position:relative;overflow:hidden}
+.bcc:hover:not(.dim):not(.locked){border-color:var(--nb);background:rgba(0,40,80,.7);transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,200,255,.15)}
+.bcc.ok{border-color:var(--ng);background:rgba(0,42,24,.7);box-shadow:0 0 20px rgba(0,255,153,.28);animation:bpulse .45s ease}
+.bcc.bad{border-color:var(--nr);animation:bshake .35s ease}
+.bcc.dim{opacity:.3;cursor:not-allowed;pointer-events:none}
+.bcc-svg{width:62px;height:62px}
+.bcc-name{font-size:9.5px;color:var(--td);text-align:center;line-height:1.3}
+.bcc-tag{font-family:var(--m);font-size:8px;color:var(--nb);text-transform:uppercase;letter-spacing:.08em}
+@keyframes bpulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+@keyframes bshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.bot-right{width:178px;flex-shrink:0;padding:9px 12px;border-left:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;gap:7px}
+.st-msg{font-size:11px;color:var(--td);line-height:1.6}
+.st-hint{font-size:9px;color:var(--td);letter-spacing:.06em;text-transform:uppercase}
+body.focus-mode .bot-right{display:none}
+
+/* WAVE ANNOUNCE */
+.wann{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;z-index:50;opacity:0;transition:opacity .3s}
+.wann.vis{opacity:1}
+.wann h2{font-size:40px;font-weight:700;color:var(--nr);text-shadow:0 0 28px rgba(255,32,80,.7);letter-spacing:.18em}
+.wann p{color:var(--ny);font-size:12px;letter-spacing:.18em;margin-top:5px}
+
+/* TOOLTIP */
+#tto{position:fixed;inset:0;background:rgba(0,4,14,.88);display:none;align-items:center;justify-content:center;z-index:1000;backdrop-filter:blur(4px)}
+#tto.vis{display:flex}
+.ttbox{max-width:530px;width:92%;background:var(--bg2);border:1px solid var(--nb);border-radius:7px;padding:26px;box-shadow:0 0 50px rgba(0,200,255,.18);animation:ttin .28s ease}
+@keyframes ttin{from{opacity:0;transform:scale(.93)}to{opacity:1;transform:scale(1)}}
+.tt-tag{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--nb);margin-bottom:9px}
+.tt-title{font-size:19px;font-weight:700;color:var(--tx);margin-bottom:12px}
+.tt-vis{width:120px;height:120px;margin:0 auto 12px}
+.tt-body{color:var(--td);font-size:12.5px;line-height:1.85;margin-bottom:14px}
+.tt-body strong{color:var(--tx)}
+.tt-vocab{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:16px;padding:10px;background:rgba(0,200,255,.04);border:1px solid var(--border);border-radius:4px}
+.vi{font-size:11px}.vi .s2{color:var(--ny)}.vi .ar{color:var(--td);margin:0 3px}.vi .f2{color:var(--np)}
+.tt-foot{display:flex;justify-content:flex-end}
+
+/* GAME OVER */
+#goo{position:fixed;inset:0;background:rgba(0,4,14,.9);display:none;align-items:center;justify-content:center;z-index:900}
+#goo.vis{display:flex}
+.gobox{max-width:440px;text-align:center;padding:34px;background:var(--bg2);border:1px solid var(--nr);border-radius:7px;box-shadow:0 0 50px rgba(255,32,80,.15)}
+.go-t{font-size:20px;font-weight:700;color:var(--nr);letter-spacing:.12em;margin-bottom:12px}
+.go-m{color:var(--td);font-size:13px;line-height:1.85;margin-bottom:18px}
+.go-st{display:flex;justify-content:center;gap:20px;margin-bottom:20px}
+.gst{font-family:var(--m);font-size:10px;color:var(--td);text-align:center}
+.gst span{font-size:20px;color:var(--nb);display:block}
+.go-b{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
+
+/* QUIZ */
+#screen-quiz{background:var(--bg);overflow-y:auto}
+.qwrap{max-width:640px;width:92%;padding:32px}
+.qhdr{text-align:center;margin-bottom:24px}
+.qhdr h2{font-size:22px;font-weight:700;color:var(--nb);letter-spacing:.1em}
+.qhdr p{color:var(--td);margin-top:6px;font-size:12.5px}
+.qprog{display:flex;justify-content:center;gap:6px;margin-top:12px}
+.qdot{width:9px;height:9px;border-radius:50%;background:var(--border);transition:background .3s}
+.qdot.done{background:var(--ng);box-shadow:0 0 4px var(--ng)}.qdot.cur{background:var(--nb);box-shadow:0 0 4px var(--nb)}
+.qbox{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:20px;margin-bottom:13px}
+.qnum{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--td);margin-bottom:9px}
+.qq{font-size:15px;font-weight:500;color:var(--tx);margin-bottom:16px;line-height:1.65}
+.qopts{display:flex;flex-direction:column;gap:8px}
+.qopt{padding:10px 13px;background:rgba(0,18,38,.5);border:1px solid var(--border);border-radius:4px;cursor:pointer;font-size:12.5px;color:var(--td);transition:all .18s;text-align:left;font-family:var(--f)}
+.qopt:hover:not(.cor):not(.wrg):not(.dis){border-color:var(--nb);color:var(--nb);background:var(--nb-dim)}
+.qopt.cor{border-color:var(--ng);color:var(--ng);background:var(--ng-dim)}.qopt.wrg{border-color:var(--nr);color:var(--nr);background:var(--nr-dim)}.qopt.dis{cursor:default}
+.qfb{font-size:12px;padding:10px 13px;border-radius:4px;margin-bottom:12px;line-height:1.65;display:none}
+.qfb.vis{display:block}.qfb.cor{background:var(--ng-dim);border:1px solid var(--ng);color:var(--ng)}.qfb.wrg{background:var(--nr-dim);border:1px solid var(--nr);color:var(--nr)}
+.qnav{display:flex;justify-content:flex-end}
+
+/* CERTIFICATE */
+#screen-certificate{background:radial-gradient(ellipse at center,rgba(0,24,50,.5),var(--bg));overflow-y:auto}
+.certwrap{max-width:660px;width:92%;padding:32px;text-align:center}
+.ch1{font-size:27px;font-weight:700;color:var(--nb);letter-spacing:.16em;text-shadow:0 0 26px rgba(0,200,255,.45);margin-bottom:5px}
+.csub{color:var(--td);font-size:11px;letter-spacing:.2em;margin-bottom:20px}
+.cseal{width:105px;height:105px;margin:0 auto 22px}
+.cstats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px}
+.cst{background:var(--panel);border:1px solid var(--border);border-radius:5px;padding:12px}
+.csv{font-family:var(--m);font-size:24px;color:var(--nb);display:block;margin-bottom:2px}
+.csl{font-size:9.5px;color:var(--td);text-transform:uppercase;letter-spacing:.1em}
+.ccon{background:var(--panel);border:1px solid var(--border);border-radius:5px;padding:15px;margin-bottom:17px;text-align:left}
+.ccon h3{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ng);margin-bottom:9px}
+.ci{display:flex;align-items:flex-start;gap:6px;margin-bottom:6px;font-size:12px;color:var(--td)}
+.ci::before{content:'✓';color:var(--ng);flex-shrink:0;font-size:10px;margin-top:1px}
+.cgr{font-size:12.5px;color:var(--td);margin-bottom:24px}
+.cgr strong{color:var(--ny);font-size:20px}
+.cbtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+@media print{body{background:white!important;color:black!important}.screen:not(#screen-certificate){display:none!important}#screen-certificate{position:static;overflow:visible;background:white!important}.cbtns{display:none}:root{--nb:#005080;--ng:#006040;--td:#444;--tx:#222}}
+@media(max-width:740px){.feed{display:none}.bot-right{display:none}.bcc{width:84px;height:110px}.feat-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<!-- INTRO SCREEN -->
+<div id="screen-intro" class="screen active">
+  <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.08" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="8%" cy="22%" r="55" fill="none" stroke="#00c8ff" stroke-width=".8"><animateTransform attributeName="transform" type="translate" values="0,0;0,-16;0,0" dur="5s" repeatCount="indefinite"/></circle>
+    <circle cx="89%" cy="15%" r="44" fill="none" stroke="#ff2050" stroke-width=".8"><animateTransform attributeName="transform" type="translate" values="0,0;0,-12;0,0" dur="4.2s" repeatCount="indefinite"/></circle>
+    <circle cx="20%" cy="80%" r="36" fill="none" stroke="#c844ff" stroke-width=".6"><animateTransform attributeName="transform" type="translate" values="0,0;0,-20;0,0" dur="6.1s" repeatCount="indefinite"/></circle>
+    <circle cx="80%" cy="74%" r="50" fill="none" stroke="#ffd600" stroke-width=".6"><animateTransform attributeName="transform" type="translate" values="0,0;0,-13;0,0" dur="5.3s" repeatCount="indefinite"/></circle>
+    <circle cx="50%" cy="50%" r="80" fill="none" stroke="#00c8ff" stroke-width=".35" stroke-dasharray="5,9"><animateTransform attributeName="transform" type="rotate" values="0 500 280;360 500 280" dur="35s" repeatCount="indefinite"/></circle>
+  </svg>
+  <div class="s-content">
+    <div class="logo">
+      <h1>BIO-SHIELD</h1>
+      <div class="sub">Adaptive Immune Response Simulator &nbsp;·&nbsp; A-Level Biology</div>
+      <div class="badge">⚡ PHASE 3 — ADAPTIVE RESPONSE ACTIVE</div>
+    </div>
+    <p class="s-desc">A pathogen has breached all physical barriers. The innate response alone cannot clear the threat. Command the <span class="nb">Adaptive Immune System</span> — select the right B-cell, match the antigen, and save the host.</p>
+    <div class="feat-grid">
+      <div class="feat"><strong>🔬 Clonal Selection Mechanic</strong>Find the ONE B-cell whose receptor matches the pathogen antigen — exactly how your immune system works.</div>
+      <div class="feat"><strong>📈 Vocabulary Unlock</strong>Earn Mastery Points to progress from scaffolded terms to formal A-Level language.</div>
+      <div class="feat"><strong>⏱ Cooldown Timer</strong>Phagocytes need time to digest — prioritise threats strategically, not just by clicking speed.</div>
+      <div class="feat"><strong>♿ SEND-Friendly</strong>Focus Mode · Info pause panels · No harsh fail states · Lexend font.</div>
+    </div>
+    <div class="s-btns">
+      <button class="btn" onclick="BS.startIntro()">▶ DEPLOY DEFENSES</button>
+      <button class="btn btn-sm" onclick="BS.skipToGame()">SKIP INTRO</button>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 1 CUTSCENE -->
+<div id="screen-phase1" class="screen">
+  <div class="cut">
+    <div class="cut-phase">Phase 1 of 3 · Non-Specific Barrier Defense</div>
+    <h2 class="cut-title">The First Line: Skin &amp; Lysozymes</h2>
+    <div class="cut-vis">
+      <svg viewBox="0 0 176 176" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="95" width="176" height="81" fill="#160a05" rx="2"/>
+        <rect x="0" y="82" width="176" height="18" fill="#251408"/>
+        <rect x="0" y="72" width="176" height="14" fill="#341c0e"/>
+        <ellipse cx="22" cy="80" rx="17" ry="7" fill="#4a2a14" opacity=".75"/>
+        <ellipse cx="60" cy="80" rx="17" ry="7" fill="#4a2a14" opacity=".75"/>
+        <ellipse cx="100" cy="80" rx="17" ry="7" fill="#4a2a14" opacity=".75"/>
+        <ellipse cx="140" cy="80" rx="17" ry="7" fill="#4a2a14" opacity=".75"/>
+        <line x1="4" y1="72" x2="172" y2="72" stroke="#00ff99" stroke-width="1.8" stroke-dasharray="3,2" opacity=".7"/>
+        <g transform="translate(32,44)"><circle r="13" fill="rgba(255,32,80,.88)"/>
+          <line x1="0" y1="-19" x2="0" y2="-13" stroke="#ff2050" stroke-width="2"/><line x1="13" y1="-13" x2="9" y2="-9" stroke="#ff2050" stroke-width="2"/><line x1="19" y1="0" x2="13" y2="0" stroke="#ff2050" stroke-width="2"/>
+          <line x1="-6" y1="-6" x2="6" y2="6" stroke="white" stroke-width="2.5"/><line x1="6" y1="-6" x2="-6" y2="6" stroke="white" stroke-width="2.5"/>
+        </g>
+        <g transform="translate(98,38)"><circle r="11" fill="rgba(255,32,80,.72)"/>
+          <line x1="0" y1="-17" x2="0" y2="-11" stroke="#ff2050" stroke-width="2"/><line x1="11" y1="-11" x2="7.5" y2="-7.5" stroke="#ff2050" stroke-width="2"/>
+          <line x1="-5" y1="-5" x2="5" y2="5" stroke="white" stroke-width="2.5"/><line x1="5" y1="-5" x2="-5" y2="5" stroke="white" stroke-width="2.5"/>
+        </g>
+        <circle cx="150" cy="50" r="7" fill="#00c8ff" opacity=".82"/>
+        <text x="150" y="46" text-anchor="middle" fill="#00c8ff" font-size="6.5" font-family="monospace">Lys</text>
+        <circle cx="160" cy="64" r="4.5" fill="#00c8ff" opacity=".5"/>
+        <text x="88" y="152" text-anchor="middle" fill="#4a6a85" font-size="9.5" font-family="monospace">Intact skin — pathogens blocked</text>
+      </svg>
+    </div>
+    <p class="cut-body">The body's first defense is <strong>physical and chemical</strong>. Intact skin — tightly-packed epithelial cells — blocks pathogen entry. <strong>Lysozymes</strong> in tears, saliva, and mucus destroy bacteria by breaking peptidoglycan bonds in their cell walls. Most pathogens never progress further.</p>
+    <div class="cut-box"><strong>📖 A-Level Checkpoint</strong>Skin provides <em>non-specific</em> defense — it blocks ALL pathogen types equally, with no memory. Lysozymes are enzymes targeting bacterial cell wall structure. This is the <strong>first line of defense</strong>: always active, non-adaptive.</div>
+    <button class="btn btn-red" onclick="BS.showPhase2()">BARRIER BREACHED → PHASE 2 ▶</button>
+  </div>
+</div>
+
+<!-- PHASE 2 CUTSCENE -->
+<div id="screen-phase2" class="screen">
+  <div class="cut">
+    <div class="cut-phase">Phase 2 of 3 · Innate Immune Response</div>
+    <h2 class="cut-title">Phagocytosis &amp; APC Formation</h2>
+    <div class="cut-vis">
+      <svg viewBox="0 0 176 176" xmlns="http://www.w3.org/2000/svg">
+        <defs><marker id="ar1" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5z" fill="#ffd600"/></marker></defs>
+        <ellipse cx="95" cy="112" rx="50" ry="40" fill="rgba(0,255,153,.08)" stroke="#00ff99" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <path d="M48 94 Q34 72 44 57" stroke="#00ff99" stroke-width="3" fill="none" opacity=".7" stroke-linecap="round"/>
+        <path d="M76 72 Q70 50 80 40" stroke="#00ff99" stroke-width="2.5" fill="none" opacity=".6" stroke-linecap="round"/>
+        <ellipse cx="95" cy="116" rx="19" ry="14" fill="rgba(0,100,160,.25)" stroke="#00c8ff" stroke-width="1"/>
+        <circle cx="96" cy="116" r="10" fill="rgba(255,32,80,.15)" stroke="#ff2050" stroke-width="1" stroke-dasharray="2,1"/>
+        <rect x="76" y="74" width="38" height="12" rx="2.5" fill="rgba(0,200,255,.22)" stroke="#00c8ff" stroke-width="1"/>
+        <text x="95" y="83.5" text-anchor="middle" fill="#00c8ff" font-size="7" font-family="monospace">MHC II</text>
+        <polygon points="95,58 103,72 87,72" fill="#ff2050" opacity=".88"/>
+        <g transform="translate(46,50)"><circle r="12" fill="rgba(255,32,80,.9)"/>
+          <line x1="0" y1="-18" x2="0" y2="-12" stroke="#ff2050" stroke-width="2"/><line x1="12" y1="-12" x2="8" y2="-8" stroke="#ff2050" stroke-width="2"/><line x1="18" y1="0" x2="12" y2="0" stroke="#ff2050" stroke-width="2"/>
+        </g>
+        <path d="M46 50 Q68 78 87 108" stroke="#ffd600" stroke-width="1.5" fill="none" stroke-dasharray="3,2" marker-end="url(#ar1)"/>
+        <text x="38" y="78" fill="#ffd600" font-size="8" font-family="monospace">chemotaxis</text>
+        <text x="88" y="168" text-anchor="middle" fill="#4a6a85" font-size="9.5" font-family="monospace">Phagocytosis → APC formation</text>
+      </svg>
+    </div>
+    <p class="cut-body"><strong>Macrophages</strong> detect chemical distress signals and move toward the threat (<strong>chemotaxis</strong>). They engulf the pathogen into a <strong>phagosome</strong>, digest it, then display fragments on <strong>MHC Class II proteins</strong> — becoming an <strong>Antigen-Presenting Cell (APC)</strong>.</p>
+    <div class="cut-box"><strong>📖 The Critical Bridge</strong>The APC displayed antigen activates T-Helper Cells → which release cytokines → which activate B-Cells → which produce antibodies. <em>Without phagocytosis and APC formation, the adaptive response cannot begin.</em></div>
+    <button class="btn btn-red" onclick="BS.startGame()">⚠ ADAPTIVE RESPONSE REQUIRED → PHASE 3 ▶</button>
+  </div>
+</div>
+<!-- GAME SCREEN -->
+<div id="screen-game" class="screen" style="padding:0">
+  <div class="hud">
+    <div class="hud-l">
+      <div class="hp-row"><span class="lbl9">Host Health</span><div class="hp-out"><div class="hp-in" id="hp-bar" style="width:100%"></div></div><span class="mono" id="hp-val" style="color:var(--ng);min-width:32px">100%</span></div>
+      <div class="hp-row"><span class="lbl9">Wave</span><span class="mono" id="wave-d" style="color:var(--ny)">1/8</span></div>
+    </div>
+    <div class="hud-c">Bio-Shield</div>
+    <div class="hud-r">
+      <span id="vbadge" class="vbadge sc">Scaffolded</span>
+      <div class="hp-row"><span class="lbl9">Mastery</span><span class="mono" id="ms-d" style="color:var(--nb);text-shadow:0 0 6px var(--nb)">0</span></div>
+      <button class="mute-btn" id="mute-btn" onclick="BS.toggleMute()" title="Toggle Sound">🔊</button>
+      <div class="ftog" id="ftog" onclick="BS.toggleFocus()"><span>Focus</span><div class="tsw"></div></div>
+    </div>
+  </div>
+  <div class="gbody">
+    <div class="bfield" id="bfield">
+      <svg id="gsvg" viewBox="0 0 900 370" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="gr"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="gblue"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <pattern id="grid" width="38" height="38" patternUnits="userSpaceOnUse"><path d="M38 0L0 0 0 38" fill="none" stroke="rgba(0,200,255,0.04)" stroke-width=".5"/></pattern>
+          <radialGradient id="bgr" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(0,35,75,0.22)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/></radialGradient>
+          <marker id="arr" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5z" fill="rgba(200,68,255,0.5)"/></marker>
+        </defs>
+        <rect width="900" height="370" fill="url(#grid)"/>
+        <rect width="900" height="370" fill="url(#bgr)"/>
+        <line x1="7" y1="0" x2="7" y2="370" stroke="rgba(255,32,80,.22)" stroke-width="2"/>
+        <rect x="0" y="0" width="7" height="370" fill="rgba(255,32,80,.04)"/>
+        <!-- APC -->
+        <g id="apc-g" transform="translate(72,185)">
+          <path d="M0,-50 L32,-38 L50,0 L37,44 L0,54 L-37,42 L-50,-7 L-30,-42Z" fill="rgba(0,140,190,.1)" stroke="#00c8ff" stroke-width="1.5"/>
+          <ellipse cx="0" cy="6" rx="17" ry="13" fill="rgba(0,100,160,.25)" stroke="#00c8ff" stroke-width=".8"/>
+          <rect x="-17" y="-49" width="34" height="12" rx="2.5" fill="rgba(0,200,255,.26)" stroke="#00c8ff" stroke-width="1"/>
+          <text x="0" y="-39.5" text-anchor="middle" fill="#00c8ff" font-size="7" font-family="monospace">MHC II</text>
+          <g id="apc-ag"><circle cx="0" cy="-53" r="8.5" fill="rgba(0,38,65,.7)" stroke="rgba(0,200,255,.3)" stroke-width="1"/><text x="0" y="-50" text-anchor="middle" fill="#4a6a85" font-size="7.5" font-family="monospace" id="apc-ag-t">?</text></g>
+          <circle cx="0" cy="0" r="50" fill="none" stroke="#00c8ff" stroke-width=".8" stroke-dasharray="3,4" opacity=".28"><animate attributeName="r" values="50;60;50" dur="3.2s" repeatCount="indefinite"/><animate attributeName="opacity" values=".28;.07;.28" dur="3.2s" repeatCount="indefinite"/></circle>
+          <text x="0" y="72" text-anchor="middle" fill="#00c8ff" font-size="8" font-family="monospace" id="apc-lbl">APC</text>
+        </g>
+        <!-- T-Helper Cell -->
+        <g id="th-g" transform="translate(190,185)">
+          <circle cx="0" cy="0" r="36" fill="rgba(200,68,255,.09)" stroke="#c844ff" stroke-width="1.5"/>
+          <ellipse cx="0" cy="0" rx="14" ry="11" fill="rgba(140,45,190,.22)" stroke="#c844ff" stroke-width=".8"/>
+          <rect x="-21" y="-47" width="42" height="12" rx="2.5" fill="rgba(200,68,255,.25)" stroke="#c844ff" stroke-width="1"/>
+          <text x="0" y="-37.5" text-anchor="middle" fill="#c844ff" font-size="7" font-family="monospace">CD4+</text>
+          <circle cx="0" cy="0" r="36" fill="none" stroke="#c844ff" stroke-width=".8" stroke-dasharray="3,5" opacity=".3"><animate attributeName="r" values="36;46;36" dur="2.4s" repeatCount="indefinite"/><animate attributeName="opacity" values=".3;.07;.3" dur="2.4s" repeatCount="indefinite"/></circle>
+          <text x="0" y="55" text-anchor="middle" fill="#c844ff" font-size="8" font-family="monospace" id="th-lbl">T-HELPER</text>
+        </g>
+        <!-- Cytokine signal path -->
+        <path d="M 226 185 Q 260 155 300 185" stroke="rgba(200,68,255,0.2)" stroke-width="1.2" fill="none" stroke-dasharray="4,6" id="cyk-path"/>
+        <g id="path-layer"></g>
+        <g id="ab-layer"></g>
+        <g id="ptcl-layer"></g>
+        <!-- Wave announce overlay -->
+        <g id="wsvg" opacity="0">
+          <rect x="230" y="140" width="440" height="90" rx="7" fill="rgba(5,10,16,.93)" stroke="rgba(255,32,80,.4)" stroke-width="1"/>
+          <text x="450" y="188" text-anchor="middle" fill="#ff2050" font-size="28" font-weight="bold" font-family="Lexend,sans-serif" id="wt1">WAVE 1</text>
+          <text x="450" y="214" text-anchor="middle" fill="#ffd600" font-size="11" font-family="Lexend,sans-serif" id="wt2">PATHOGEN ALPHA DETECTED</text>
+        </g>
+      </svg>
+      <div class="wann" id="wann"><h2 id="wa-h">WAVE 1</h2><p id="wa-p">Pathogen Alpha detected</p></div>
+    </div>
+    <div class="feed" id="feed">
+      <div class="feed-hdr">📡 Technical Feed</div>
+      <div class="flog" id="flog">
+        <div class="le hlt">&gt; Bio-Shield system online.</div>
+        <div class="le">&gt; Adaptive Response Module loaded.</div>
+        <div class="le">&gt; Awaiting pathogen incursion...</div>
+      </div>
+    </div>
+  </div>
+  <div class="bot">
+    <div class="bot-left">
+      <span class="lbl9">Immune Cooldown</span>
+      <div class="cd-out"><div class="cd-in" id="cd-bar" style="width:100%"></div></div>
+      <span class="mono" id="cd-lbl" style="font-size:9.5px;color:var(--td)">Ready</span>
+      <div class="tbox"><strong>Active Threat</strong><span id="threat-t">Awaiting detection...</span></div>
+    </div>
+    <span class="bclib-lbl">B-Cell Library — Clonal Selection</span>
+    <div class="bclib-wrap"><div class="bclib" id="bclib"></div></div>
+    <div class="bot-right" id="bot-r">
+      <div class="st-msg" id="st-msg">Identify the pathogen antigen shape on the battlefield. Select the matching B-cell receptor below to initiate clonal selection.</div>
+      <div class="st-hint">↑ Click a B-cell card to deploy antibodies</div>
+    </div>
+  </div>
+</div>
+
+<!-- TOOLTIP OVERLAY -->
+<div id="tto">
+  <div class="ttbox">
+    <div class="tt-tag" id="tt-tag">📖 CELL TYPE BRIEFING</div>
+    <h3 class="tt-title" id="tt-title">Title</h3>
+    <div class="tt-vis" id="tt-vis"></div>
+    <div class="tt-body" id="tt-body"></div>
+    <div class="tt-vocab" id="tt-vocab"></div>
+    <div class="tt-foot"><button class="btn btn-green" onclick="BS.closeTT()">UNDERSTOOD — CONTINUE ▶</button></div>
+  </div>
+</div>
+
+<!-- GAME OVER OVERLAY -->
+<div id="goo">
+  <div class="gobox">
+    <div class="go-t">⚠ SYSTEM OVERWHELMED</div>
+    <p class="go-m">The pathogen load exceeded adaptive capacity this cycle. <strong style="color:var(--nb)">This is not failure — it is data.</strong> The immune system learns from every encounter. Analyse your B-cell selection strategy and redeploy a refined defense.</p>
+    <div class="go-st" id="go-st"></div>
+    <div class="go-b">
+      <button class="btn" onclick="BS.restart()">↺ RE-DEPLOY DEFENSES</button>
+      <button class="btn btn-green" onclick="BS.skipToQuiz()">MASTERY QUIZ ▶</button>
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ SCREEN -->
+<div id="screen-quiz" class="screen">
+  <div class="qwrap">
+    <div class="qhdr">
+      <h2>🧬 MASTERY ASSESSMENT</h2>
+      <p>Demonstrate your understanding of the Adaptive Immune Response</p>
+      <div class="qprog" id="qprog"></div>
+    </div>
+    <div class="qbox">
+      <div class="qnum" id="qnum">Question 1 of 5</div>
+      <div class="qq" id="qq"></div>
+      <div class="qopts" id="qopts"></div>
+    </div>
+    <div class="qfb" id="qfb"></div>
+    <div class="qnav"><button class="btn" id="qnext" onclick="BS.quizNext()" style="display:none">Next Question ▶</button></div>
+  </div>
+</div>
+
+<!-- CERTIFICATE SCREEN -->
+<div id="screen-certificate" class="screen">
+  <div class="certwrap">
+    <h1 class="ch1">COMMANDER'S CERTIFICATE</h1>
+    <div class="csub">Bio-Shield · Adaptive Immune Response · A-Level Biology</div>
+    <div class="cseal">
+      <svg viewBox="0 0 105 105" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="52.5" cy="52.5" r="50" fill="none" stroke="#00c8ff" stroke-width="1.8"/>
+        <circle cx="52.5" cy="52.5" r="42" fill="none" stroke="rgba(0,200,255,.22)" stroke-width="1"/>
+        <g fill="rgba(0,200,255,0.3)">
+          <circle cx="52.5" cy="3" r="2"/><circle cx="76" cy="11" r="1.5"/><circle cx="96" cy="30" r="1.5"/>
+          <circle cx="102" cy="55" r="2"/><circle cx="93" cy="80" r="1.5"/><circle cx="71" cy="99" r="1.5"/>
+          <circle cx="52.5" cy="103" r="2"/><circle cx="33" cy="99" r="1.5"/><circle cx="11" cy="80" r="1.5"/>
+          <circle cx="3" cy="55" r="2"/><circle cx="8" cy="30" r="1.5"/><circle cx="28" cy="11" r="1.5"/>
+        </g>
+        <circle cx="52.5" cy="52.5" r="22" fill="rgba(0,22,50,.9)" stroke="#00c8ff" stroke-width="1"/>
+        <line x1="52.5" y1="65" x2="52.5" y2="53" stroke="#00ff99" stroke-width="3" stroke-linecap="round"/>
+        <line x1="52.5" y1="53" x2="43" y2="43" stroke="#00ff99" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="52.5" y1="53" x2="62" y2="43" stroke="#00ff99" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="43" cy="41.5" r="3.5" fill="#00ff99"/><circle cx="62" cy="41.5" r="3.5" fill="#00ff99"/>
+        <text x="52.5" y="97" text-anchor="middle" fill="#4a6a85" font-size="5.5" font-family="monospace" letter-spacing=".8">VERIFIED COMMANDER</text>
+      </svg>
+    </div>
+    <div class="cstats" id="cstats"></div>
+    <div class="ccon" id="ccon"><h3>✓ Concepts Engaged</h3></div>
+    <div class="cgr">Commander Grade: <strong id="cgr">A</strong></div>
+    <div class="cbtns">
+      <button class="btn btn-green" onclick="window.print()">🖨 Print Certificate</button>
+      <button class="btn" onclick="BS.restart()">↺ New Deployment</button>
+    </div>
+  </div>
+</div>
+<script>
+'use strict';
+
+/* =======================================================
+   SFX ENGINE — Web Audio API (zero external files)
+   All sounds are synthesised procedurally.
+   ======================================================= */
+const SFX = (() => {
+  let ctx = null;
+  let muted = false;
+  let masterGain = null;
+
+  const init = () => {
+    if (ctx) return;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    masterGain = ctx.createGain();
+    masterGain.gain.value = 0.55;
+    masterGain.connect(ctx.destination);
+  };
+
+  const resume = () => { if (ctx && ctx.state === 'suspended') ctx.resume(); };
+
+  // Low-level helpers
+  const osc = (type, freq, startT, dur, gainPeak, pitchEnd) => {
+    if (!ctx || muted) return;
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = type;
+    o.frequency.setValueAtTime(freq, startT);
+    if (pitchEnd !== undefined) o.frequency.exponentialRampToValueAtTime(pitchEnd, startT + dur);
+    g.gain.setValueAtTime(0, startT);
+    g.gain.linearRampToValueAtTime(gainPeak, startT + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001, startT + dur);
+    o.connect(g); g.connect(masterGain);
+    o.start(startT); o.stop(startT + dur + 0.05);
+  };
+
+  const noise = (startT, dur, gainPeak, filterFreq, filterQ) => {
+    if (!ctx || muted) return;
+    const bufSize = ctx.sampleRate * dur;
+    const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < bufSize; i++) data[i] = Math.random() * 2 - 1;
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    const filt = ctx.createBiquadFilter();
+    filt.type = 'bandpass';
+    filt.frequency.value = filterFreq || 1000;
+    filt.Q.value = filterQ || 1;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(gainPeak, startT);
+    g.gain.exponentialRampToValueAtTime(0.0001, startT + dur);
+    src.connect(filt); filt.connect(g); g.connect(masterGain);
+    src.start(startT); src.stop(startT + dur + 0.05);
+  };
+
+  const now = () => ctx ? ctx.currentTime : 0;
+
+  // ── INDIVIDUAL SOUNDS ────────────────────────────────
+
+  // UI click — quick blip
+  const uiClick = () => {
+    init(); resume();
+    const t = now();
+    osc('sine', 880, t, 0.08, 0.2, 660);
+  };
+
+  // Tooltip / info panel open — soft chime
+  const tooltip = () => {
+    init(); resume();
+    const t = now();
+    osc('sine', 523, t,      0.35, 0.18);
+    osc('sine', 659, t+0.06, 0.30, 0.14);
+    osc('sine', 784, t+0.12, 0.25, 0.10);
+  };
+
+  // Pathogen spawn — alien warble / low threat
+  const pathogenSpawn = () => {
+    init(); resume();
+    const t = now();
+    osc('sawtooth', 80,  t,      0.25, 0.12, 55);
+    osc('square',   160, t+0.05, 0.18, 0.07, 120);
+    noise(t, 0.12, 0.06, 200, 2);
+  };
+
+  // Antibody launch — sharp sci-fi whoosh
+  const antibodyLaunch = () => {
+    init(); resume();
+    const t = now();
+    osc('sawtooth', 300, t, 0.22, 0.28, 900);
+    osc('sine',     600, t+0.03, 0.16, 0.12, 1800);
+    noise(t, 0.14, 0.09, 2000, 3);
+  };
+
+  // Correct match / neutralise — crystal chime + resonant hit
+  const neutralise = () => {
+    init(); resume();
+    const t = now();
+    osc('sine',     1046, t,      0.55, 0.30);
+    osc('sine',     1318, t+0.04, 0.45, 0.22);
+    osc('sine',     1568, t+0.08, 0.35, 0.18);
+    osc('triangle', 2093, t+0.02, 0.30, 0.12);
+    noise(t, 0.08, 0.15, 4000, 5);
+  };
+
+  // Mismatch / wrong — dissonant buzz
+  const mismatch = () => {
+    init(); resume();
+    const t = now();
+    osc('sawtooth', 220, t,      0.35, 0.25, 180);
+    osc('square',   233, t+0.01, 0.25, 0.20, 190);
+    noise(t, 0.2, 0.1, 300, 1.5);
+  };
+
+  // Pathogen breach / damage — heavy thud + alarm
+  const breach = () => {
+    init(); resume();
+    const t = now();
+    osc('sine',     80,  t,      0.40, 0.45, 40);
+    osc('sawtooth', 220, t,      0.25, 0.30, 110);
+    osc('square',   440, t+0.05, 0.20, 0.20, 220);
+    noise(t, 0.30, 0.22, 600, 2);
+  };
+
+  // Lysis pop — cellular explosion crackle
+  const lysispop = () => {
+    init(); resume();
+    const t = now();
+    noise(t,      0.06, 0.35, 3000, 4);
+    noise(t+0.03, 0.10, 0.20, 1200, 2);
+    osc('sine', 1200, t, 0.12, 0.18, 400);
+  };
+
+  // Wave start — military alert siren pulse
+  const waveStart = () => {
+    init(); resume();
+    const t = now();
+    [0, 0.18, 0.36].forEach((off, i) => {
+      osc('sawtooth', 440 + i * 40, t + off, 0.15, 0.22, 550 + i * 40);
+    });
+    osc('square', 220, t + 0.1, 0.3, 0.14, 180);
+    noise(t, 0.4, 0.07, 800, 1.5);
+  };
+
+  // Wave complete — ascending triumph
+  const waveComplete = () => {
+    init(); resume();
+    const t = now();
+    const notes = [523, 659, 784, 1046];
+    notes.forEach((f, i) => osc('sine', f, t + i * 0.1, 0.35, 0.22));
+    osc('triangle', 1318, t + 0.4, 0.4, 0.15);
+  };
+
+  // Vocab unlock — sparkling fanfare
+  const vocabUnlock = () => {
+    init(); resume();
+    const t = now();
+    const run = [523, 659, 784, 1046, 1318, 1568];
+    run.forEach((f, i) => {
+      osc('sine', f, t + i * 0.07, 0.25, 0.18);
+      osc('triangle', f * 2, t + i * 0.07 + 0.03, 0.18, 0.08);
+    });
+  };
+
+  // Cooldown ready — soft ping notification
+  const cooldownReady = () => {
+    init(); resume();
+    const t = now();
+    osc('sine', 880, t,      0.22, 0.15);
+    osc('sine', 1108, t+0.08, 0.18, 0.12);
+  };
+
+  // Game over — descending doom
+  const gameOver = () => {
+    init(); resume();
+    const t = now();
+    const seq = [440, 370, 311, 261, 220, 185];
+    seq.forEach((f, i) => osc('sawtooth', f, t + i * 0.18, 0.3, 0.28, f * 0.85));
+    noise(t + 0.5, 0.8, 0.12, 150, 1);
+  };
+
+  // Victory / win — full fanfare
+  const victory = () => {
+    init(); resume();
+    const t = now();
+    [[523,0],[659,0.1],[784,0.2],[1046,0.3],[1318,0.4],[1046,0.55],[784,0.7],[1046,0.85],[1318,1.0]].forEach(([f,o])=>{
+      osc('sine', f, t+o, 0.4, 0.28);
+      if(o>0.5) osc('triangle', f*2, t+o+0.02, 0.25, 0.10);
+    });
+    noise(t+1.0, 0.3, 0.08, 3000, 4);
+  };
+
+  // Quiz correct — bright upward ding
+  const quizCorrect = () => {
+    init(); resume();
+    const t = now();
+    osc('sine', 784,  t,      0.30, 0.22);
+    osc('sine', 988,  t+0.08, 0.28, 0.18);
+    osc('sine', 1175, t+0.16, 0.25, 0.14);
+  };
+
+  // Quiz wrong — flat descending buzz
+  const quizWrong = () => {
+    init(); resume();
+    const t = now();
+    osc('sawtooth', 320, t,      0.30, 0.22, 260);
+    osc('square',   260, t+0.08, 0.24, 0.18, 210);
+  };
+
+  // Ambient heartbeat pulse (looping bg atmosphere)
+  let heartbeatTimer = null;
+  const heartbeat = () => {
+    if (!ctx || muted) return;
+    const t = now();
+    osc('sine', 55, t,      0.06, 0.08, 50);
+    osc('sine', 50, t+0.12, 0.04, 0.06, 46);
+  };
+  const startHeartbeat = () => {
+    stopHeartbeat();
+    heartbeat();
+    heartbeatTimer = setInterval(()=>{ if(!muted) heartbeat(); }, 900);
+  };
+  const stopHeartbeat = () => {
+    if (heartbeatTimer) { clearInterval(heartbeatTimer); heartbeatTimer = null; }
+  };
+
+  // Toggle mute
+  const toggleMute = () => {
+    init(); resume();
+    muted = !muted;
+    if (masterGain) masterGain.gain.value = muted ? 0 : 0.55;
+    const btn = document.getElementById('mute-btn');
+    if (btn) { btn.textContent = muted ? '🔇' : '🔊'; btn.classList.toggle('muted', muted); }
+  };
+
+  return {
+    init, resume, toggleMute,
+    uiClick, tooltip, pathogenSpawn, antibodyLaunch,
+    neutralise, mismatch, breach, lysispop,
+    waveStart, waveComplete, vocabUnlock, cooldownReady,
+    gameOver, victory, quizCorrect, quizWrong,
+    startHeartbeat, stopHeartbeat,
+  };
+})();
+const BS = (() => {
+  // ── DATA ─────────────────────────────────────────────
+  const COOLDOWN = 4400;
+  const VOCAB_TH = 50;
+  const AT = {
+    TRI:  {id:'TRI',  col:'#ff2050', sc:'Triangle Marker', fo:'Triangular Epitope (α)', ps:'Alpha Germ',  pf:'Pathogen Alpha'},
+    HEX:  {id:'HEX',  col:'#ffd600', sc:'Hex Marker',      fo:'Hexagonal Epitope (β)',  ps:'Beta Germ',   pf:'Pathogen Beta'},
+    DIA:  {id:'DIA',  col:'#00c8ff', sc:'Diamond Marker',  fo:'Diamond Epitope (γ)',    ps:'Gamma Germ',  pf:'Pathogen Gamma'},
+    STAR: {id:'STAR', col:'#c844ff', sc:'Star Marker',     fo:'Star Epitope (δ)',        ps:'Delta Germ',  pf:'Pathogen Delta'},
+  };
+  const WAVES = [
+    {types:['TRI'],                  n:3,spd:.50,gap:4200},
+    {types:['TRI','HEX'],            n:4,spd:.62,gap:3800},
+    {types:['TRI','HEX'],            n:5,spd:.74,gap:3400},
+    {types:['TRI','HEX','DIA'],      n:5,spd:.84,gap:3100},
+    {types:['TRI','HEX','DIA'],      n:6,spd:.92,gap:2900},
+    {types:['TRI','HEX','DIA','STAR'],n:6,spd:1.02,gap:2700},
+    {types:['TRI','HEX','DIA','STAR'],n:7,spd:1.12,gap:2500},
+    {types:['TRI','HEX','DIA','STAR'],n:8,spd:1.22,gap:2300},
+  ];
+  const TIPS = {
+    apc:{
+      tag:'🔬 CELL TYPE: Antigen-Presenting Cell (APC)',
+      title:'The APC: Bridge to Adaptive Immunity',
+      vis:`<svg viewBox="-62 -68 124 132" xmlns="http://www.w3.org/2000/svg" width="120" height="120">
+        <path d="M0,-56 L31,-42 L50,0 L36,46 L0,58 L-36,42 L-50,-7 L-28,-46Z" fill="rgba(0,150,200,.1)" stroke="#00c8ff" stroke-width="2"/>
+        <ellipse cx="0" cy="6" rx="18" ry="13" fill="rgba(0,100,160,.25)" stroke="#00c8ff" stroke-width="1"/>
+        <rect x="-19" y="-56" width="38" height="13" rx="3" fill="rgba(0,200,255,.26)" stroke="#00c8ff" stroke-width="1.5"/>
+        <text x="0" y="-46" text-anchor="middle" fill="#00c8ff" font-size="8.5" font-family="monospace">MHC II</text>
+        <polygon points="0,-61 8,-48 -8,-48" fill="#ff2050" opacity=".9"/>
+        <text x="0" y="-63" text-anchor="middle" fill="#ff2050" font-size="7.5" font-family="monospace">Antigen</text>
+      </svg>`,
+      body:`After a phagocyte digests a pathogen, it displays fragments on its surface as <strong>antigens</strong> using <strong>MHC Class II proteins</strong>. Now called an <strong>Antigen-Presenting Cell (APC)</strong>, it waits for a T-Helper Cell to bind and read the antigen — triggering the full adaptive cascade. Without this step, B-cells cannot activate.`,
+      vocab:[{s:'Presenter Cell',f:'Antigen-Presenting Cell (APC)'},{s:'Fragment Flag',f:'Antigen on MHC II'},{s:'Eater Cell',f:'Macrophage / Phagocyte'}],
+    },
+    thelper:{
+      tag:'🔬 CELL TYPE: T-Helper Lymphocyte (CD4+)',
+      title:'The T-Helper Cell: Immune Commander',
+      vis:`<svg viewBox="-62 -68 124 128" xmlns="http://www.w3.org/2000/svg" width="120" height="120">
+        <circle cx="0" cy="0" r="48" fill="rgba(200,68,255,.08)" stroke="#c844ff" stroke-width="2"/>
+        <ellipse cx="0" cy="0" rx="17" ry="13" fill="rgba(150,50,200,.24)" stroke="#c844ff" stroke-width="1"/>
+        <rect x="-22" y="-61" width="44" height="13" rx="3" fill="rgba(200,68,255,.26)" stroke="#c844ff" stroke-width="1.5"/>
+        <text x="0" y="-51" text-anchor="middle" fill="#c844ff" font-size="8.5" font-family="monospace">CD4+</text>
+        <circle cx="35" cy="-24" r="7" fill="rgba(255,200,0,.55)" stroke="#ffd600" stroke-width="1"><animate attributeName="r" values="7;10;7" dur="1.5s" repeatCount="indefinite"/></circle>
+        <text x="48" y="-20" fill="#ffd600" font-size="7.5" font-family="monospace">IL-2</text>
+      </svg>`,
+      body:`The T-Helper Cell (CD4+) is the immune <strong>coordinator</strong>. When it recognises the antigen on an APC, it activates and releases <strong>cytokines</strong> (e.g., Interleukin-2). These cytokines drive B-Cell clonal expansion and recruit more immune cells. <em>Without the T-Helper signal, B-Cells cannot fully activate — this is why HIV (which targets CD4+ cells) is so devastating.</em>`,
+      vocab:[{s:'Helper Cell',f:'T-Helper Cell (CD4+ T Lymphocyte)'},{s:'Chemical Alarm',f:'Cytokine (e.g., IL-2)'},{s:'Signal to Clone',f:'Clonal Expansion Stimulus'}],
+    },
+    bcell:{
+      tag:'🔬 CELL TYPE: B-Lymphocyte & Clonal Selection',
+      title:'B-Cell: Finding the Perfect Fit',
+      vis:`<svg viewBox="-55 -70 110 125" xmlns="http://www.w3.org/2000/svg" width="120" height="120">
+        <circle cx="0" cy="0" r="46" fill="rgba(0,255,153,.07)" stroke="#00ff99" stroke-width="2"/>
+        <ellipse cx="0" cy="4" rx="15" ry="12" fill="rgba(0,150,100,.24)" stroke="#00ff99" stroke-width="1"/>
+        <line x1="0" y1="-16" x2="0" y2="-36" stroke="#00ff99" stroke-width="3" stroke-linecap="round"/>
+        <line x1="0" y1="-36" x2="-17" y2="-56" stroke="#00ff99" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="0" y1="-36" x2="17" y2="-56" stroke="#00ff99" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="-17" cy="-56" r="5" fill="#00ff99"/><circle cx="17" cy="-56" r="5" fill="#00ff99"/>
+        <text x="0" y="56" text-anchor="middle" fill="#00ff99" font-size="7.5" font-family="monospace">B-Cell Receptor</text>
+      </svg>`,
+      body:`Your body has <strong>millions of B-Cells</strong> with unique surface receptors. The adaptive immune system must find the <strong>one B-Cell whose receptor perfectly matches the pathogen's antigen</strong> — this is <strong>Clonal Selection</strong>. That cell then clones itself into <strong>Plasma Cells</strong>, producing up to 2,000 antibodies per second each. This specificity takes days to develop — which is why you feel ill for several days before recovering.`,
+      vocab:[{s:'Defense Cell',f:'B-Lymphocyte'},{s:'Shape-Lock Key',f:'B-Cell Receptor (BCR)'},{s:'Clone Army',f:'Clonal Expansion → Plasma Cells'},{s:'Memory Leftover',f:'Memory B-Cell'}],
+    },
+    antibody:{
+      tag:'🔬 MOLECULE: Immunoglobulin (Antibody)',
+      title:'Antibody: Lock & Key Specificity',
+      vis:`<svg viewBox="-58 -68 116 128" xmlns="http://www.w3.org/2000/svg" width="120" height="120">
+        <line x1="0" y1="50" x2="0" y2="12" stroke="#00ff99" stroke-width="4" stroke-linecap="round"/>
+        <line x1="0" y1="12" x2="-28" y2="-28" stroke="#00ff99" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="0" y1="12" x2="28" y2="-28" stroke="#00ff99" stroke-width="3.5" stroke-linecap="round"/>
+        <rect x="-46" y="-54" width="30" height="30" rx="5" fill="rgba(0,255,153,.1)" stroke="#00ff99" stroke-width="1.5"/>
+        <rect x="16" y="-54" width="30" height="30" rx="5" fill="rgba(0,255,153,.1)" stroke="#00ff99" stroke-width="1.5"/>
+        <text x="-31" y="-60" text-anchor="middle" fill="#00ff99" font-size="7" font-family="monospace">Variable</text>
+        <text x="31" y="-60" text-anchor="middle" fill="#00ff99" font-size="7" font-family="monospace">Variable</text>
+        <text x="-31" y="-18" text-anchor="middle" fill="#00ff99" font-size="7.5" font-family="monospace">Fab</text>
+        <text x="31" y="-18" text-anchor="middle" fill="#00ff99" font-size="7.5" font-family="monospace">Fab</text>
+        <text x="0" y="63" text-anchor="middle" fill="#4a6a85" font-size="7" font-family="monospace">Fc (constant region)</text>
+      </svg>`,
+      body:`An antibody is a <strong>Y-shaped immunoglobulin</strong>. The tips of the Y are <strong>variable (Fab) regions</strong> — uniquely shaped to bind ONE antigen type. This is lock-and-key specificity. Binding neutralises the pathogen (blocks function) and flags it for phagocytosis — a process called <strong>opsonisation</strong>.`,
+      vocab:[{s:'Defense Protein',f:'Antibody (Immunoglobulin)'},{s:'Shape-Match Tips',f:'Variable Region (Fab)'},{s:'Flagging',f:'Opsonisation'},{s:'Binding Event',f:'Antigen-Antibody Complex'}],
+    },
+  };
+  const QUIZ = [
+    {q:'Which cell presents pathogen antigens on MHC Class II proteins to initiate the adaptive response?',
+     opts:['Neutrophil','Natural Killer Cell','Antigen-Presenting Cell (APC)','Mast Cell'],ans:2,
+     exp:'APCs (e.g. macrophages, dendritic cells) display digested pathogen fragments on MHC II. T-Helper Cells then read this antigen and trigger the adaptive cascade — the critical bridge between innate and adaptive immunity.'},
+    {q:'What is Clonal Selection and why is it fundamental to adaptive immunity?',
+     opts:['Selecting the most dangerous pathogen to study','Identifying the B-Cell with a complementary receptor and stimulating it to clone into plasma cells','Cloning T-Helper cells to produce extra cytokines','Selecting which skin cells regenerate after infection'],ans:1,
+     exp:'Clonal Selection identifies the specific B-Cell whose receptor is complementary to the pathogen antigen. It then undergoes rapid expansion, producing plasma cells that secrete that specific antibody at huge rates — explaining why adaptive immunity is highly specific and takes several days to peak.'},
+    {q:'One antibody can neutralise any pathogen it encounters. Is this correct?',
+     opts:['Yes — all antibodies are structurally identical','No — each antibody\'s variable (Fab) region is specific to one antigen shape','Yes — but only once activated by cytokines','No — antibodies only function inside cells'],ans:1,
+     exp:'Antibodies are highly specific. Each variable region has a unique 3D shape complementary to only one antigen epitope — lock and key. This precision prevents attacks on the body\'s own cells and ensures targeted pathogen clearance.'},
+    {q:'What two roles do cytokines from activated T-Helper (CD4+) cells perform?',
+     opts:['Directly lyse pathogens and produce memory cells','Signal B-Cell clonal expansion AND recruit additional immune cells to the infection site','Convert macrophages into plasma cells and release histamine','Form the physical barrier against re-infection'],ans:1,
+     exp:'Cytokines (e.g. IL-2, IL-4) serve two vital roles: (1) stimulate the selected B-Cell to undergo clonal expansion into plasma cells and memory B-cells; (2) recruit additional immune cells to the infection site. This is why T-Helper cell loss (as in HIV infection) is catastrophic to immunity.'},
+    {q:'Why do some B-Cells NOT become plasma cells, and what is their long-term role?',
+     opts:['They become senescent and are removed by apoptosis','They remain as Memory B-Cells, enabling a faster stronger secondary response upon re-infection','They transform into Natural Killer cells for non-specific immunity','They become dendritic cells for improved antigen presentation'],ans:1,
+     exp:'Memory B-Cells are long-lived cells retaining the specific receptor. On re-exposure to the same antigen, they rapidly expand into plasma cells — producing antibodies far faster than the primary response. This immunological memory is the scientific basis of vaccination: priming memory without causing disease.'},
+  ];
+
+  // ── STATE ─────────────────────────────────────────────
+  let S={};
+  const resetS = () => { S={
+    health:100,mastery:0,formal:false,focus:false,
+    wave:0,waveActive:false,wSpawned:0,wCleared:0,wTotal:0,wSpawnTimer:0,wGap:3500,
+    pathogens:[],antibodies:[],particles:[],
+    cdActive:false,cdMs:0,
+    pId:0,abId:0,
+    correct:0,incorrect:0,
+    running:false,paused:false,last:0,raf:null,
+    quizIdx:0,quizScore:0,
+    tipsShown:{},
+  };};
+
+  // ── SCREEN MANAGEMENT ────────────────────────────────
+  const show = id => {
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    const el = document.getElementById(id);
+    if(el) el.classList.add('active');
+  };
+
+  // ── INTRO FLOW ───────────────────────────────────────
+  const startIntro = () => show('screen-phase1');
+  const showPhase2 = () => show('screen-phase2');
+  const skipToGame = () => { resetS(); buildBCLib(); show('screen-game'); startWave(); };
+
+  const startGame = () => {
+    resetS();
+    buildBCLib();
+    show('screen-game');
+    // Show APC tooltip first
+    showTip('apc', () => showTip('thelper', () => showTip('bcell', () => showTip('antibody', startWave))));
+  };
+
+  // ── TOOLTIP SYSTEM ───────────────────────────────────
+  const showTip = (key, cb) => {
+    const t = TIPS[key];
+    if(!t) { if(cb) cb(); return; }
+    S.paused = true;
+    const ov = document.getElementById('tto');
+    document.getElementById('tt-tag').textContent   = t.tag;
+    document.getElementById('tt-title').textContent = t.title;
+    document.getElementById('tt-vis').innerHTML     = t.vis;
+    document.getElementById('tt-body').innerHTML    = t.body;
+    const vhtml = t.vocab.map(v=>`<div class="vi"><span class="s2">${v.s}</span><span class="ar">→</span><span class="f2">${v.f}</span></div>`).join('');
+    document.getElementById('tt-vocab').innerHTML   = vhtml;
+    SFX.tooltip();
+    ov.classList.add('vis');
+    ov._cb = cb;
+  };
+  const closeTT = () => {
+    const ov = document.getElementById('tto');
+    ov.classList.remove('vis');
+    const cb = ov._cb;
+    ov._cb = null;
+    S.paused = false;
+    SFX.uiClick();
+    if(cb) cb();
+  };
+
+  // ── B-CELL LIBRARY ───────────────────────────────────
+  const buildBCLib = () => {
+    const lib = document.getElementById('bclib');
+    lib.innerHTML = '';
+    const allTypes = ['TRI','HEX','DIA','STAR'];
+    allTypes.forEach(id => {
+      const a = AT[id];
+      const card = document.createElement('div');
+      card.className = 'bcc';
+      card.id = 'bcc-'+id;
+      card.innerHTML = `<div class="bcc-svg">${bcSVG(id)}</div>
+        <div class="bcc-name" id="bcn-${id}">${S.formal?a.fo:a.sc}</div>
+        <div class="bcc-tag" id="bct-${id}">${id}</div>`;
+      card.onclick = () => selectBCell(id);
+      lib.appendChild(card);
+    });
+  };
+
+  const bcSVG = (type) => {
+    const a = AT[type];
+    const c = a.col;
+    const shapes = {
+      TRI: `<polygon points="31,10 52,52 10,52" fill="none" stroke="${c}" stroke-width="2.5"/><polygon points="31,17 45,44 17,44" fill="${c}" opacity=".18"/>`,
+      HEX: `<polygon points="31,8 50,19 50,43 31,54 12,43 12,19" fill="none" stroke="${c}" stroke-width="2.5"/><polygon points="31,15 44,22 44,40 31,47 18,40 18,22" fill="${c}" opacity=".18"/>`,
+      DIA: `<polygon points="31,8 54,31 31,54 8,31" fill="none" stroke="${c}" stroke-width="2.5"/><polygon points="31,16 46,31 31,46 16,31" fill="${c}" opacity=".18"/>`,
+      STAR:`<polygon points="31,8 36,24 53,24 39,34 44,51 31,41 18,51 23,34 9,24 26,24" fill="none" stroke="${c}" stroke-width="2.5"/><polygon points="31,13 35,23 46,23 38,30 41,41 31,35 21,41 24,30 16,23 27,23" fill="${c}" opacity=".18"/>`,
+    };
+    const receptor = {
+      TRI: `<polygon points="31,56 37,64 25,64" fill="${c}" opacity=".8"/>`,
+      HEX: `<polygon points="26,57 36,57 39,63 36,69 26,69 23,63" fill="${c}" opacity=".8"/>`,
+      DIA: `<polygon points="31,56 38,63 31,70 24,63" fill="${c}" opacity=".8"/>`,
+      STAR:`<polygon points="31,56 33,60 38,60 34,63 36,68 31,65 26,68 28,63 24,60 29,60" fill="${c}" opacity=".8"/>`,
+    };
+    return `<svg viewBox="0 0 62 72" xmlns="http://www.w3.org/2000/svg">
+      <rect width="62" height="72" rx="4" fill="rgba(0,18,40,.6)"/>
+      ${shapes[type]}
+      ${receptor[type]}
+      <line x1="31" y1="52" x2="31" y2="56" stroke="${c}" stroke-width="1.5" opacity=".6"/>
+      <text x="31" y="8" text-anchor="middle" fill="${c}" font-size="5.5" font-family="monospace" opacity=".7">receptor</text>
+    </svg>`;
+  };
+
+  // ── PATHOGEN SVG ────────────────────────────────────
+  const pathogenSVG = (type, id) => {
+    const a = AT[type];
+    const c = a.col;
+    const spikes = (n,r1,r2) => Array.from({length:n},(_,i)=>{
+      const a1=i*2*Math.PI/n, a2=(i+.5)*2*Math.PI/n;
+      return `L${(r1*Math.cos(a1)).toFixed(1)},${(r1*Math.sin(a1)).toFixed(1)} L${(r2*Math.cos(a2)).toFixed(1)},${(r2*Math.sin(a2)).toFixed(1)}`;
+    }).join(' ');
+    const spike_path = `M${(13*Math.cos(0)).toFixed(1)},${(13*Math.sin(0)).toFixed(1)} `+spikes(8,13,20)+' Z';
+    const antigenShape = {
+      TRI: `<polygon points="0,-9 8,5 -8,5" fill="${c}" opacity=".95"/>`,
+      HEX: `<polygon points="0,-9 7.8,-4.5 7.8,4.5 0,9 -7.8,4.5 -7.8,-4.5" fill="${c}" opacity=".95"/>`,
+      DIA: `<polygon points="0,-10 9,0 0,10 -9,0" fill="${c}" opacity=".95"/>`,
+      STAR:`<polygon points="0,-10 2.5,-3.5 9.5,-3 4,2 6.5,9 0,5 -6.5,9 -4,2 -9.5,-3 -2.5,-3.5" fill="${c}" opacity=".95"/>`,
+    };
+    return `<g id="path-${id}" data-type="${type}" data-id="${id}">
+      <path d="${spike_path}" fill="rgba(255,32,80,.15)" stroke="${c}" stroke-width=".8" opacity=".6"/>
+      <circle r="13" fill="rgba(18,2,8,.88)" stroke="${c}" stroke-width="1.5"/>
+      ${antigenShape[type]}
+      <circle r="13" fill="none" stroke="${c}" stroke-width="1" opacity=".3">
+        <animate attributeName="r" values="13;18;13" dur="2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values=".3;.0;.3" dur="2s" repeatCount="indefinite"/>
+      </circle>
+    </g>`;
+  };
+
+  // ── ANTIBODY SVG ────────────────────────────────────
+  const antibodySVG = (type, id) => {
+    const c = '#00ff99';
+    return `<g id="ab-${id}" data-type="${type}" data-id="${id}" opacity=".9">
+      <line x1="0" y1="10" x2="0" y2="0" stroke="${c}" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="0" y1="0" x2="-8" y2="-9" stroke="${c}" stroke-width="2" stroke-linecap="round"/>
+      <line x1="0" y1="0" x2="8" y2="-9" stroke="${c}" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="-8" cy="-9" r="2.8" fill="${c}"/><circle cx="8" cy="-9" r="2.8" fill="${c}"/>
+    </g>`;
+  };
+
+  // ── WAVE MANAGEMENT ─────────────────────────────────
+  const startWave = () => {
+    if(S.wave >= WAVES.length) { endGame(true); return; }
+    const cfg = WAVES[S.wave];
+    S.waveActive=true; S.wSpawned=0; S.wCleared=0; S.wTotal=cfg.n;
+    S.wGap=cfg.gap; S.wSpawnTimer=0;
+    updateHUD();
+    showWaveAnn(S.wave+1, cfg.types);
+  };
+
+  const showWaveAnn = (wNum, types) => {
+    S.paused = true;
+    SFX.waveStart();
+    SFX.startHeartbeat();
+    const wa = document.getElementById('wann');
+    document.getElementById('wa-h').textContent = `WAVE ${wNum}`;
+    const names = types.map(t=>S.formal?AT[t].pf:AT[t].ps);
+    document.getElementById('wa-p').textContent = [...new Set(names)].join(' + ')+' detected';
+    wa.classList.add('vis');
+    setTimeout(()=>{ wa.classList.remove('vis'); S.paused=false; if(!S.raf) loop(performance.now()); },2200);
+  };
+
+  // ── GAME LOOP ────────────────────────────────────────
+  const loop = (ts) => {
+    if(!S.running){ S.running=true; }
+    const dt = Math.min(ts - (S.last||ts), 50);
+    S.last = ts;
+    if(!S.paused){
+      updateCooldown(dt);
+      spawnLogic(dt);
+      movePathogens(dt);
+      moveAntibodies(dt);
+      updateParticles(dt);
+      checkCollisions();
+      checkWaveEnd();
+    }
+    S.raf = requestAnimationFrame(loop);
+  };
+
+  const updateCooldown = (dt) => {
+    if(S.cdActive){
+      S.cdMs = Math.max(0, S.cdMs - dt);
+      const pct = (S.cdMs/COOLDOWN)*100;
+      const bar = document.getElementById('cd-bar');
+      const lbl = document.getElementById('cd-lbl');
+      if(bar) bar.style.width = pct+'%';
+      if(lbl) lbl.textContent = S.cdMs>0 ? `${(S.cdMs/1000).toFixed(1)}s` : 'Ready';
+      if(S.cdMs===0){ S.cdActive=false; if(bar) bar.style.background='var(--nb)'; SFX.cooldownReady(); }
+    }
+  };
+
+  const spawnLogic = (dt) => {
+    if(!S.waveActive || S.wSpawned >= S.wTotal) return;
+    S.wSpawnTimer -= dt;
+    if(S.wSpawnTimer <= 0){
+      spawnPathogen();
+      S.wSpawned++;
+      S.wSpawnTimer = S.wGap + (Math.random()-0.5)*600;
+    }
+  };
+
+  const spawnPathogen = () => {
+    const cfg = WAVES[S.wave];
+    const type = cfg.types[Math.floor(Math.random()*cfg.types.length)];
+    const id = S.pId++;
+    const y = 40 + Math.random()*290;
+    const spd = cfg.spd * (0.8+Math.random()*0.4);
+    S.pathogens.push({id,type,x:920,y,spd,alive:true});
+    const layer = document.getElementById('path-layer');
+    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.innerHTML = pathogenSVG(type,id);
+    g.setAttribute('transform',`translate(920,${y})`);
+    layer.appendChild(g);
+    // update APC antigen display
+    SFX.pathogenSpawn();
+    const apcT = document.getElementById('apc-ag-t');
+    if(apcT) {
+      const mini = {TRI:'△',HEX:'⬡',DIA:'◇',STAR:'★'};
+      apcT.textContent = mini[type]||'?';
+      apcT.setAttribute('fill', AT[type].col);
+    }
+    // update threat box
+    const tt = document.getElementById('threat-t');
+    if(tt) tt.textContent = S.formal ? AT[type].pf : AT[type].ps;
+    // update status msg
+    const sm = document.getElementById('st-msg');
+    const shapeWord = {TRI:'triangle',HEX:'hexagon',DIA:'diamond',STAR:'star'};
+    if(sm) sm.textContent = `Antigen detected: ${shapeWord[type]} shape on the APC. Select the matching B-cell receptor!`;
+    log(`> Pathogen detected: ${S.formal?AT[type].pf:AT[type].ps} bearing ${shapeWord[type]} antigen.`, 'wrn');
+  };
+
+  const movePathogens = (dt) => {
+    const scale = 900/document.getElementById('gsvg').clientWidth || 1;
+    S.pathogens.forEach(p => {
+      if(!p.alive) return;
+      p.x -= p.spd * (dt/16);
+      const el = document.querySelector(`#path-${p.id}`);
+      if(el && el.parentElement) el.parentElement.setAttribute('transform',`translate(${p.x},${p.y})`);
+      if(p.x < 5){
+        p.alive=false;
+        removePathogenEl(p.id);
+        S.health = Math.max(0, S.health - (10 + S.wave*2));
+        S.wCleared++;
+        SFX.breach();
+        log(`> ${S.formal?AT[p.type].pf:AT[p.type].ps} breached host boundary! Health: ${S.health.toFixed(0)}%`, 'dan');
+        updateHUD();
+        if(S.health<=0){ endGame(false); }
+      }
+    });
+    S.pathogens = S.pathogens.filter(p=>p.alive);
+  };
+
+  const removePathogenEl = (id) => {
+    const el = document.querySelector(`#path-${id}`);
+    if(el && el.parentElement) el.parentElement.remove();
+  };
+
+  const moveAntibodies = (dt) => {
+    S.antibodies.forEach(ab => {
+      if(!ab.alive) return;
+      const dx = ab.tx - ab.x, dy = ab.ty - ab.y;
+      const dist = Math.sqrt(dx*dx+dy*dy);
+      if(dist<4){
+        ab.alive=false;
+        removeAbEl(ab.id);
+        return;
+      }
+      const spd = 5;
+      ab.x += (dx/dist)*spd;
+      ab.y += (dy/dist)*spd;
+      const el = document.querySelector(`#ab-${ab.id}`);
+      if(el && el.parentElement) el.parentElement.setAttribute('transform',`translate(${ab.x},${ab.y})`);
+    });
+    S.antibodies = S.antibodies.filter(a=>a.alive);
+  };
+
+  const removeAbEl = (id) => {
+    const el = document.querySelector(`#ab-${id}`);
+    if(el && el.parentElement) el.parentElement.remove();
+  };
+
+  const checkCollisions = () => {
+    S.antibodies.forEach(ab => {
+      if(!ab.alive) return;
+      S.pathogens.forEach(p => {
+        if(!p.alive) return;
+        const dx = ab.x - p.x, dy = ab.y - p.y;
+        if(Math.sqrt(dx*dx+dy*dy) < 22){
+          if(ab.type === p.type){
+            // MATCH — neutralise
+            p.alive=false; ab.alive=false;
+            S.wCleared++;
+            spawnLysis(p.x,p.y,AT[p.type].col);
+            removePathogenEl(p.id); removeAbEl(ab.id);
+            S.correct++;
+            SFX.neutralise();
+            SFX.lysispop();
+            gainMastery(12);
+            log(`> Antibody-antigen complex formed! ${S.formal?AT[p.type].pf:AT[p.type].ps} neutralised. Opsonisation initiated.`, 'suc');
+            flashCard(ab.type, true);
+          } else {
+            // MISMATCH — antibody dissolves harmlessly
+            ab.alive=false; removeAbEl(ab.id);
+            SFX.mismatch();
+            log(`> Receptor mismatch — antibody did not bind. No neutralisation.`, 'dan');
+          }
+        }
+      });
+    });
+  };
+
+  const checkWaveEnd = () => {
+    if(!S.waveActive) return;
+    if(S.wSpawned >= S.wTotal && S.pathogens.length===0 && S.antibodies.length===0){
+      S.waveActive=false;
+      SFX.waveComplete();
+      SFX.stopHeartbeat();
+      S.wave++;
+      const delay = S.wave>=WAVES.length ? 1000 : 2200;
+      setTimeout(()=>{
+        if(S.health>0) startWave();
+      }, delay);
+    }
+  };
+
+  // ── LYSIS PARTICLES ──────────────────────────────────
+  const spawnLysis = (x,y,col) => {
+    const layer = document.getElementById('ptcl-layer');
+    const id = 'lys'+Date.now()+Math.random().toString(36).slice(2);
+    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.id=id;
+    const frags = Array.from({length:10},()=>{
+      const ang=Math.random()*2*Math.PI, r=3+Math.random()*5;
+      const dx=(Math.cos(ang)*r).toFixed(1), dy=(Math.sin(ang)*r).toFixed(1);
+      return `<circle cx="${dx}" cy="${dy}" r="${1+Math.random()*2.5}" fill="${col}" opacity=".9"/>`;
+    }).join('');
+    g.innerHTML=frags;
+    g.setAttribute('transform',`translate(${x},${y})`);
+    layer.appendChild(g);
+    let op=1, scale=1;
+    const anim=()=>{
+      op-=0.07; scale+=0.12;
+      g.setAttribute('opacity',op.toFixed(2));
+      g.setAttribute('transform',`translate(${x},${y}) scale(${scale.toFixed(2)})`);
+      if(op>0) requestAnimationFrame(anim); else g.remove();
+    };
+    requestAnimationFrame(anim);
+  };
+
+  const updateParticles = ()=>{};
+
+  // ── B-CELL SELECTION ────────────────────────────────
+  const selectBCell = (type) => {
+    SFX.init(); SFX.resume();
+    if(S.cdActive){ SFX.uiClick(); log('> Immune system still processing. Cooldown active.','wrn'); return; }
+    if(S.pathogens.length===0){ SFX.uiClick(); log('> No active pathogens to target.','wrn'); return; }
+    // Fire antibodies at all pathogens of matching type
+    const targets = S.pathogens.filter(p=>p.alive);
+    if(targets.length===0) return;
+    // Biologically: select closest and up to 3
+    const closest = targets.sort((a,b)=>{
+      return (a.x) - (b.x); // leftmost (closest to breach)
+    }).slice(0,3);
+    closest.forEach(p=>{
+      const id = S.abId++;
+      S.antibodies.push({id,type,x:290,y:185,tx:p.x,ty:p.y,alive:true});
+      const layer = document.getElementById('ab-layer');
+      const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+      g.innerHTML = antibodySVG(type,id);
+      g.setAttribute('transform','translate(290,185)');
+      layer.appendChild(g);
+    });
+    // Start cooldown
+    S.cdActive=true; S.cdMs=COOLDOWN;
+    SFX.antibodyLaunch();
+    const bar=document.getElementById('cd-bar');
+    if(bar) bar.style.background='var(--nr)';
+    log(`> Clonal selection initiated: ${S.formal?AT[type].fo:AT[type].sc} B-cell activated. Plasma cells producing antibodies.`, 'hlt');
+    if(!S.raf){ S.raf=requestAnimationFrame(loop); }
+  };
+
+  const flashCard = (type, ok) => {
+    const card = document.getElementById('bcc-'+type);
+    if(!card) return;
+    card.classList.add(ok?'ok':'bad');
+    setTimeout(()=>card.classList.remove(ok?'ok':'bad'),600);
+  };
+
+  // ── MASTERY & HUD ───────────────────────────────────
+  const gainMastery = (pts) => {
+    S.mastery = Math.min(100, S.mastery+pts);
+    if(!S.formal && S.mastery>=VOCAB_TH){
+      S.formal=true;
+      document.getElementById('vbadge').textContent='Formal';
+      document.getElementById('vbadge').className='vbadge fo';
+      updateBCLabels();
+      log('> Vocabulary unlocked: Formal A-Level terminology active.','hlt');
+    }
+    updateHUD();
+  };
+
+  const updateBCLabels = () => {
+    Object.keys(AT).forEach(id=>{
+      const a=AT[id];
+      const n=document.getElementById('bcn-'+id);
+      if(n) n.textContent = S.formal?a.fo:a.sc;
+    });
+    const apcL=document.getElementById('apc-lbl');
+    if(apcL) apcL.textContent = S.formal?'Antigen-Presenting Cell':'Presenter Cell';
+    const thL=document.getElementById('th-lbl');
+    if(thL) thL.textContent = S.formal?'T-Helper (CD4+)':'Helper Cell';
+  };
+
+  const updateHUD = () => {
+    const hp=S.health;
+    const bar=document.getElementById('hp-bar');
+    const val=document.getElementById('hp-val');
+    const msd=document.getElementById('ms-d');
+    const wd=document.getElementById('wave-d');
+    if(bar){ bar.style.width=hp+'%'; bar.style.background=hp>60?'linear-gradient(90deg,#00c85a,#00ff99)':hp>30?'linear-gradient(90deg,#c8a000,#ffd600)':'linear-gradient(90deg,#c80020,#ff2050)'; }
+    if(val){ val.textContent=hp.toFixed(0)+'%'; val.style.color=hp>60?'var(--ng)':hp>30?'var(--ny)':'var(--nr)'; }
+    if(msd) msd.textContent=S.mastery;
+    if(wd) wd.textContent=`${Math.min(S.wave+1,WAVES.length)}/${WAVES.length}`;
+  };
+
+  // ── LOGGING ──────────────────────────────────────────
+  const log = (msg, cls='inf') => {
+    const flog=document.getElementById('flog');
+    if(!flog) return;
+    const el=document.createElement('div');
+    el.className=`le ${cls}`;
+    el.textContent=msg;
+    flog.appendChild(el);
+    flog.scrollTop=flog.scrollHeight;
+    // keep max 80 entries
+    while(flog.children.length>80) flog.removeChild(flog.firstChild);
+  };
+
+  // ── FOCUS MODE ───────────────────────────────────────
+  const toggleFocus = () => {
+    S.focus=!S.focus;
+    document.body.classList.toggle('focus-mode',S.focus);
+    const tog=document.getElementById('ftog');
+    if(tog) tog.classList.toggle('on',S.focus);
+  };
+
+  // ── GAME END ─────────────────────────────────────────
+  const endGame = (won) => {
+    if(S.raf){ cancelAnimationFrame(S.raf); S.raf=null; }
+    S.running=false; S.paused=true;
+    if(!won){
+      const el=document.getElementById('goo');
+      document.getElementById('go-st').innerHTML=`
+        <div class="gst"><span>${S.correct}</span>Neutralised</div>
+        <div class="gst"><span>${S.incorrect}</span>Mismatches</div>
+        <div class="gst"><span>${S.wave}</span>Waves Cleared</div>`;
+      el.classList.add('vis');
+    } else {
+      showQuiz();
+    }
+  };
+
+  const restart = () => {
+    document.getElementById('goo').classList.remove('vis');
+    document.querySelectorAll('#path-layer,#ab-layer,#ptcl-layer').forEach(l=>l&&(l.innerHTML=''));
+    resetS(); buildBCLib(); show('screen-game');
+    updateHUD();
+    startWave();
+  };
+  const skipToQuiz = () => { document.getElementById('goo').classList.remove('vis'); showQuiz(); };
+
+  // ── QUIZ ─────────────────────────────────────────────
+  const showQuiz = () => {
+    resetS();
+    show('screen-quiz');
+    S.quizIdx=0; S.quizScore=0;
+    renderQuizDots(); renderQ();
+  };
+
+  const renderQuizDots = () => {
+    const pg=document.getElementById('qprog');
+    if(!pg) return;
+    pg.innerHTML=QUIZ.map((_,i)=>`<div class="qdot ${i<S.quizIdx?'done':i===S.quizIdx?'cur':''}" id="qd${i}"></div>`).join('');
+  };
+
+  const renderQ = () => {
+    const q=QUIZ[S.quizIdx];
+    document.getElementById('qnum').textContent=`Question ${S.quizIdx+1} of ${QUIZ.length}`;
+    document.getElementById('qq').textContent=q.q;
+    document.getElementById('qopts').innerHTML=q.opts.map((o,i)=>`<button class="qopt" onclick="BS.pickQ(${i})">${o}</button>`).join('');
+    document.getElementById('qfb').className='qfb';
+    document.getElementById('qnext').style.display='none';
+    renderQuizDots();
+  };
+
+  const pickQ = (i) => {
+    const q=QUIZ[S.quizIdx];
+    const opts=document.querySelectorAll('.qopt');
+    opts.forEach(o=>{ o.classList.add('dis'); o.onclick=null; });
+    const fb=document.getElementById('qfb');
+    const nxt=document.getElementById('qnext');
+    if(i===q.ans){
+      opts[i].classList.add('cor');
+      S.quizScore++;
+      fb.className='qfb cor vis';
+      fb.textContent='✓ Correct! '+q.exp;
+    } else {
+      opts[i].classList.add('wrg');
+      opts[q.ans].classList.add('cor');
+      fb.className='qfb wrg vis';
+      fb.textContent='✗ Not quite. '+q.exp;
+    }
+    nxt.style.display='flex';
+    // Update dot
+    const dot=document.getElementById('qd'+S.quizIdx);
+    if(dot){ dot.classList.remove('cur'); dot.classList.add('done'); }
+  };
+
+  const quizNext = () => {
+    S.quizIdx++;
+    if(S.quizIdx>=QUIZ.length){ showCert(); return; }
+    renderQ();
+  };
+
+  // ── CERTIFICATE ──────────────────────────────────────
+  const showCert = () => {
+    show('screen-certificate');
+    const sc=S.quizScore, tot=QUIZ.length;
+    const pct=Math.round((sc/tot)*100);
+    const grade=pct>=90?'A*':pct>=80?'A':pct>=70?'B':pct>=60?'C':pct>=50?'D':'E';
+    document.getElementById('cstats').innerHTML=`
+      <div class="cst"><span class="csv">${sc}/${tot}</span><span class="csl">Quiz Score</span></div>
+      <div class="cst"><span class="csv">${pct}%</span><span class="csl">Accuracy</span></div>
+      <div class="cst"><span class="csv">${grade}</span><span class="csl">Grade</span></div>`;
+    document.getElementById('cgr').textContent=grade;
+    const concepts=[
+      'Non-specific barrier defense: skin integrity and lysozymes as first-line protection',
+      'Phagocytosis: chemotaxis, phagosome formation, and intracellular digestion',
+      'APC formation: MHC Class II antigen presentation bridges innate and adaptive immunity',
+      'T-Helper Cell (CD4+) activation: cytokine release drives adaptive cascade',
+      'Clonal Selection: identifying and expanding the specific complementary B-Cell',
+      'Antibody specificity: variable (Fab) region — lock-and-key antigen-antibody binding',
+      'Opsonisation: antibody flagging of pathogens for phagocytic clearance',
+      'Memory B-Cells: immunological memory — the basis of vaccination',
+    ];
+    document.getElementById('ccon').innerHTML='<h3>✓ Concepts Engaged</h3>'+concepts.map(c=>`<div class="ci">${c}</div>`).join('');
+  };
+
+  // ── PUBLIC API ───────────────────────────────────────
+  return { startIntro, showPhase2, skipToGame, startGame, closeTT, toggleFocus,
+           selectBCell, pickQ, quizNext, restart, skipToQuiz };
+})();
+</script>
+</body>
+</html>
