@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Network diagrams: vulnerable vs secure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF3F6;--surface:#FFFFFF;--ink:#16283D;--muted:#51657A;--wire:#8A9CAE;
+  --vuln:#C0392B;--vuln-soft:#FBEAE8;--sec:#17805C;--sec-soft:#E3F3EC;
+  --zone:#3D6FA8;--zonefill:rgba(61,111,168,.07);--line:#D3DDE6;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0F1A26;--surface:#172636;--ink:#E4EDF5;--muted:#9DB0C3;--wire:#5E7489;
+  --vuln:#F0715F;--vuln-soft:#3A2020;--sec:#4CC896;--sec-soft:#173528;
+  --zone:#7FA9D8;--zonefill:rgba(127,169,216,.08);--line:#2A3D52;}}
+:root[data-theme="dark"]{
+  --bg:#0F1A26;--surface:#172636;--ink:#E4EDF5;--muted:#9DB0C3;--wire:#5E7489;
+  --vuln:#F0715F;--vuln-soft:#3A2020;--sec:#4CC896;--sec-soft:#173528;
+  --zone:#7FA9D8;--zonefill:rgba(127,169,216,.08);--line:#2A3D52;}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.5 "Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:1120px;margin:0 auto;padding:28px 18px 60px}
+h1{font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.15;margin:0 0 8px}
+h2{font-size:1.45rem;margin:48px 0 6px}
+.lede{color:var(--muted);max-width:68ch;margin:0 0 22px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.seg{display:inline-flex;border:2px solid var(--ink);border-radius:999px;overflow:hidden}
+.seg button{font:inherit;font-weight:700;border:0;padding:9px 18px;background:transparent;color:var(--ink);cursor:pointer}
+.seg button[aria-pressed="true"].v{background:var(--vuln);color:#fff}
+.seg button[aria-pressed="true"].s{background:var(--sec);color:#fff}
+.quiz{font:inherit;display:flex;gap:8px;align-items:center;color:var(--muted);cursor:pointer}
+.quiz input{width:20px;height:20px;accent-color:var(--ink)}
+button:focus-visible,.marker:focus-visible,label:focus-within{outline:3px solid var(--zone);outline-offset:2px}
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow-x:auto}
+.stage svg{display:block;min-width:760px;width:100%;height:auto}
+.banner{padding:12px 18px;font-weight:700;border-bottom:1px solid var(--line)}
+.banner.v{color:var(--vuln)}.banner.s{color:var(--sec)}
+svg text{fill:var(--ink);font-family:"Atkinson Hyperlegible",system-ui,sans-serif}
+.lbl{font-size:15px;text-anchor:middle}
+.ico{fill:var(--surface);stroke:var(--ink);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+.ico .f{fill:var(--ink);stroke:none}
+.mask{fill:var(--surface)}
+.wire{stroke:var(--wire);stroke-width:2.5;fill:none}
+.wire.air{stroke-dasharray:3 7;stroke-linecap:round}
+.wire.bad{stroke:var(--vuln);stroke-dasharray:10 7;stroke-width:3}
+.wire.good{stroke:var(--sec);stroke-dasharray:10 7;stroke-width:3}
+.wtxt{font-size:13px;font-weight:700}
+.wtxt.bad{fill:var(--vuln)}.wtxt.good{fill:var(--sec)}
+.zone{fill:var(--zonefill);stroke:var(--zone);stroke-width:1.6;stroke-dasharray:7 5}
+.ztxt{font-size:13px;font-weight:700;fill:var(--zone)}
+.marker{cursor:pointer}
+.marker circle{stroke:var(--surface);stroke-width:3}
+.marker text{fill:#fff;font-size:14px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+.gap{fill:var(--vuln-soft);stroke:var(--vuln);stroke-width:2;stroke-dasharray:5 4}
+.gaptxt{font-size:13px;font-weight:700;fill:var(--vuln);text-anchor:middle}
+.key{list-style:none;padding:0;margin:18px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px}
+.key li{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--c);border-radius:10px;padding:12px 14px;transition:box-shadow .2s}
+.key li.hit{box-shadow:0 0 0 3px var(--c)}
+.key .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--c);color:#fff;font-weight:700;font-size:14px;margin-right:8px;vertical-align:1px}
+.key strong{font-size:1.05rem}
+.key p{margin:6px 0 0}
+.key .t{font-size:.92rem;color:var(--muted)}
+.key .t b{color:var(--c)}
+.quizon .key .body{filter:blur(6px);user-select:none;cursor:pointer}
+.quizon .key li.shown .body{filter:none}
+.comps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:16px}
+.comp{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.comp header{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.comp svg{width:64px;height:52px;flex:none}
+.comp h3{margin:0;font-size:1.1rem}
+.comp ul{margin:0;padding-left:20px}
+.comp li{margin:3px 0}
+.comp .risk{margin:8px 0 0;font-size:.92rem;color:var(--muted)}
+.comp .risk b{color:var(--vuln)}
+footer{margin-top:40px;color:var(--muted);font-size:.9rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<script type='text/javascript' nonce='2YK4WXFsAGkBKCZYYZNYxw==' src='https://bb503c39-07a7-468b-ac09-3acee5cd87f9.frame.claudeusercontent.com/9hVDXHwFUya55DBVuhkwynXm0MSSX2X1e56_apXWGtIBnWbHa5rMJElpq3OHXbHhl-1mT7cg1H7xCfch7k3ATCq9KoIGVK4mO_aJngXgjNRTJlrKtPAAIgY-CBjvlFDL537UlH04QgSgv7UGy7pwwUFtfbOjrUKXTV_uTetHm7bVApCFHAHZzkFs94HfxGMtZQNHPNfafFJ02nyLDH3sj7Gjw13IWKjWyVfoDTDLyqmlLD-B-BgTiAVlOt2jJXjB0VUAQC8eezmLBTn8kuYB6xG9v4LFnTbJXX9ZcItIwt9Fk6BoWhVbb1ctmqlSEWmUXCVmoiORmZef7KdU46vAPrNtgYx4ZtulrgKyoA3Eh9JT4B7DE_dMfsHUr0uJkXStwmLamy8kVZbx3VUm_Sy425WPwqASq83nf76rCJh-RoaxGrZaBejveybNr_KZxPkeyASxGiebY0NqoDXexadduQsrYvV5SXbD2fhAqimKz6n68Fm14HFQNRdcjWiGeqVvvQIhlJFd5MCmQ0pyXep05jz6gN0hQOO54AjxGlFvre0fcTiQcW-wh50tFvGI_BXYqQcQiXJ57sIyNNc384HPxRdkP2xNl0TO8oNwRZ0H6crFuoHXXPk5g86dvEfrQPI1QYjQQ2kJ1oLh5o6GFPT6DEXGHI1LrTGc5tjOD_ZNG-XQsyJXE95paatneRVs9_BE8_Isr7P9vaHfAOjw2fuLFA'></script></head>
+<body>
+<main>
+  <h1>Reading a network diagram for security</h1>
+  <p class="lede">Same small business, drawn twice. Switch between the two versions: the devices sit in the same places, so every difference you see is a security decision. Tap a numbered marker to jump to its explanation.</p>
+
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Choose network">
+      <button class="v" id="bV" aria-pressed="true">Vulnerable network</button>
+      <button class="s" id="bS" aria-pressed="false">Secure network</button>
+    </div>
+    <label class="quiz"><input type="checkbox" id="quiz"> Quiz mode: hide the answers</label>
+  </div>
+
+  <section class="stage" aria-live="polite">
+    <div class="banner v" id="banner"></div>
+    <svg id="dia" viewbox="0 0 1000 640" role="img" aria-labelledby="banner"></svg>
+  </section>
+  <div id="keywrap"><ol class="key" id="key"></ol></div>
+
+  <h2>What each component does</h2>
+  <p class="lede">The devices that keep appearing in exam network diagrams, with what they do and what goes wrong when they are missing or badly set up.</p>
+  <div class="comps" id="comps"></div>
+
+  <footer>Teaching resource for BTEC Unit 11 Cyber Security and Incident Management. Scenario is invented.</footer>
+</main>
+
+<script>
+/* ---------- icons (drawn around 0,0) ---------- */
+const I={
+ cloud:'<path d="M-38,20 C-58,20 -58,-8 -36,-8 C-34,-30 -4,-36 6,-18 C16,-34 44,-28 40,-6 C60,-4 58,20 38,20 Z"/>',
+ router:'<path d="M-32,-8 v20 a32,10 0 0 0 64,0 v-20"/><ellipse cx="0" cy="-8" rx="32" ry="10"/><path d="M-14,-8 h28 M8,-12 l6,4 -6,4 M-8,-12 l-6,4 6,4" fill="none"/>',
+ sw:'<rect x="-36" y="-13" width="72" height="26" rx="3"/><path d="M-20,-4 h38 l-6,-5 M20,5 h-38 l6,5" fill="none"/>',
+ fw:'<rect x="-32" y="-22" width="64" height="44" rx="2"/><path d="M-32,-7 h64 M-32,8 h64 M-12,-22 v15 M14,-22 v15 M0,-7 v15 M-20,8 v14 M20,8 v14" fill="none"/>',
+ server:'<rect x="-19" y="-28" width="38" height="56" rx="3"/><path d="M-12,-15 h24 M-12,-5 h24 M-12,5 h24" fill="none"/><circle class="f" cx="10" cy="18" r="2.6"/>',
+ pc:'<rect x="-26" y="-24" width="52" height="34" rx="2"/><path d="M-8,10 l-4,10 h24 l-4,-10"/>',
+ laptop:'<rect x="-22" y="-20" width="44" height="28" rx="2"/><path d="M-30,8 h60 l-5,7 h-50 z"/>',
+ ap:'<rect x="-24" y="2" width="48" height="15" rx="4"/><path d="M-11,-6 a15,15 0 0 1 22,0 M-20,-14 a27,27 0 0 1 40,0" fill="none"/><circle class="f" cx="0" cy="-1" r="2.6"/>',
+ phone:'<rect x="-12" y="-22" width="24" height="44" rx="5"/><path d="M-4,15 h8" fill="none"/>',
+ cam:'<rect x="-24" y="-13" width="36" height="22" rx="3"/><path d="M12,-6 l13,-7 v20 l-13,-7"/><path d="M-12,9 v11 h-10" fill="none"/>',
+ printer:'<rect x="-16" y="-22" width="32" height="15"/><rect x="-28" y="-8" width="56" height="22" rx="3"/><rect x="-16" y="14" width="32" height="8"/>',
+ ids:'<rect x="-28" y="-20" width="56" height="40" rx="4"/><circle cx="-3" cy="-2" r="10" fill="none"/><path d="M4,5 l10,10" fill="none"/>',
+ nas:'<rect x="-24" y="-24" width="48" height="13" rx="3"/><rect x="-24" y="-7" width="48" height="13" rx="3"/><rect x="-24" y="10" width="48" height="13" rx="3"/><circle class="f" cx="15" cy="-17" r="2"/><circle class="f" cx="15" cy="0" r="2"/><circle class="f" cx="15" cy="17" r="2"/>',
+ vpn:'<rect x="-16" y="-4" width="32" height="24" rx="3"/><path d="M-10,-4 v-7 a10,10 0 0 1 20,0 v7" fill="none"/><circle class="f" cx="0" cy="8" r="3"/>',
+ vlan:'<rect x="-34" y="-22" width="30" height="20" rx="3"/><rect x="4" y="-22" width="30" height="20" rx="3"/><rect x="-15" y="4" width="30" height="20" rx="3"/>'
+};
+const icon=(t,x,y)=>`<g class="ico" transform="translate(${x},${y})">${I[t]}</g>`;
+
+/* ---------- data ---------- */
+const V={
+ title:'Vulnerable network: count the weaknesses before you open the key',
+ cls:'v',col:'var(--vuln)',
+ zones:[],
+ nodes:{
+  inet:['cloud',500,62,'Internet'],
+  remote:['laptop',880,70,'Remote worker'],
+  router:['router',500,175,'ISP router'],
+  sw:['sw',500,320,'Switch'],
+  web:['server',150,320,'Web server'],
+  file:['server',150,500,'File / database','server'],
+  pc1:['pc',350,505,'Staff PC'],
+  pc2:['pc',490,505,'Staff PC'],
+  pr:['printer',630,505,'Printer'],
+  ap:['ap',820,320,'Wireless AP'],
+  guest:['phone',930,440,'Guest phone'],
+  cam:['cam',790,505,'CCTV camera']
+ },
+ links:[['inet','router'],['router','sw'],['sw','web'],['sw','file'],['sw','pc1'],['sw','pc2'],['sw','pr'],['sw','ap'],['sw','cam'],['ap','guest','air']],
+ special:[['bad','M 852,92 C 760,140 640,170 536,175','RDP port open: password only',700,128]],
+ gap:true,
+ marks:[
+  ['router','Router left on factory settings','Default admin password, remote management switched on, firmware never updated.','Unauthorised access, brute force'],
+  [null,'No firewall','Nothing filters traffic between the internet and the LAN, so every open port and device is reachable.','Unauthorised access, DDoS, malware',[566,236]],
+  ['web','Public web server inside the LAN','The website sits on the same network as staff and data. Hack the site and you are already inside.','SQL injection, unauthorised access'],
+  ['sw','Flat network','One switch, one segment, no VLANs. Unused wall ports are live, so anyone can plug in.','Malware spreading, unauthorised access'],
+  ['ap','Weak, shared Wi-Fi','Open or WEP security, one password shared with visitors, guests land on the staff network.','Wireless attacks, man-in-the-middle'],
+  ['remote','Remote access with no VPN','Staff log in over Remote Desktop straight through the router. No encryption tunnel, no second factor.','Brute force, man-in-the-middle'],
+  ['pc1','Unprotected staff PCs','Updates switched off, no anti-malware, USB ports open, everyone has admin rights.','Malware, phishing, USB attacks, zero-day'],
+  ['file','Server with no protection','Kept in an unlocked cupboard, data not encrypted, no backups exist.','Physical theft, ransomware with no recovery'],
+  ['cam','IoT camera on the main network','Default username and password, never updated, sitting alongside staff devices.','Entry point for attackers, botnet for DDoS']
+ ]
+};
+const S={
+ title:'Secure network: every weakness answered with a control',
+ cls:'s',col:'var(--sec)',
+ zones:[[60,250,190,140,'DMZ'],[30,420,250,175,'VLAN 10 Servers'],[300,420,290,175,'VLAN 20 Staff'],[610,420,215,175,'VLAN 30 Guest Wi-Fi'],[845,420,135,175,'VLAN 40 IoT']],
+ nodes:{
+  inet:['cloud',500,62,'Internet'],
+  remote:['laptop',880,70,'Remote worker'],
+  router:['router',500,160,'Router'],
+  fw:['fw',500,255,'Firewall +','VPN gateway'],
+  web:['server',155,315,'Web server'],
+  ids:['ids',820,255,'IDS / IPS'],
+  sw:['sw',500,360,'Managed switch'],
+  file:['server',95,500,'File / database','server'],
+  nas:['nas',215,500,'Backup NAS'],
+  pc1:['pc',360,500,'Staff PC'],
+  pc2:['pc',450,500,'Staff PC'],
+  pr:['printer',535,500,'Printer'],
+  ap:['ap',665,500,'Wireless AP'],
+  guest:['phone',770,500,'Guest phone'],
+  cam:['cam',912,500,'CCTV camera']
+ },
+ links:[['inet','router'],['router','fw'],['fw','web'],['fw','ids'],['fw','sw'],['sw','file'],['sw','nas'],['sw','pc1'],['sw','pc2'],['sw','pr'],['sw','ap'],['sw','cam'],['ap','guest','air']],
+ special:[['good','M 852,92 C 760,150 640,215 540,248','Encrypted VPN tunnel + MFA',712,150]],
+ gap:false,
+ marks:[
+  ['router','Hardened router','Default password changed, remote management off, firmware kept up to date.','Unauthorised access, brute force'],
+  ['fw','Firewall with default-deny rules','Only the ports the business needs are open. Everything else is blocked and logged.','Unauthorised access, DDoS (reduced), malware'],
+  ['web','Web server in a DMZ','A separate zone: the internet can reach the website, but the website cannot reach internal data. Input validation on forms.','SQL injection, unauthorised access'],
+  ['remote','VPN with multi-factor login','Remote traffic travels in an encrypted tunnel. Remote Desktop is closed to the internet.','Man-in-the-middle, brute force'],
+  ['ids','Intrusion detection / prevention','Watches traffic for attack patterns. IDS raises an alert, IPS blocks. Logs support incident response.','Malware, DDoS, unauthorised access'],
+  ['sw','Segmented with VLANs','Servers, staff, guests and IoT are kept apart. Unused ports disabled, port security on.','Malware spreading, unauthorised access'],
+  ['ap','WPA3 Wi-Fi with a guest network','Staff sign in individually. Visitors get internet only, on their own VLAN.','Wireless attacks, man-in-the-middle'],
+  ['pc1','Protected endpoints','Automatic patching, anti-malware, USB control, standard user accounts, phishing training.','Malware, phishing, USB attacks, zero-day'],
+  ['nas','Backups that survive an attack','3-2-1 rule: three copies, two media, one offsite or offline. Restores are tested.','Ransomware, hardware failure'],
+  ['file','Physically secure server','Locked server room with logged access, UPS for power cuts, data encrypted, least-privilege permissions.','Physical theft, insider misuse'],
+  ['cam','IoT isolated','Own VLAN, default login changed, firmware updated.','Entry point for attackers, botnet']
+ ]
+};
+
+/* ---------- render ---------- */
+const svg=document.getElementById('dia'),key=document.getElementById('key'),banner=document.getElementById('banner');
+function render(D){
+ const N=D.nodes;let h='';
+ D.zones.forEach(([x,y,w,hh,t])=>{h+=`<rect class="zone" x="${x}" y="${y}" width="${w}" height="${hh}" rx="10"/><text class="ztxt" x="${x+10}" y="${y+18}">${t}</text>`});
+ D.links.forEach(([a,b,k])=>{const A=N[a],B=N[b];
+  h+= (k==='air')
+   ? `<path class="wire air" d="M${A[1]},${A[2]} L${B[1]},${B[2]}"/>`
+   : `<path class="wire" d="M${A[1]},${A[2]} V${(A[2]+B[2])/2} H${B[1]} V${B[2]}"/>`;});
+ D.special.forEach(([c,d,t,tx,ty])=>{h+=`<path class="wire ${c}" d="${d}"/><text class="wtxt ${c}" x="${tx}" y="${ty}" text-anchor="middle">${t}</text>`});
+ if(D.gap){h+=`<rect class="gap" x="440" y="225" width="120" height="30" rx="6"/><text class="gaptxt" x="500" y="245">No firewall</text>`}
+ for(const k in N){const[t,x,y,l1,l2]=N[k];
+  h+=`<rect class="mask" x="${x-40}" y="${y-32}" width="80" height="64" rx="8"/>`+icon(t,x,y)+
+   `<text class="lbl" x="${x}" y="${y+48}">${l1}</text>`+(l2?`<text class="lbl" x="${x}" y="${y+66}">${l2}</text>`:'');}
+ key.innerHTML='';
+ D.marks.forEach((m,i)=>{const n=i+1;let x,y;
+  if(m[0]){x=N[m[0]][1]+36;y=N[m[0]][2]-34}else{[x,y]=m[4]}
+  h+=`<g class="marker" tabindex="0" role="button" aria-label="Point ${n}: ${m[1]}" data-n="${n}"><circle cx="${x}" cy="${y}" r="14" fill="${D.col}"/><text x="${x}" y="${y}">${n}</text></g>`;
+  const li=document.createElement('li');li.id='k'+n;li.style.setProperty('--c',D.col);
+  li.innerHTML=`<span class="n">${n}</span><strong>${m[1]}</strong><div class="body"><p>${m[2]}</p><p class="t"><b>${D.cls==='v'?'Invites':'Defends against'}:</b> ${m[3]}</p></div>`;
+  li.addEventListener('click',()=>li.classList.toggle('shown'));
+  key.appendChild(li);});
+ svg.innerHTML=h;banner.textContent=D.title;banner.className='banner '+D.cls;
+ svg.querySelectorAll('.marker').forEach(g=>{const go=()=>{const li=document.getElementById('k'+g.dataset.n);
+   key.querySelectorAll('.hit').forEach(e=>e.classList.remove('hit'));li.classList.add('hit','shown');
+   li.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});};
+  g.addEventListener('click',go);g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}});});
+}
+const bV=document.getElementById('bV'),bS=document.getElementById('bS');
+bV.onclick=()=>{bV.setAttribute('aria-pressed','true');bS.setAttribute('aria-pressed','false');render(V)};
+bS.onclick=()=>{bS.setAttribute('aria-pressed','true');bV.setAttribute('aria-pressed','false');render(S)};
+document.getElementById('quiz').onchange=e=>document.getElementById('keywrap').classList.toggle('quizon',e.target.checked);
+render(V);
+
+/* ---------- component reference ---------- */
+const C=[
+ ['cloud','Internet / WAN',['The untrusted network outside the organisation.','Drawn as a cloud; every connection to it is a possible way in.'],'Anything reaching in from here must be filtered.'],
+ ['router','Router',['Connects the internal network (LAN) to other networks, such as the internet.','Forwards packets between networks using IP addresses.','Usually performs NAT, hiding internal addresses.'],'Default passwords, open remote management, old firmware.'],
+ ['fw','Firewall',['Checks traffic coming in and going out against rules (IP, port, protocol, application).','Blocks anything not allowed: "default deny".','Sits between the router and the internal network; can be hardware or software.'],'Missing or "allow all" rules leave every device exposed.'],
+ ['sw','Switch',['Connects devices inside the LAN.','Sends data only to the port of the device it is meant for, using MAC addresses.','Managed switches support VLANs, port security and disabling unused ports.'],'A flat network lets malware spread to every device.'],
+ ['ap','Wireless access point',['Lets wireless devices join the network.','Broadcasts a network name (SSID).','Protected by encryption: WPA2 or, better, WPA3.'],'Weak or shared passwords; guests on the staff network.'],
+ ['server','Server',['Provides shared services: files, databases, email, logins.','Holds the organisation\'s most valuable data.','Needs access control, encryption, backups and a locked room.'],'Theft, ransomware, unauthorised access to data.'],
+ ['server','Web server and DMZ',['Hosts the public website.','A DMZ is a separate zone between the internet and the LAN.','If the web server is hacked, the attacker still cannot reach internal systems.'],'SQL injection gives a route into the main network.'],
+ ['vpn','VPN',['Creates an encrypted tunnel across the internet.','Lets remote workers use the network as if they were in the office.','Should be paired with multi-factor authentication.'],'Without it, remote logins can be intercepted or brute-forced.'],
+ ['ids','IDS / IPS',['Monitors network traffic for signs of attack.','IDS detects and alerts; IPS detects and blocks.','Logs provide evidence for incident response.'],'Without monitoring, attacks go unnoticed for months.'],
+ ['vlan','VLAN',['Splits one physical network into separate logical networks.','Keeps groups apart: servers, staff, guests, IoT.','Limits how far an attacker or malware can move.'],'One compromised device can reach everything.'],
+ ['pc','Client devices',['PCs, laptops and phones where staff do their work.','Where phishing emails, malware and infected USB sticks usually land.','Need patching, anti-malware, USB control and limited user rights.'],'The most common entry point for attacks.'],
+ ['nas','Backup storage',['Keeps copies of data so it can be restored.','3-2-1 rule: 3 copies, 2 types of media, 1 offsite or offline.','Restores must be tested.'],'No backup turns ransomware into permanent data loss.'],
+ ['cam','IoT devices',['CCTV, smart sensors, door entry, card readers.','Often ship with weak default logins and rarely get updates.','Should sit on their own VLAN.'],'Easy entry point; can be recruited into a botnet.']
+];
+document.getElementById('comps').innerHTML=C.map(([t,n,b,r])=>`<article class="comp"><header><svg viewBox="-42 -32 84 64" aria-hidden="true">${icon(t,0,0)}</svg><h3>${n}</h3></header><ul>${b.map(x=>`<li>${x}</li>`).join('')}</ul><p class="risk"><b>Risk:</b> ${r}</p></article>`).join('');
+</script>
+</body>
+</html>
