@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 2 Part A – Home Revision</title>
+<meta name="description" content="Two-week interactive home revision programme for BTEC Unit 2 Part A (Activities 1–5). Self-marking, no Microsoft Access needed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1b2230; --ink-2:#4b5565; --muted:#6b7280; --line:#e3e6ec; --bg:#f3f5f8; --card:#ffffff;
+  --blue:#2e5e8c; --blue-2:#3b82f6; --blue-soft:#eaf1fb; --purple:#6b3fa0; --purple-soft:#f2ecfa;
+  --green:#15803d; --green-soft:#e8f6ec; --red:#b42318; --red-soft:#fdecea; --amber:#a15c07; --amber-soft:#fff6e0;
+  --code-bg:#eef1f6; --radius:12px; --shadow:0 1px 2px rgba(16,24,40,.05),0 2px 8px rgba(16,24,40,.05);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;font-size:16px}
+a{color:var(--blue-2)}
+code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:var(--code-bg);padding:1px 5px;border-radius:4px;white-space:nowrap}
+h1,h2,h3,h4{line-height:1.25;margin:0 0 .5em}
+h1{font-size:1.7rem;letter-spacing:-.02em}
+h2{font-size:1.3rem}
+h3{font-size:1.08rem}
+p{margin:.4em 0 .8em}
+ul,ol{margin:.3em 0 .8em;padding-left:1.3em}
+li{margin:.2em 0}
+
+/* layout */
+.topbar{position:sticky;top:0;z-index:20;background:var(--blue);color:#fff;display:flex;align-items:center;gap:12px;padding:10px 16px;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+.topbar .brand{font-weight:700;font-size:1rem;color:#fff;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .spacer{flex:1}
+.topbar .who{font-size:.85rem;opacity:.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:40vw}
+.menu-btn{background:rgba(255,255,255,.15);border:0;color:#fff;border-radius:8px;padding:6px 10px;font-size:1rem;cursor:pointer}
+.wrap{display:flex;max-width:1180px;margin:0 auto}
+.side{width:270px;flex:0 0 270px;padding:16px 12px 40px;position:sticky;top:52px;align-self:flex-start;max-height:calc(100vh - 52px);overflow:auto}
+.main{flex:1;min-width:0;padding:20px 20px 80px}
+.nav a{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:.92rem}
+.nav a:hover{background:#e8edf4}
+.nav a.active{background:var(--blue-soft);color:var(--blue);font-weight:600}
+.nav .wk{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:14px 10px 4px;font-weight:700}
+.nav .pct{margin-left:auto;font-size:.75rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.nav .dot{width:9px;height:9px;border-radius:50%;background:#cfd6e0;flex:0 0 9px}
+.nav .dot.part{background:#f0b44c}.nav .dot.full{background:var(--green)}
+@media (max-width:880px){
+  .side{position:fixed;left:0;top:52px;bottom:0;background:var(--card);z-index:30;transform:translateX(-105%);transition:transform .2s;box-shadow:4px 0 16px rgba(0,0,0,.15);max-height:none}
+  .side.open{transform:none}
+  .main{padding:16px 16px 80px}
+}
+@media (min-width:881px){.menu-btn{display:none}}
+
+/* cards */
+.card{scroll-margin-top:64px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:0 0 16px;box-shadow:var(--shadow)}
+.card.learn{border-left:5px solid var(--blue)}
+.card.scenario{border-left:5px solid var(--purple);background:#fcfbfe}
+.card.tip{border-left:5px solid var(--amber);background:var(--amber-soft)}
+.kicker{font-size:.75rem;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--blue);margin-bottom:4px}
+.card.scenario .kicker{color:var(--purple)}
+.card.tip .kicker{color:var(--amber)}
+.dayhead{margin-bottom:18px}
+.dayhead .meta{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+.pill{display:inline-block;font-size:.78rem;padding:3px 10px;border-radius:999px;background:var(--blue-soft);color:var(--blue);font-weight:600}
+.pill.p2{background:var(--purple-soft);color:var(--purple)}
+.pill.p3{background:var(--green-soft);color:var(--green)}
+.bar{height:8px;background:#e3e8ef;border-radius:99px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--green);border-radius:99px}
+
+/* tables */
+.tbl-wrap{overflow-x:auto;margin:8px 0 12px;-webkit-overflow-scrolling:touch}
+table.data{border-collapse:collapse;font-size:.88rem;min-width:100%}
+table.data th{background:#404a5c;color:#fff;text-align:left;padding:6px 9px;font-weight:600;white-space:nowrap}
+table.data td{border:1px solid var(--line);padding:5px 9px;vertical-align:top}
+table.data tr:nth-child(even) td{background:#f8f9fb}
+table.data.purple th{background:var(--purple)}
+table.data td.hl{background:#fff3c4 !important;font-weight:600}
+table.data td.hl2{background:#dff3e4 !important;font-weight:600}
+mark.ent{background:#fff1a8;padding:0 3px;border-radius:3px}
+mark.rel{background:#cdeed6;padding:0 3px;border-radius:3px}
+mark.att{background:#dbe6ff;padding:0 3px;border-radius:3px}
+
+/* ERD boxes */
+.erd{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0}
+.ent{border:2px solid var(--blue);border-radius:8px;background:#fff;min-width:140px;font-size:.85rem}
+.ent b{display:block;background:var(--blue);color:#fff;padding:4px 8px;font-size:.85rem}
+.ent span{display:block;padding:2px 8px}
+.ent span.pk{font-weight:700}.ent span.pk::after{content:"  PK";color:var(--blue);font-size:.72rem}
+.ent span.fk::after{content:"  FK";color:var(--purple);font-size:.72rem;font-weight:700}
+.ent span.pkfk{font-weight:700}.ent span.pkfk::after{content:"  PK + FK";color:var(--purple);font-size:.72rem}
+.ent.link{border-color:var(--purple)}.ent.link b{background:var(--purple)}
+.arrow{font-size:.8rem;color:var(--ink-2);text-align:center;font-weight:600;line-height:1.2}
+.arrow .ln{font-size:1.3rem;color:var(--ink)}
+
+/* QBE grid */
+table.qbe{border-collapse:collapse;font-size:.85rem;background:#fff}
+table.qbe th{background:#e9edf3;text-align:right;padding:5px 8px;font-weight:600;color:var(--ink-2);border:1px solid #cdd3dc;white-space:nowrap}
+table.qbe td{border:1px solid #cdd3dc;padding:4px 7px;min-width:130px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.82rem}
+.qbe-title{font-size:.78rem;color:var(--muted);margin:2px 0 4px}
+
+/* questions */
+.q{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin:0 0 14px;box-shadow:var(--shadow)}
+.q .qnum{font-size:.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;display:flex;gap:8px;align-items:center}
+.q .qnum .tag{background:#eef1f6;color:var(--ink-2);padding:1px 8px;border-radius:99px;text-transform:none;letter-spacing:0;font-weight:600}
+.q .qtext{font-weight:500;margin-bottom:10px}
+.q.correct{border-color:#9bd3ad;background:linear-gradient(0deg,#fbfefc,#fff)}
+.q.wrong{border-color:#efb3ac}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:10px;align-items:flex-start;border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;cursor:pointer;background:#fff;text-align:left;font:inherit;color:inherit}
+.opt:hover{border-color:#b9c6d8}
+.opt input{margin-top:4px;flex:0 0 auto}
+.opt.sel{border-color:var(--blue-2);background:var(--blue-soft)}
+.opt.ok{border-color:var(--green);background:var(--green-soft)}
+.opt.bad{border-color:var(--red);background:var(--red-soft)}
+.q input[type=text],.q textarea,.q select,.field input,.field select{font:inherit;border:1.5px solid #cdd3dc;border-radius:8px;padding:7px 10px;background:#fff;color:var(--ink);max-width:100%}
+.q input[type=text]{width:100%}
+.q input.mono,.q textarea.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9rem}
+.q textarea{width:100%;min-height:150px;line-height:1.5}
+.q select{width:100%}
+.q input.ok,.q select.ok{border-color:var(--green);background:var(--green-soft)}
+.q input.bad,.q select.bad{border-color:var(--red);background:var(--red-soft)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+.btn{font:inherit;font-weight:600;border:0;border-radius:9px;padding:9px 16px;cursor:pointer;background:var(--blue-2);color:#fff}
+.btn:hover{background:#2563eb}
+.btn.ghost{background:#eef1f6;color:var(--ink)}
+.btn.ghost:hover{background:#e2e7ef}
+.btn.green{background:var(--green)}
+.btn.small{padding:6px 12px;font-size:.88rem}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.fb{margin-top:12px;border-radius:10px;padding:10px 14px;font-size:.94rem}
+.fb.ok{background:var(--green-soft);border:1px solid #a7d8b6}
+.fb.bad{background:var(--red-soft);border:1px solid #efb3ac}
+.fb.info{background:var(--blue-soft);border:1px solid #c6d7ee}
+.fb b.h{display:block;margin-bottom:3px}
+.hint{font-size:.88rem;color:var(--ink-2);margin-top:6px}
+.grid-q td{vertical-align:middle}
+.grid-q td input,.grid-q td select{width:100%;min-width:110px}
+.ans{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.86rem;color:var(--green);display:block;margin-top:2px}
+.check{display:flex;gap:10px;align-items:flex-start;padding:6px 0}
+.check input{margin-top:5px}
+.model{background:#f7f8fa;border-left:4px solid var(--blue);padding:10px 14px;border-radius:6px;margin-top:10px}
+.score-big{font-size:2.2rem;font-weight:700;letter-spacing:-.02em}
+.daygrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.daycard{display:block;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--ink);box-shadow:var(--shadow)}
+.daycard:hover{border-color:#b9c6d8}
+.daycard .t{font-weight:700;margin:2px 0 4px}
+.daycard .s{font-size:.86rem;color:var(--ink-2);margin-bottom:8px}
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:24px;flex-wrap:wrap}
+.field{margin:8px 0}
+.field label{display:block;font-weight:600;font-size:.9rem;margin-bottom:3px}
+.field input,.field select{width:100%;max-width:420px}
+.notice{font-size:.85rem;color:var(--ink-2)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:700px){.two{grid-template-columns:1fr}}
+.toc{columns:2;font-size:.92rem}
+@media (max-width:700px){.toc{columns:1}}
+.badge-ok{color:var(--green);font-weight:700}
+.badge-no{color:var(--red);font-weight:700}
+.sr{position:absolute;left:-9999px}
+.scrim{display:none}
+@media (max-width:880px){.scrim.show{display:block;position:fixed;inset:52px 0 0 0;background:rgba(0,0,0,.25);z-index:25}}
+@media print{.topbar,.side,.actions,.pager{display:none}.main{padding:0}}
+
+</style>
+</head>
+<body>
+<!-- Netlify Forms: this hidden form lets Netlify detect the "unit2-progress" form at deploy time. -->
+<form name="unit2-progress" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="form-name" value="unit2-progress">
+  <input name="bot-field">
+  <input name="student_name">
+  <input name="class_group">
+  <input name="checkpoint">
+  <input name="overall">
+  <textarea name="summary"></textarea>
+</form>
+
+<div class="topbar">
+  <button class="menu-btn" aria-label="Open menu">☰</button>
+  <a class="brand" href="#home">Unit 2 · Part A Home Revision</a>
+  <span class="spacer"></span>
+  <span class="who" id="who"></span>
+</div>
+<div class="scrim"></div>
+<div class="wrap">
+  <aside class="side" id="side"></aside>
+  <main class="main" id="main"><p>Loading…</p></main>
+</div>
+<noscript><p style="padding:20px">This page needs JavaScript switched on.</p></noscript>
+<script>
+window.COURSE = { days: [], reference: "" };
+/* content helpers */
+function T(head, rows, cls) {
+  var h = '<div class="tbl-wrap"><table class="data ' + (cls || "") + '"><tr>' + head.map(function (x) { return "<th>" + x + "</th>"; }).join("") + "</tr>";
+  rows.forEach(function (r) {
+    h += "<tr>" + r.map(function (c) {
+      if (c && typeof c === "object") return '<td class="' + (c.c || "hl") + '">' + c.v + "</td>";
+      return "<td>" + c + "</td>";
+    }).join("") + "</tr>";
+  });
+  return h + "</table></div>";
+}
+function ENT(name, fields, link) {
+  return '<div class="ent' + (link ? " link" : "") + '"><b>' + name + "</b>" + fields.map(function (f) {
+    var m = f.match(/^(pk|fk|pkfk):(.*)$/);
+    return m ? '<span class="' + m[1] + '">' + m[2] + "</span>" : "<span>" + f + "</span>";
+  }).join("") + "</div>";
+}
+function ARR(label) { return '<div class="arrow"><div>' + (label || "1 → ∞") + '</div><div class="ln">⟶</div></div>'; }
+function QBE(cols, title) {
+  var rows = ["Field", "Table", "Total", "Sort", "Show", "Criteria", "or"];
+  var keys = ["f", "t", "tot", "s", "sh", "c", "or"];
+  var useTotal = cols.some(function (c) { return c.tot; });
+  var h = (title ? '<div class="qbe-title">' + title + "</div>" : "") + '<div class="tbl-wrap"><table class="qbe">';
+  rows.forEach(function (r, i) {
+    if (r === "Total" && !useTotal) return;
+    h += "<tr><th>" + r + ":</th>" + cols.map(function (c) {
+      var v = c[keys[i]];
+      if (r === "Show") v = c.sh === false ? "☐" : "☑";
+      return "<td>" + (v || "") + "</td>";
+    }).join("") + "</tr>";
+  });
+  return h + "</table></div>";
+}
+
+/* Elmwood Cookery School dataset – used on Days 2, 6 and 7 */
+var ELM = {
+  head: ["Chef ID", "Chef Name", "Course ID", "Course Name", "Day", "Course Price", "Learner ID", "Learner Name", "Learner Phone", "Booking Date", "Deposit Paid"],
+  rows: [
+    ["CH1", "Rosa Bianchi", "K01", "Italian Basics", "Monday", "£45.00", "L01", "Omar Haddad", "07700 900111", "03/09/2025", "Yes"],
+    ["CH1", "Rosa Bianchi", "K01", "Italian Basics", "Monday", "£45.00", "L02", "Grace Kim", "07700 900222", "05/09/2025", "No"],
+    ["CH1", "Rosa Bianchi", "K02", "Fresh Pasta", "Wednesday", "£50.00", "L01", "Omar Haddad", "07700 900111", "10/09/2025", "Yes"],
+    ["CH2", "Dev Sharma", "K03", "Curry Masterclass", "Tuesday", "£55.00", "L03", "Ella Brooks", "07700 900333", "12/09/2025", "Yes"],
+    ["CH2", "Dev Sharma", "K03", "Curry Masterclass", "Tuesday", "£55.00", "L02", "Grace Kim", "07700 900222", "15/09/2025", "Yes"],
+    ["CH2", "Dev Sharma", "K03", "Curry Masterclass", "Tuesday", "£55.00", "L04", "Finn O'Neill", "07700 900444", "01/10/2025", "No"],
+    ["CH3", "Mei Tanaka", "K04", "Sushi Skills", "Thursday", "£60.00", "L05", "Zara Ahmed", "07700 900555", "02/10/2025", "Yes"],
+    ["CH3", "Mei Tanaka", "K04", "Sushi Skills", "Thursday", "£60.00", "L01", "Omar Haddad", "07700 900111", "06/10/2025", "No"],
+    ["CH3", "Mei Tanaka", "K05", "Baking Bread", "Saturday", "£40.00", "L04", "Finn O'Neill", "07700 900444", "14/10/2025", "Yes"],
+    ["CH1", "Rosa Bianchi", "K02", "Fresh Pasta", "Wednesday", "£50.00", "L05", "Zara Ahmed", "07700 900555", "20/10/2025", "No"]
+  ]
+};
+ELM.table = function () { return T(ELM.head, ELM.rows); };
+ELM.tables = function () {
+  return '<div class="erd">' +
+    ENT("tblChef", ["pk:Chef ID", "Chef Name"]) + ARR("1 → ∞") +
+    ENT("tblCourse", ["pk:Course ID", "Course Name", "Day", "Course Price", "fk:Chef ID"]) + ARR("1 → ∞") +
+    ENT("tblBooking", ["pkfk:Learner ID", "pkfk:Course ID", "Booking Date", "Deposit Paid"], true) + '<div class="arrow"><div>∞ ← 1</div><div class="ln">⟵</div></div>' +
+    ENT("tblLearner", ["pk:Learner ID", "Learner Name", "Learner Phone"]) + "</div>";
+};
+
+COURSE.days.push({
+  id: "d1", n: 1, week: 1, short: "Reading the scenario",
+  title: "Reading the scenario: entities and relationships",
+  activity: "Activity 1", time: "60–75 mins",
+  intro: "Activity 1 always starts with a short scenario and a flat file (Figure 1). Before you can design any tables, you have to read the wording and work out <b>what things</b> the business keeps records about, and <b>how they link</b>. That's today.",
+  blocks: [
+    { t: "learn", title: "What Activity 1 actually asks you to do", html:
+      "<p>You get a short story about a business and <b>Figure 1</b> — one big table with everything crammed into it (a <b>flat file</b>). Your job is to split it into a set of linked tables: give each table a name, its fields, its <b>primary key</b>, any <b>foreign keys</b>, and the <b>relationships</b> between the tables.</p>" +
+      "<p>The pattern you'll see again and again in the real papers:</p><ul>" +
+      "<li>Figure 1 usually gives you <b>two or three ID columns</b> (e.g. Coach ID, Session ID, Member ID). Each ID is a big clue: <b>every ID becomes the primary key of its own table.</b></li>" +
+      "<li>Then there is <b>one more table you have to think of yourself</b> — the one that links two of the others. It isn't given its own ID. Spotting it is where most of the marks are won or lost.</li></ul>" },
+
+    { t: "learn", title: "Entities and attributes", html:
+      "<p>An <b>entity</b> is a <i>thing the business keeps records about</i> — usually a person, an object or an event. Each entity becomes a <b>table</b>.</p>" +
+      "<p>An <b>attribute</b> is a <i>fact about</i> an entity. Each attribute becomes a <b>field</b> (a column).</p>" +
+      "<p><b>Quick test:</b> does this word have its own details that you'd want to store? If yes → entity. If it <i>is</i> a detail → attribute.</p>" +
+      "<p>Example: <i>\"The gym records each <mark class='ent'>member</mark>'s <mark class='att'>name</mark> and <mark class='att'>phone number</mark>, and the <mark class='ent'>classes</mark> they attend, including the <mark class='att'>day</mark> and <mark class='att'>start time</mark>.\"</i></p>" +
+      "<p>Entities (yellow): Member, Class. Attributes (blue): name, phone number, day, start time.</p>" },
+
+    { t: "learn", title: "The three ways two entities can link", html:
+      "<p><b>1. One-to-many (1:M)</b> — the most common. <i>\"A coach can run <mark class='rel'>several</mark> classes, but <mark class='rel'>each class has one</mark> coach.\"</i> Look at the data: the coach repeats, the class doesn't.</p>" +
+      T(["Class ID", "Class Name", "Coach ID", "Coach Name"], [["C1", "Spin", { v: "K1" }, { v: "Jo Adams" }], ["C2", "Yoga", { v: "K1" }, { v: "Jo Adams" }], ["C3", "Boxfit", "K2", "Raj Patel"]]) +
+      "<p>K1 appears twice (one coach → many classes). Each class has only one coach. <b>The foreign key goes in the 'many' table</b>: Coach ID goes into the Class table.</p>" +
+      "<p><b>2. Many-to-many (M:M)</b> — <i>\"A member can attend <mark class='rel'>more than one</mark> class, and a class has <mark class='rel'>several</mark> members.\"</i> Both sides repeat:</p>" +
+      T(["Member ID", "Member Name", "Class ID", "Class Name"], [[{ v: "M1" }, { v: "Amy" }, "C1", "Spin"], [{ v: "M1" }, { v: "Amy" }, { v: "C2", c: "hl2" }, { v: "Yoga", c: "hl2" }], ["M2", "Ben", { v: "C2", c: "hl2" }, { v: "Yoga", c: "hl2" }]]) +
+      "<p>M1 has two classes; C2 has two members. Access <b>cannot</b> store this directly — you must add a <b>link table</b> (also called a junction table) in the middle, which turns one M:M into <b>two 1:M</b> relationships.</p>" +
+      "<p><b>3. One-to-one (1:1)</b> — rare in this exam. One record matches exactly one record on the other side (e.g. a country and its capital city).</p>" },
+
+    { t: "learn", title: "The two-question test (use it every time)", html:
+      "<p>For any two entities A and B, ask both questions:</p>" +
+      T(["Can one A have many B?", "Can one B have many A?", "Relationship", "What you do"], [
+        ["Yes", "No", "One-to-many (A is the 'one')", "Put A's ID into B's table as a foreign key"],
+        ["No", "Yes", "One-to-many (B is the 'one')", "Put B's ID into A's table as a foreign key"],
+        ["Yes", "Yes", "<b>Many-to-many</b>", "Create a <b>link table</b> holding both IDs"],
+        ["No", "No", "One-to-one", "Rare – usually merge or link by the same key"]]) +
+      "<p><b>Words that mean 'many':</b> more than one, several, a number of, any number of, multiple, can … many.<br><b>Words that mean 'one':</b> only one, exactly one, a single, each … is run by one.</p>" },
+
+    { t: "learn", title: "Where does a field go? Ask: \"whose fact is it?\"", html:
+      "<p>Some facts belong to neither side of a many-to-many on its own — they belong to the <b>pairing</b>. Look at this data:</p>" +
+      T(["Member", "Class", "Grade awarded"], [[{ v: "Amy" }, "Spin", { v: "Merit", c: "hl2" }], [{ v: "Amy" }, "Yoga", { v: "Pass", c: "hl2" }]]) +
+      "<p>Same member, <b>different grade</b>. So 'Grade awarded' is not a fact about Amy (she'd have one grade) and not a fact about the class (everyone would get the same). It's a fact about <b>Amy-in-that-class</b> → it goes in the <b>link table</b>.</p>" +
+      "<p>Compare Amy's phone number: it's the same on every row → it's a fact about Amy → Member table.</p>" },
+
+    { t: "scenario", title: "Worked example – Westbrook Music School", html:
+      "<p><i>\"Westbrook Music School runs instrument <mark class='ent'>courses</mark>. A <mark class='ent'>tutor</mark> can teach <mark class='rel'>more than one course</mark>, but <mark class='rel'>every course is taught by one tutor only</mark>. <mark class='ent'>Students</mark> can join <mark class='rel'>more than one course</mark>, and <mark class='rel'>each course has several students</mark>. When a student joins a course, the school records <mark class='att'>whether they have paid the fee for that course</mark>.\"</i></p>" +
+      "<p><b>Entities:</b> Tutor, Course, Student.</p>" +
+      "<p><b>Tutor ↔ Course:</b> one tutor → many courses; one course → one tutor. <b>One-to-many.</b> Tutor ID goes into tblCourse as a foreign key.</p>" +
+      "<p><b>Student ↔ Course:</b> one student → many courses; one course → many students. <b>Many-to-many</b> → link table <b>tblEnrolment</b>.</p>" +
+      "<p><b>'Paid the fee for that course':</b> the words <i>for that course</i> tell you it's about the pairing → tblEnrolment.</p>" +
+      '<div class="erd">' + ENT("tblTutor", ["pk:Tutor ID", "Tutor Name"]) + ARR() + ENT("tblCourse", ["pk:Course ID", "Instrument", "fk:Tutor ID"]) + ARR() +
+      ENT("tblEnrolment", ["pkfk:Student ID", "pkfk:Course ID", "Fee Paid"], true) + '<div class="arrow"><div>∞ ← 1</div><div class="ln">⟵</div></div>' + ENT("tblStudent", ["pk:Student ID", "Student Name"]) + "</div>" +
+      "<p class='notice'>Notice: four tables. Three were obvious from the IDs. The fourth (tblEnrolment) had to be worked out — and it has no ID of its own.</p>" },
+
+    { t: "h", text: "Practise", sub: "Answer, press Check, and read the explanation every time — even when you're right." },
+
+    { t: "mcq", q: "Which of these is an <b>entity</b> (it would become a table)?", opts: ["Surname", "Customer", "Date of birth", "Price"], a: 1,
+      why: "A customer is a thing the business keeps records about — it has its own details (surname, date of birth…). The other three are details <i>about</i> something, so they're attributes (fields)." },
+
+    { t: "multi", q: "<i>\"A garage records each mechanic's name and phone number, and each repair job the mechanic carries out, including the date and the cost.\"</i><br>Which of these are <b>entities</b>?", opts: ["Mechanic", "Repair job", "Phone number", "Cost", "Date"], a: [0, 1],
+      why: "Mechanic and Repair job each have their own details. Phone number belongs to the mechanic; date and cost belong to the repair job." },
+
+    { t: "match", q: "A hotel booking system. Is each one an <b>entity</b> (table) or an <b>attribute</b> (field)?", lh: "Word", rh: "Entity or attribute?",
+      items: [["Guest", "Entity"], ["Room", "Entity"], ["Room price", "Attribute"], ["Guest email", "Attribute"], ["Booking", "Entity"], ["Check-in date", "Attribute"]],
+      choices: ["Entity", "Attribute"],
+      why: "Guest, Room and Booking all have details of their own. Room price is a fact about a room, guest email about a guest, and check-in date about a booking. Events like a <i>booking</i> are entities too — they're often the link table." },
+
+    { t: "mcq", q: "<i>\"Each driving instructor teaches many learners, but each learner has only one instructor.\"</i> What is the relationship between Instructor and Learner?", opts: ["One-to-one", "One-to-many (one instructor, many learners)", "One-to-many (one learner, many instructors)", "Many-to-many"], a: 1,
+      why: "Two-question test: one instructor → many learners (yes); one learner → many instructors (no — 'only one'). So 1:M with Instructor on the 'one' side." },
+
+    { t: "mcq", q: "<i>\"A student can borrow many library books over the year, and the same book can be borrowed by many different students.\"</i> Relationship between Student and Book?", opts: ["One-to-one", "One-to-many", "Many-to-many", "There is no relationship"], a: 2,
+      why: "Both questions answer 'yes' → many-to-many. You'd need a link table (e.g. tblLoan) holding Student ID and Book ID." },
+
+    { t: "mcq", q: "In a one-to-many relationship between <b>tblCustomer</b> (one) and <b>tblOrder</b> (many), where does the foreign key go?", opts: ["Order ID goes into tblCustomer", "Customer ID goes into tblOrder", "Both tables get each other's ID", "A link table is needed"], a: 1,
+      why: "The foreign key always sits in the <b>many</b> table. Each order stores which customer it belongs to. (If tblCustomer stored Order IDs, a customer with 5 orders would need 5 fields — that breaks the rules.)" },
+
+    { t: "match", q: "Use the two-question test. What is each relationship?", lh: "Pair (and the facts)", rh: "Relationship",
+      items: [
+        ["Team ↔ Player<br><small>A team has many players; a player plays for one team.</small>", "One-to-many"],
+        ["Course ↔ Student<br><small>A student takes several courses; a course has many students.</small>", "Many-to-many"],
+        ["Country ↔ Capital city<br><small>Each country has one capital; each capital belongs to one country.</small>", "One-to-one"],
+        ["Author ↔ Book<br><small>An author writes many books; some books have several authors.</small>", "Many-to-many"],
+        ["Vet ↔ Appointment<br><small>A vet has many appointments; each appointment is with one vet.</small>", "One-to-many"]],
+      choices: ["One-to-one", "One-to-many", "Many-to-many"],
+      why: "If both sides can have 'many', it's many-to-many — even if only <i>some</i> books have several authors. One exception is enough." },
+
+    { t: "multi", q: "Which phrases in a scenario tell you that a side is <b>many</b>?", opts: ["\"more than one\"", "\"several\"", "\"exactly one\"", "\"a number of\"", "\"only one\"", "\"any number of\""], a: [0, 1, 3, 5],
+      why: "'Exactly one' and 'only one' mean the <b>one</b> side. Underline these words when you read the real scenario." },
+
+    { t: "scenario", title: "Look at the data – Clayworks Pottery Club", html:
+      "<p>Here is part of a flat file. Use the data itself (not just the wording) to spot relationships.</p>" +
+      T(["Member ID", "Member Name", "Class ID", "Class Name", "Teacher ID", "Teacher Name"], [
+        ["M01", "Ava Stone", "C1", "Wheel Throwing", "T1", "Mr Okafor"],
+        ["M02", "Ben Hale", "C1", "Wheel Throwing", "T1", "Mr Okafor"],
+        ["M01", "Ava Stone", "C2", "Glazing", "T1", "Mr Okafor"],
+        ["M03", "Cara Wu", "C2", "Glazing", "T1", "Mr Okafor"],
+        ["M02", "Ben Hale", "C3", "Hand Building", "T2", "Ms Li"]]) },
+
+    { t: "mcq", q: "Look at Member ID and Class ID in the Clayworks data. What does the data prove?", opts: ["Each member only does one class", "Each class only has one member", "A member can do more than one class AND a class can have more than one member", "Members and classes are not linked"], a: 2,
+      why: "M01 appears with C1 and C2 (one member → many classes). C1 appears with M01 and M02 (one class → many members). Both sides repeat → many-to-many." },
+
+    { t: "mcq", q: "Now look at Class ID and Teacher ID. What's the relationship between Teacher and Class?", opts: ["Many-to-many", "One-to-many: one teacher, many classes", "One-to-many: one class, many teachers", "One-to-one"], a: 1,
+      why: "T1 teaches C1 and C2, but every class only ever has one teacher (C1 is always T1). So Teacher (1) → Class (many). Teacher ID becomes a foreign key in tblClass." },
+
+    { t: "mcq", q: "How many tables should the Clayworks design have?", opts: ["3 – Member, Class, Teacher", "4 – Member, Class, Teacher and a link table between Member and Class", "4 – Member, Class, Teacher and a link table between Teacher and Class", "2 – Member and Class"], a: 1,
+      why: "Three IDs → three tables. Member↔Class is many-to-many, so you need a fourth, link table (e.g. tblMembership with Member ID + Class ID). Teacher↔Class is only 1:M, so no link table is needed there." },
+
+    { t: "match", q: "Clayworks: which table does each field belong in?", lh: "Field", rh: "Table",
+      items: [["Member phone number", "tblMember"], ["Class day", "tblClass"], ["Date the member joined <i>that</i> class", "tblMembership"], ["Teacher email", "tblTeacher"], ["Kiln fee paid for <i>that</i> class (Yes/No)", "tblMembership"], ["Class name", "tblClass"], ["Member date of birth", "tblMember"]],
+      choices: ["tblMember", "tblClass", "tblTeacher", "tblMembership"],
+      why: "Ask 'whose fact is it?'. Anything described as 'for that class' / 'each time they join' depends on the <b>pair</b> (member + class), so it goes in the link table." },
+
+    { t: "mcq", q: "A school records students and the exams they sit. A student sits many exams; each exam is sat by many students. Where should <b>Grade Achieved</b> be stored?", opts: ["tblStudent – it's about the student", "tblExam – it's about the exam", "The link table (e.g. tblResult) – it's about one student in one exam", "In both tblStudent and tblExam"], a: 2,
+      why: "One student gets a different grade in each exam, and one exam gives different grades to different students. So the grade belongs to the pairing → link table." },
+
+    { t: "text", mode: "word", q: "<i>\"A customer can place more than one order. Each order is placed by one customer.\"</i><br>Which entity is on the <b>many</b> side? (one word)", accept: ["order", "orders"], ph: "e.g. Customer",
+      why: "One customer → many orders. So Order is the 'many' side, and tblOrder holds Customer ID as a foreign key." },
+
+    { t: "scenario", title: "Mini scenario – Sunnyside Dog Walkers", html:
+      "<p><i>\"Sunnyside employs several walkers. Each walker is assigned to a number of dogs, and a dog can be assigned to more than one walker. Every dog belongs to one owner, although an owner may have more than one dog. For each assignment, the company records the weekday the walk happens.\"</i></p>" },
+
+    { t: "match", q: "Sunnyside: what are the relationships?", lh: "Pair", rh: "Relationship",
+      items: [["Owner ↔ Dog", "One-to-many"], ["Walker ↔ Dog", "Many-to-many"], ["Walker ↔ Owner", "No direct relationship"]],
+      choices: ["One-to-many", "Many-to-many", "One-to-one", "No direct relationship"],
+      why: "Owner → many dogs; each dog has one owner (1:M). Walkers ↔ dogs: both sides 'more than one' (M:M). Walkers and owners aren't linked directly in the wording — they only connect through dogs." },
+
+    { t: "mcq", q: "Sunnyside: which table should hold <b>Walk Weekday</b>?", opts: ["tblWalker", "tblDog", "tblOwner", "The link table between Walker and Dog (e.g. tblAssignment)"], a: 3,
+      why: "\"For each assignment\" = for each walker–dog pair. Different pairs walk on different days, so it's a fact about the pairing." },
+
+    { t: "mcq", q: "Sunnyside: Figure 1 gives Owner ID, Dog ID and Walker ID. Which table will <b>not</b> have an ID column of its own in Figure 1?", opts: ["tblOwner", "tblDog", "tblWalker", "tblAssignment (the link table)"], a: 3,
+      why: "This is the classic exam pattern: three IDs given, and the fourth (link) table has to be worked out. Its primary key is made from the two IDs it links: Walker ID + Dog ID." },
+
+    { t: "tip", title: "What to take into tomorrow", html: "<ul><li>Every ID in Figure 1 → its own table.</li><li>Two-question test on every pair. Yes/Yes → link table.</li><li>'For that…', 'each time…', 'for each assignment/booking/enrolment' → field goes in the link table.</li><li>Foreign keys live on the <b>many</b> side.</li></ul>" }
+  ]
+});
+
+COURSE.days.push({
+  id: "d2", n: 2, week: 1, short: "Flat file → tables & keys",
+  title: "From flat file to tables: keys and the 'fourth table'",
+  activity: "Activity 1", time: "75–90 mins",
+  intro: "Yesterday you learned to read the relationships. Today you turn a real flat file into a finished table design — with primary keys, foreign keys and the composite key on the link table — using a six-step method you can repeat in the exam.",
+  blocks: [
+    { t: "learn", title: "Why the flat file is a problem", html:
+      "<p>A flat file repeats the same facts over and over. That causes three classic problems (called <b>anomalies</b>):</p><ul>" +
+      "<li><b>Update anomaly</b> – a learner's phone number is stored on three rows. Change it on one and forget the others → the data now disagrees with itself.</li>" +
+      "<li><b>Insertion anomaly</b> – you can't add a new course until somebody books it, because every row needs a learner.</li>" +
+      "<li><b>Deletion anomaly</b> – delete the only booking for a course and you lose the course details (and maybe the chef) too.</li></ul>" +
+      "<p>Splitting into linked tables means <b>each fact is stored once</b>. That's the whole point of Activity 1 — and it's the first thing to say in your Activity 5 evaluation.</p>" },
+
+    { t: "learn", title: "The six-step method", html:
+      "<ol>" +
+      "<li><b>Circle every ID column.</b> Each one is the primary key of its own table.</li>" +
+      "<li><b>For every other field ask \"what is this a fact about?\"</b> and move it next to that ID. Check the data: if the value never changes for the same ID, it belongs to that ID.</li>" +
+      "<li><b>Two-question test</b> on each pair of entities.</li>" +
+      "<li><b>One-to-many:</b> copy the 'one' table's primary key into the 'many' table as a <b>foreign key</b>.</li>" +
+      "<li><b>Many-to-many:</b> create a <b>link table</b>. It holds both IDs. Together they form a <b>composite primary key</b>, and each one is also a foreign key.</li>" +
+      "<li><b>Facts about the pairing</b> (e.g. 'for that booking') go in the link table.</li></ol>" },
+
+    { t: "learn", title: "Keys – the words you must use correctly", html:
+      T(["Term", "Meaning", "Example"], [
+        ["<b>Primary key (PK)</b>", "Uniquely identifies each record. No duplicates, never blank.", "Learner ID in tblLearner"],
+        ["<b>Foreign key (FK)</b>", "A field that holds another table's primary key, to link the two.", "Chef ID in tblCourse"],
+        ["<b>Composite key</b>", "A primary key made of two (or more) fields together.", "Learner ID + Course ID in tblBooking"],
+        ["<b>Link / junction table</b>", "The table that breaks a many-to-many into two one-to-manys.", "tblBooking"]]) +
+      "<p><b>Why a composite key and not a new AutoNumber 'Booking ID'?</b> The composite key makes Access refuse a second record with the same Learner ID + Course ID — so the same learner can't be booked onto the same course twice. With an AutoNumber key, every new row gets a fresh number, so a duplicate booking would be <i>accepted</i>. Examiners reward the composite key on the link table when the brief doesn't give the table an ID.</p>" },
+
+    { t: "tip", title: "When would a link table have its own ID?", html:
+      "<p>Only when the <b>same pair can happen more than once</b> – e.g. the same pet sees the same vet on several different dates. Then Pet ID + Vet ID would repeat, so it can't be the primary key. In that case the brief normally gives you an ID (Appointment ID). If the brief gives you no ID for the link table, use the composite key.</p>" },
+
+    { t: "scenario", title: "Scenario – Elmwood Cookery School (you'll use this again on Days 6 and 7)", html:
+      "<p><i>\"Elmwood Cookery School runs cookery courses. Each course is run by one chef, although a chef can run more than one course. Learners can book onto more than one course, and each course has several learners. When a learner books a course, the school records the date of the booking and whether a deposit has been paid for that booking.\"</i></p>" +
+      "<p><b>Figure 1 – the flat file</b></p>" + ELM.table() },
+
+    { t: "h", text: "Practise – Elmwood Cookery School" },
+
+    { t: "multi", q: "Step 1: which columns in Figure 1 are <b>ID columns</b> that will each become the primary key of their own table?", opts: ["Chef ID", "Course ID", "Learner ID", "Learner Phone", "Booking Date"], a: [0, 1, 2],
+      why: "Three IDs → three tables: tblChef, tblCourse, tblLearner. The fourth table (for bookings) has no ID in Figure 1 — you'll build its key in a moment." },
+
+    { t: "match", q: "Step 2: for each field, which table is it a <b>fact about</b>?", lh: "Field", rh: "Home table",
+      items: [["Chef Name", "tblChef"], ["Course Name", "tblCourse"], ["Day", "tblCourse"], ["Course Price", "tblCourse"], ["Learner Name", "tblLearner"], ["Learner Phone", "tblLearner"], ["Booking Date", "tblBooking"], ["Deposit Paid", "tblBooking"]],
+      choices: ["tblChef", "tblCourse", "tblLearner", "tblBooking"],
+      why: "Check with the data: K01 is <i>always</i> Monday and £45 → Day and Course Price belong to the course. Omar's phone is the same on every row → tblLearner. But Omar's Deposit Paid is Yes for K01, Yes for K02 and No for K04 — it changes per booking → tblBooking." },
+
+    { t: "mcq", q: "Why does <b>Learner Phone</b> NOT go in the booking table?", opts: ["Because phone numbers are text", "Because it's the same for a learner whatever course they book – it's a fact about the learner", "Because it isn't an ID", "Because the exam says so"], a: 1,
+      why: "Omar Haddad's phone (07700 900111) appears on three rows and never changes. Storing it in tblBooking would repeat it for every booking — exactly the redundancy we're trying to remove." },
+
+    { t: "match", q: "Steps 3 and 4: what are the relationships?", lh: "Pair", rh: "Relationship",
+      items: [["Chef ↔ Course", "One-to-many"], ["Learner ↔ Course", "Many-to-many"], ["Chef ↔ Learner", "No direct relationship"]],
+      choices: ["One-to-one", "One-to-many", "Many-to-many", "No direct relationship"],
+      why: "CH1 runs K01 and K02, but each course has one chef → 1:M. L01 books K01, K02, K04, and K01 has L01 and L02 → M:M. Chefs and learners only connect through courses." },
+
+    { t: "mcq", q: "What should the primary key of <b>tblBooking</b> be?", opts: ["Learner ID", "Course ID", "Learner ID + Course ID together (composite key)", "A new AutoNumber field called Booking ID"], a: 2,
+      why: "Neither ID is unique on its own (L01 has three bookings; K01 has two). But each <b>pair</b> appears only once – so the pair is the primary key." },
+
+    { t: "mcq", q: "A student gives tblBooking an AutoNumber <b>Booking ID</b> as its primary key and stores Learner ID and Course ID as ordinary fields. What's the main weakness?", opts: ["It won't let you create relationships", "Access would accept the same learner being booked onto the same course twice", "AutoNumber can't be a primary key", "Nothing – it's exactly the same"], a: 1,
+      why: "The design still works, but every row gets a new Booking ID, so nothing stops a duplicate Learner ID + Course ID pair. The composite key stops that automatically — that's the reason to give in the exam." },
+
+    { t: "match", q: "What role does each field play?", lh: "Field (in which table)", rh: "Key role",
+      items: [["Chef ID in tblChef", "Primary key"], ["Chef ID in tblCourse", "Foreign key"], ["Course ID in tblCourse", "Primary key"], ["Course ID in tblBooking", "Part of composite primary key + foreign key"], ["Learner ID in tblBooking", "Part of composite primary key + foreign key"], ["Course Name in tblCourse", "Not a key"]],
+      choices: ["Primary key", "Foreign key", "Part of composite primary key + foreign key", "Not a key"],
+      why: "In a link table, each of the two IDs is doing two jobs at once: half of the primary key, and a foreign key pointing back to its own table." },
+
+    { t: "grid", q: "How many records (rows) will each table have once the data from Figure 1 is split up? Count the <b>unique</b> values.", head: ["Table", "Number of records"],
+      rows: [["tblChef", { accept: ["3"], mode: "num" }], ["tblCourse", { accept: ["5"], mode: "num" }], ["tblLearner", { accept: ["5"], mode: "num" }], ["tblBooking", { accept: ["10"], mode: "num" }]],
+      why: "3 chefs (CH1–CH3), 5 courses (K01–K05), 5 learners (L01–L05). tblBooking keeps one row per booking, so it has all 10. This is the proof that splitting removes repetition: Omar's details are now stored once, not three times." },
+
+    { t: "multi", q: "Which problems would happen if Elmwood kept using the flat file?", opts: ["If Omar changes his phone number it must be changed on three rows, or the data disagrees (update anomaly)", "A brand-new course can't be added until a learner books it (insertion anomaly)", "If the only Baking Bread booking is deleted, the course details are lost too (deletion anomaly)", "Access can't open flat files", "Searches become impossible"], a: [0, 1, 2],
+      why: "These three anomalies are the classic reasons for normalising. Access <i>can</i> open and search a flat file – it's the repetition that causes the problems." },
+
+    { t: "grid", q: "Complete the design. Choose the primary key and foreign key(s) for each table.", head: ["Table", "Primary key", "Foreign key(s)"],
+      rows: [
+        ["tblChef", { sel: ["Chef ID", "Course ID", "Learner ID", "Learner ID + Course ID", "Booking Date"], a: "Chef ID" }, { sel: ["None", "Chef ID", "Course ID", "Learner ID", "Learner ID and Course ID"], a: "None" }],
+        ["tblCourse", { sel: ["Chef ID", "Course ID", "Learner ID", "Learner ID + Course ID", "Booking Date"], a: "Course ID" }, { sel: ["None", "Chef ID", "Course ID", "Learner ID", "Learner ID and Course ID"], a: "Chef ID" }],
+        ["tblLearner", { sel: ["Chef ID", "Course ID", "Learner ID", "Learner ID + Course ID", "Booking Date"], a: "Learner ID" }, { sel: ["None", "Chef ID", "Course ID", "Learner ID", "Learner ID and Course ID"], a: "None" }],
+        ["tblBooking", { sel: ["Chef ID", "Course ID", "Learner ID", "Learner ID + Course ID", "Booking Date"], a: "Learner ID + Course ID" }, { sel: ["None", "Chef ID", "Course ID", "Learner ID", "Learner ID and Course ID"], a: "Learner ID and Course ID" }]],
+      why: "Here's the finished design:" + ELM.tables() + "Three relationships, all one-to-many: tblChef→tblCourse, tblCourse→tblBooking, tblLearner→tblBooking." },
+
+    { t: "mcq", q: "Should <b>Chef ID</b> also go in tblBooking, so you can see which chef each booking is with?", opts: ["Yes – it saves a step", "No – you can already find the chef through Course ID → tblCourse, so adding it would repeat data", "Yes – every table needs every ID", "No – foreign keys can't go in link tables"], a: 1,
+      why: "The chef is a fact about the course, not the booking. Storing it again in tblBooking brings back the repetition you've just removed (and the chef could end up disagreeing with tblCourse)." },
+
+    { t: "mcq", q: "Spot the mistake. A student's tblCourse is: <code>Course ID (PK), Course Name, Day, Course Price, Chef ID (FK), Learner ID (FK)</code>. What's wrong?", opts: ["Course Price should be in tblChef", "Learner ID can't go in tblCourse – a course has many learners, so it would need many Learner IDs; that's why tblBooking exists", "Chef ID should be the primary key", "Nothing is wrong"], a: 1,
+      why: "A field can only hold one value per record. K03 has three learners, so tblCourse would need three rows for the same course (repetition again). Many-to-many always needs the link table." },
+
+    { t: "scenario", title: "Stretch – Harbour View Vets", html:
+      "<p><i>\"Pets are registered with the practice. Each pet has one owner, and an owner may have several pets. Pets can be seen by any of the vets. Every visit is booked as an appointment with a date and time, and a pet can see the same vet many times.\"</i></p>" +
+      T(["Appointment ID", "Appt Date", "Pet ID", "Pet Name", "Owner ID", "Owner Name", "Vet ID", "Vet Name"], [
+        ["A101", "04/11/2025", "P1", "Biscuit", "O1", "J. Rowe", "V1", "Dr Sato"],
+        ["A102", "04/11/2025", "P2", "Luna", "O1", "J. Rowe", "V2", "Dr Klein"],
+        ["A103", "18/11/2025", "P1", "Biscuit", "O1", "J. Rowe", "V1", "Dr Sato"]]) },
+
+    { t: "mcq", q: "Harbour View: Pet and Vet are many-to-many. Why is <b>Pet ID + Vet ID NOT</b> a good primary key for the appointments table here?", opts: ["Because Pet ID is text", "Because the same pet can see the same vet more than once (P1 + V1 appears twice), so the pair isn't unique", "Because vets don't need IDs", "Because composite keys are never allowed"], a: 1,
+      why: "A101 and A103 are both P1 + V1. A primary key must be unique, so the pair fails. That's why the brief gives you Appointment ID here: tblAppointment(Appointment ID PK, Appt Date, Pet ID FK, Vet ID FK)." },
+
+    { t: "mcq", q: "So how do you decide between a composite key and the link table's own ID?", opts: ["Always use a composite key", "Always add an AutoNumber", "If each pair can only happen once and no ID is given → composite key. If the same pair can repeat (or an ID is given) → use the ID", "Use whichever has fewer characters"], a: 2,
+      why: "This is the reasoning examiners look for. In most Unit 2 papers the link table has no ID and each pair happens once → composite key." },
+
+    { t: "tip", title: "How to set out your Activity 1 answer", html:
+      "<p>For each table write: <b>table name</b> (use the <code>tbl</code> prefix), every <b>field</b> (use Figure 1's field names exactly), and label the <b>PK</b> and any <b>FK</b>. Then list each relationship: <i>tblChef (1) → (∞) tblCourse on Chef ID</i>. In Access you'd also tick <b>Enforce Referential Integrity</b> on each relationship — mention that you would.</p>" }
+  ]
+});
+
+COURSE.days.push({
+  id: "d3", n: 3, week: 1, short: "Data types & properties",
+  title: "Data types and field properties",
+  activity: "Activity 2", time: "60–75 mins",
+  intro: "Activity 2 is where you build your tables in Access. Even without Access at home, almost every mark comes from <b>decisions</b>: the right data type, the right field size, the right property for each requirement. Today: data types and the properties panel.",
+  blocks: [
+    { t: "learn", title: "What Activity 2 asks", html:
+      "<p>You create the tables from Activity 1 in Access, choose a <b>data type</b> and sensible <b>field size</b> for every field, set the <b>primary keys</b>, and then add the <b>validation</b> the brief asks for (input masks, validation rules, lookups, required fields). You evidence it with screenshots of Design View and of each check working.</p>" +
+      "<p>In Design View every field has a name, a data type, and underneath, a <b>Field Properties</b> panel. Today is about choosing those correctly; tomorrow is validation.</p>" },
+
+    { t: "learn", title: "Choosing the data type", html:
+      T(["Data type", "Use it for", "Watch out"], [
+        ["<b>Short Text</b>", "Names, codes, IDs like CH1, phone numbers, postcodes – anything not used in maths. Up to 255 characters.", "Set the Field Size – default is 255."],
+        ["<b>Long Text</b>", "Notes and comments longer than 255 characters.", "Rarely needed in the exam."],
+        ["<b>Number</b>", "Quantities you do maths with: ages, number of seats.", "Field Size <b>Integer</b>/<b>Long Integer</b> = whole numbers only. Use <b>Double</b> for decimals."],
+        ["<b>Currency</b>", "Money – prices, fees, costs.", "Not Number: Currency avoids rounding errors and shows £."],
+        ["<b>Date/Time</b>", "Dates and times.", "Set Format, e.g. Short Date (dd/mm/yyyy) or Short Time."],
+        ["<b>Yes/No</b>", "Anything with only two answers: Paid? Passed?", "Shows as a tick box."],
+        ["<b>AutoNumber</b>", "A primary key Access numbers for you (1, 2, 3…).", "Only if the IDs are plain numbers. IDs like 'CH1' are Short Text."]]) },
+
+    { t: "learn", title: "Three traps that cost marks every year", html:
+      "<p><b>1. Phone numbers are Short Text, not Number.</b> A Number field throws away the leading zero (07700… becomes 7700…) and can't store spaces. You never do maths on a phone number.</p>" +
+      "<p><b>2. Money is Currency, not Number Integer.</b> Integer can only store whole numbers, so £12.50 would be stored as 13.</p>" +
+      "<p><b>3. A foreign key must match the primary key it points to.</b> If Chef ID in tblChef is Short Text size 3, Chef ID in tblCourse must be Short Text size 3. If the primary key is <b>AutoNumber</b>, the foreign key must be <b>Number – Long Integer</b> (not AutoNumber – you can't have two AutoNumbers deciding the same value).</p>" },
+
+    { t: "learn", title: "The field properties you need", html:
+      T(["Property", "What it does", "Example"], [
+        ["<b>Field Size</b>", "Max length (text) or number range (numbers).", "Chef ID: 3. Learner Name: 30."],
+        ["<b>Format</b>", "How a value is displayed (not what's stored).", "Short Date; Currency"],
+        ["<b>Input Mask</b>", "Forces the shape of what's typed.", "<code>>LL0000</code>"],
+        ["<b>Caption</b>", "The label shown on forms/datasheets instead of the field name.", "Field LearnerPhone, caption 'Phone'"],
+        ["<b>Default Value</b>", "Filled in automatically for new records.", "<code>Date()</code> for today; <code>No</code>"],
+        ["<b>Validation Rule</b>", "A condition the value must meet.", "<code>Between 1 And 20</code>"],
+        ["<b>Validation Text</b>", "The error message when the rule is broken.", "'Enter a number from 1 to 20'"],
+        ["<b>Required</b>", "Yes = can't be left blank (presence check).", "Required: Yes"],
+        ["<b>Indexed</b>", "Yes (No Duplicates) = no two records can have the same value.", "Email address"]]) +
+      "<p><b>Choosing a field size:</b> look at the longest value in Figure 1 and allow a sensible margin. For fixed-length codes use the exact length (CH1 → 3). Don't leave everything at 255 – examiners notice.</p>" },
+
+    { t: "h", text: "Practise" },
+
+    { t: "grid", q: "Elmwood Cookery School (from Day 2). Choose the best data type for each field.", head: ["Field", "Example from Figure 1", "Data type"],
+      rows: [
+        ["Chef ID", "CH1", { sel: ["Short Text", "Number", "Currency", "Date/Time", "Yes/No", "AutoNumber"], a: "Short Text" }],
+        ["Course Price", "£45.00", { sel: ["Short Text", "Number", "Currency", "Date/Time", "Yes/No", "AutoNumber"], a: "Currency" }],
+        ["Day", "Monday", { sel: ["Short Text", "Number", "Currency", "Date/Time", "Yes/No", "AutoNumber"], a: "Short Text" }],
+        ["Learner Phone", "07700 900111", { sel: ["Short Text", "Number", "Currency", "Date/Time", "Yes/No", "AutoNumber"], a: "Short Text" }],
+        ["Booking Date", "03/09/2025", { sel: ["Short Text", "Number", "Currency", "Date/Time", "Yes/No", "AutoNumber"], a: "Date/Time" }],
+        ["Deposit Paid", "Yes", { sel: ["Short Text", "Number", "Currency", "Date/Time", "Yes/No", "AutoNumber"], a: "Yes/No" }],
+        ["Learner Name", "Omar Haddad", { sel: ["Short Text", "Number", "Currency", "Date/Time", "Yes/No", "AutoNumber"], a: "Short Text" }]],
+      why: "Day is the <i>name</i> of a weekday ('Monday'), not a date, so it's Short Text. Chef ID contains letters, so it can't be AutoNumber or Number." },
+
+    { t: "mcq", q: "Why should <b>Learner Phone</b> be Short Text rather than Number?", opts: ["Number fields can't be searched", "Number would remove the leading 0 and can't store the space – and you never do calculations with it", "Short Text uses less memory", "Phone numbers are always 11 characters"], a: 1,
+      why: "This is the most common data-type mistake. Rule of thumb: if you'd never add or multiply it, it's text." },
+
+    { t: "mcq", q: "A student sets Course Price to <b>Number, Field Size Integer</b>. What goes wrong?", opts: ["Nothing", "Prices with pence (e.g. £12.50) would be rounded to whole numbers", "It won't show the £ sign but is otherwise fine", "Access refuses to save the table"], a: 1,
+      why: "Integer = whole numbers only. Money should be <b>Currency</b> – exact to the penny and displayed with £." },
+
+    { t: "match", q: "Choose the best data type for each field.", lh: "Field", rh: "Data type",
+      items: [["Number of guests on a booking", "Number"], ["Ticket price", "Currency"], ["Date of birth", "Date/Time"], ["Has the member signed the waiver?", "Yes/No"], ["Postcode", "Short Text"], ["Customer ID that Access numbers 1, 2, 3… for you", "AutoNumber"], ["Instructor's notes on each lesson (can be several paragraphs)", "Long Text"]],
+      choices: ["Short Text", "Long Text", "Number", "Currency", "Date/Time", "Yes/No", "AutoNumber"],
+      why: "Postcode has letters and spaces → Short Text. Number of guests is a quantity you might total → Number. Several paragraphs is longer than 255 characters → Long Text." },
+
+    { t: "mcq", q: "In tblCustomer, <b>Customer ID</b> is an AutoNumber. What data type must <b>Customer ID</b> be in tblOrder (where it's a foreign key)?", opts: ["AutoNumber", "Number – Long Integer", "Short Text", "Number – Double"], a: 1,
+      why: "AutoNumber is stored as a Long Integer. The foreign key must match it, so it's Number with Field Size Long Integer. It can't be AutoNumber, because you need to type in which customer the order belongs to." },
+
+    { t: "mcq", q: "Chef ID values are CH1, CH2, CH3. Which Field Size is most sensible?", opts: ["3", "50", "255 (the default)", "Long Integer"], a: 0,
+      why: "The codes are exactly three characters. A size of 3 matches the data and stops anyone typing a longer code. (Long Integer is for numbers, not text.)" },
+
+    { t: "match", q: "Which field property meets each requirement?", lh: "Requirement", rh: "Property",
+      items: [["Member Email must not be left blank", "Required"], ["Status should show 'Pending' automatically on every new record", "Default Value"], ["No two members can have the same email address", "Indexed – Yes (No Duplicates)"], ["Show a helpful message when the rule is broken", "Validation Text"], ["Rating must be between 1 and 5", "Validation Rule"], ["Surname can be no longer than 30 characters", "Field Size"], ["Display the field heading as 'Phone' instead of LearnerPhone", "Caption"]],
+      choices: ["Field Size", "Caption", "Default Value", "Validation Rule", "Validation Text", "Required", "Indexed – Yes (No Duplicates)"],
+      why: "Learn these pairings — Activity 2 requirements are written in plain English and you have to translate them into the right property." },
+
+    { t: "text", mode: "expr", q: "What would you type in the <b>Default Value</b> property so that Booking Date fills in with <b>today's date</b> automatically?", accept: ["Date()", "Now()"], show: "Date()", ph: "Type the Access function",
+      why: "<code>Date()</code> gives today's date. (<code>Now()</code> also works but includes the time too, so <code>Date()</code> is the better answer for a date field.)" },
+
+    { t: "mcq", q: "What is the maximum Field Size for a Short Text field?", opts: ["50", "100", "255", "No limit"], a: 2,
+      why: "255 characters. Anything longer needs Long Text." },
+
+    { t: "multi", q: "Which of these should be stored as <b>Short Text</b>?", opts: ["Phone number", "Postcode", "Price of a ticket", "Car registration (e.g. AB12 CDE)", "Number of seats in a room", "Course code (e.g. K01)"], a: [0, 1, 3, 5],
+      why: "Price → Currency. Number of seats → Number (Integer). Everything else is a code or label you'd never do maths with." },
+
+    { t: "mcq", q: "When you set a field as the <b>primary key</b>, what does Access automatically do?", opts: ["Makes it AutoNumber", "Sets Indexed to Yes (No Duplicates) and won't allow it to be blank", "Adds a validation rule", "Creates a relationship"], a: 1,
+      why: "A primary key must be unique and present, so Access indexes it with No Duplicates and refuses blanks. You don't need to add a separate validation rule for that." },
+
+    { t: "mcq", q: "Which data type should <b>Session Start Time</b> (e.g. 16:00) be?", opts: ["Short Text", "Number", "Date/Time with Format Short Time", "Currency"], a: 2,
+      why: "Times are Date/Time. Setting Format to Short Time displays 16:00. It also lets you write validation rules like <code>Between #09:00# And #20:00#</code> – you can't do that reliably with text." },
+
+    { t: "mcq", q: "Which is the best data type for <b>Distance run (km)</b>, e.g. 5.4?", opts: ["Number – Integer", "Number – Double", "Currency", "Short Text"], a: 1,
+      why: "It's a measurement with decimals and you might total or average it → Number with Field Size Double (or Single). Integer would round 5.4 to 5." },
+
+    { t: "grid", q: "Write a sensible <b>Field Size</b> for each Short Text field, using the Figure 1 data from Elmwood.", head: ["Field", "Longest example", "Field Size"],
+      rows: [["Course ID", "K01", { accept: ["3"], mode: "num" }], ["Learner ID", "L05", { accept: ["3"], mode: "num" }], ["Learner Phone", "07700 900111 (with the space)", { accept: ["12", "13", "14", "15"], mode: "num", show: "12" }], ["Course Name", "Curry Masterclass (17 characters)", { accept: [/^(1[7-9]|[2-5][0-9]|60)$/], mode: "num", show: "30" }]],
+      why: "IDs: exact length. Phone: 11 digits + 1 space = 12 (a little extra is fine). Course Name: at least 17 — something like 30 allows for longer names later. Any sensible size from 17 to 60 is accepted here; in the exam, give a reason." },
+
+    { t: "tip", title: "Exam habit", html: "<p>When you screenshot Design View for Activity 2, make sure the <b>Field Properties</b> panel is visible for the field you're evidencing – the examiner can't award a Field Size or Validation Rule they can't see.</p>" }
+  ]
+});
+
+COURSE.days.push({
+  id: "d4", n: 4, week: 1, short: "Validation & input masks",
+  title: "Validation rules, input masks and lookups",
+  activity: "Activity 2", time: "90 mins",
+  intro: "This is the day that wins Activity 2. The brief describes each check in plain English; you have to recognise which Access feature it needs and write the setting exactly. Learn the decoder first, then practise until the syntax feels automatic.",
+  blocks: [
+    { t: "learn", title: "The decoder: wording → check → Access feature", html:
+      T(["If the brief says…", "Type of check", "Use this in Access"], [
+        ["\"must be entered\", \"cannot be left blank\"", "Presence", "<b>Required = Yes</b>"],
+        ["\"between…\", \"at least…\", \"no more than…\", \"cannot be in the past\"", "Range", "<b>Validation Rule</b> + Validation Text"],
+        ["\"in the format…\", \"two letters followed by four digits\"", "Format / picture", "<b>Input Mask</b>"],
+        ["\"must contain @\", \"must start with B\"", "Format (pattern)", "<b>Validation Rule</b> with <code>Like</code>"],
+        ["\"must be one of: Small, Medium, Large\"", "List (lookup) – fixed values", "<b>Lookup Wizard → type in the values (Value List)</b>, Limit To List = <b>Yes</b>"],
+        ["\"must be a valid Course ID\", \"chosen from the courses table\"", "Lookup to another table (foreign key)", "<b>Lookup Wizard → look up values in a table</b>, Limit To List = <b>No</b>, plus the relationship with referential integrity"],
+        ["\"no two … can be the same\"", "Uniqueness", "<b>Indexed = Yes (No Duplicates)</b>"],
+        ["\"no longer than 30 characters\"", "Length", "<b>Field Size</b>"]]) },
+
+    { t: "learn", title: "Validation Rule syntax", html:
+      T(["Requirement", "Validation Rule"], [
+        ["Between 15 and 50 (inclusive)", "<code>Between 15 And 50</code> &nbsp;or&nbsp; <code>&gt;=15 And &lt;=50</code>"],
+        ["At least 16", "<code>&gt;=16</code>"],
+        ["More than 0", "<code>&gt;0</code>"],
+        ["No more than 100", "<code>&lt;=100</code>"],
+        ["Today or later (not in the past)", "<code>&gt;=Date()</code>"],
+        ["Before today", "<code>&lt;Date()</code>"],
+        ["On or after 1 January 2026", "<code>&gt;=#01/01/2026#</code>"],
+        ["Between 9am and 8pm", "<code>Between #09:00# And #20:00#</code>"],
+        ["One of S, M or L", "<code>In (\"S\",\"M\",\"L\")</code> &nbsp;or&nbsp; <code>\"S\" Or \"M\" Or \"L\"</code>"],
+        ["Starts with B", "<code>Like \"B*\"</code>"],
+        ["Contains @", "<code>Like \"*@*\"</code>"]]) +
+      "<p><b>Rules of the syntax:</b> text goes in <code>\"double quotes\"</code>; dates and times go between <code>#hashes#</code>; numbers have nothing round them. <code>Between</code> includes both ends. 'At least' means <code>&gt;=</code>, not <code>&gt;</code>.</p>" +
+      "<p><b>Always add Validation Text</b> that tells the user what to type, e.g. <i>'Age must be 16 or over'</i>. A message like 'Error' or 'Wrong' gets no credit.</p>" },
+
+    { t: "learn", title: "Input masks – build them one character at a time", html:
+      T(["Character", "Means"], [["<code>0</code>", "digit, required"], ["<code>9</code>", "digit, optional"], ["<code>L</code>", "letter, required"], ["<code>?</code>", "letter, optional"], ["<code>A</code>", "letter or digit, required"], ["<code>&amp;</code>", "any character, required"], ["<code>&gt;</code>", "make everything after it UPPER CASE"], ["<code>&lt;</code>", "make everything after it lower case"], ["<code>\\</code>", "the next character is shown literally (e.g. <code>\\M</code> = the letter M itself)"]]) +
+      "<p><b>Worked example 1:</b> 'Two capital letters followed by four digits, e.g. AB1234'. Capitals → start with <code>&gt;</code>. Two required letters → <code>LL</code>. Four required digits → <code>0000</code>. Answer: <code>&gt;LL0000</code>.</p>" +
+      "<p><b>Worked example 2:</b> 'Member ID is the letter M followed by two digits, e.g. M07'. The M is <i>fixed</i> – the user shouldn't have to type it and can't change it – so it's a literal: <code>\\M</code>. Then <code>00</code>. Answer: <code>\\M00</code> (or <code>\"M\"00</code>).<br>⚠️ <code>&gt;L00</code> is <b>wrong</b> here: it would accept <i>any</i> letter, e.g. X07.</p>" +
+      "<p><b>Worked example 3:</b> 'Phone number: exactly 11 digits' → <code>00000000000</code> (eleven zeros).</p>" +
+      "<p><b>Input mask vs validation rule:</b> an input mask controls the <i>shape</i> (letters/digits in positions). It can't check a <i>range</i> like 'between 1 and 10' – that's a validation rule.</p>" },
+
+    { t: "learn", title: "Lookups and Limit To List – get this right", html:
+      "<p>There are two kinds of lookup, and the mark schemes treat <b>Limit To List</b> differently for each:</p>" +
+      T(["Kind of lookup", "Example", "Limit To List"], [
+        ["<b>Value List</b> – you type the allowed values into the Lookup Wizard", "Day: Monday; Tuesday; Wednesday…", "<b>Yes</b> – otherwise users can type anything"],
+        ["<b>Table lookup</b> – the list comes from another table (this field is a foreign key)", "Course ID in tblBooking, looking up tblCourse", "<b>No</b> – the relationship with <b>referential integrity</b> already stops invalid values"]]) +
+      "<p>So: a fixed list of words → Value List, Limit To List Yes. A foreign key → lookup to the table, Limit To List No, and make sure the relationship enforces referential integrity.</p>" },
+
+    { t: "h", text: "Practise – validation rules", sub: "Type the exact Validation Rule. Spaces and capital letters don't matter; quotes, hashes and symbols do." },
+
+    { t: "text", mode: "expr", q: "Age must be <b>between 16 and 99</b> (inclusive).", accept: ["Between 16 And 99", ">=16 And <=99", "<=99 And >=16"], show: "Between 16 And 99",
+      near: [{ re: /^>16and<99$/, msg: "That leaves out 16 and 99 themselves. 'Inclusive' means use &gt;= and &lt;= (or Between)." }, { re: /^between16&99$|^16-99$/, msg: "Use the word <b>And</b>: <code>Between 16 And 99</code>." }],
+      why: "<code>Between 16 And 99</code> includes both ends. <code>&gt;=16 And &lt;=99</code> is the same thing." },
+    { t: "text", mode: "expr", q: "Number of guests must be <b>at least 1</b>.", accept: [">=1", ">0"], show: ">=1",
+      near: [{ re: /^>1$/, msg: "&gt;1 would reject 1 itself. 'At least' includes the number → &gt;=." }],
+      why: "'At least 1' → <code>&gt;=1</code>. For whole numbers <code>&gt;0</code> does the same job." },
+    { t: "text", mode: "expr", q: "Discount <b>cannot be more than 50</b>.", accept: ["<=50"], why: "'Not more than 50' means 50 is allowed → <code>&lt;=50</code>." },
+    { t: "text", mode: "expr", q: "Star rating must be <b>from 1 to 5</b>.", accept: ["Between 1 And 5", ">=1 And <=5", "In (1,2,3,4,5)"], show: "Between 1 And 5", why: "<code>Between 1 And 5</code>." },
+    { t: "text", mode: "expr", q: "Booking Date <b>cannot be in the past</b>.", accept: [">=Date()"], show: ">=Date()",
+      near: [{ re: /^>date\(\)$/, msg: "&gt;Date() would reject today. 'Not in the past' allows today → &gt;=Date()." }, { re: /today/, msg: "Access uses the function <code>Date()</code> for today's date." }],
+      why: "<code>Date()</code> is today. 'Not in the past' = today or later = <code>&gt;=Date()</code>." },
+    { t: "text", mode: "expr", q: "Date of Birth must be <b>before today</b>.", accept: ["<Date()"], why: "<code>&lt;Date()</code>." },
+    { t: "text", mode: "expr", q: "Hire Date must be <b>on or after 1 January 2026</b>.", accept: [">=#01/01/2026#", ">=#1/1/2026#", ">=#2026-01-01#"], show: ">=#01/01/2026#",
+      near: [{ re: /^>=01\/01\/2026$/, msg: "Dates need hashes round them: <code>#01/01/2026#</code>." }, { re: /^>="01\/01\/2026"$/, msg: "Quotes are for text. Dates go between hashes: <code>#01/01/2026#</code>." }],
+      why: "<code>&gt;=#01/01/2026#</code> – dates always between # symbols." },
+    { t: "text", mode: "expr", q: "T-shirt Size must be <b>S, M or L</b> (write a Validation Rule).", accept: ["In (\"S\",\"M\",\"L\")", "\"S\" Or \"M\" Or \"L\"", "=\"S\" Or =\"M\" Or =\"L\"", "In (\"S\";\"M\";\"L\")"], show: "In (\"S\",\"M\",\"L\")",
+      near: [{ re: /^in\(s,m,l\)$|^sorMorl$/i, msg: "Text values need double quotes: <code>\"S\"</code>." }],
+      why: "<code>In (\"S\",\"M\",\"L\")</code>. (A Value List lookup with Limit To List = Yes is another valid way to do a list check.)" },
+    { t: "text", mode: "expr", q: "Price must be <b>greater than zero</b>.", accept: [">0"], why: "<code>&gt;0</code>." },
+    { t: "text", mode: "expr", q: "Session Start Time must be <b>between 09:00 and 21:00</b>.", accept: ["Between #09:00# And #21:00#", ">=#09:00# And <=#21:00#", "Between #9:00# And #21:00#", "Between #09:00:00# And #21:00:00#"], show: "Between #09:00# And #21:00#",
+      why: "Times use hashes like dates: <code>Between #09:00# And #21:00#</code>." },
+    { t: "text", mode: "expr", q: "Product Code must <b>start with the letter B</b>.", accept: ["Like \"B*\""], show: "Like \"B*\"",
+      near: [{ re: /^="b\*"$|^"b\*"$/, msg: "Wildcards only work with <code>Like</code>: <code>Like \"B*\"</code>." }],
+      why: "<code>*</code> means 'anything after'. Wildcards need <code>Like</code>." },
+    { t: "text", mode: "expr", q: "Email must <b>contain an @ symbol</b>.", accept: ["Like \"*@*\"", "Like \"*@*.*\"", "Like \"?*@?*\"", "Like \"?*@?*.?*\""], show: "Like \"*@*\"",
+      why: "<code>Like \"*@*\"</code> – anything, then @, then anything. <code>Like \"*@*.*\"</code> is even stricter (needs a dot after the @)." },
+
+    { t: "mcq", q: "Which Validation Rule correctly means \"16 to 99, including 16 and 99\"?", opts: ["<code>&gt;16 And &lt;99</code>", "<code>Between 16 &amp; 99</code>", "<code>Between 16 And 99</code>", "<code>16-99</code>"], a: 2,
+      why: "A leaves out 16 and 99. B uses &amp; instead of And. D isn't valid Access syntax." },
+    { t: "mcq", q: "Which is the best <b>Validation Text</b> for the rule <code>&gt;=8</code> on Climber Age?", opts: ["Error!", "Invalid", "Climbers must be aged 8 or over – please re-enter the age", "&gt;=8"], a: 2,
+      why: "Good validation text tells the user <b>what went wrong and what to enter</b>." },
+
+    { t: "h", text: "Practise – input masks", sub: "Capital letters DO matter in input masks." },
+
+    { t: "text", mode: "mask", q: "<b>Two capital letters followed by four digits</b>, e.g. AB1234.", accept: [">LL0000"], ph: "e.g. >L0", near: [{ re: /^LL0000$/, msg: "Nearly – add <code>&gt;</code> at the start to force capitals." }],
+      why: "<code>&gt;</code> forces capitals, <code>LL</code> two required letters, <code>0000</code> four required digits." },
+    { t: "text", mode: "mask", q: "Member ID is <b>the letter M followed by three digits</b>, e.g. M042.", accept: ["\\M000", "\"M\"000"], show: "\\M000",
+      near: [{ re: /^>?L000$/, msg: "L accepts <i>any</i> letter. The M is fixed, so make it a literal: <code>\\M</code>." }, { re: /^M000$/, msg: "On its own, M isn't a mask character – put a backslash in front so it's shown literally: <code>\\M000</code>." }],
+      why: "<code>\\M000</code>: the backslash makes the M a fixed character, then three required digits." },
+    { t: "text", mode: "mask", q: "Phone number: <b>exactly 11 digits</b>.", accept: ["00000000000"], near: [{ re: /^0{10}$|^0{12}$/, msg: "Count again – you need exactly eleven 0s." }, { re: /^9{11}$/, msg: "9 means optional. 'Exactly 11' means all required → 0." }],
+      why: "Eleven 0s – every digit required." },
+    { t: "text", mode: "mask", q: "Course Code: <b>three capital letters</b>, e.g. ITA.", accept: [">LLL"], why: "<code>&gt;LLL</code>." },
+    { t: "text", mode: "mask", q: "Climber ID: <b>the letters CL followed by three digits</b>, e.g. CL004.", accept: ["\\C\\L000", "\"CL\"000"], show: "\\C\\L000",
+      near: [{ re: /^>?LL000$/, msg: "LL would accept any two letters. CL is fixed – use literals: <code>\\C\\L</code> (or <code>\"CL\"</code>)." }],
+      why: "Each fixed letter needs its own backslash: <code>\\C\\L000</code>. Or put them in quotes: <code>\"CL\"000</code>." },
+    { t: "text", mode: "mask", q: "Vehicle registration: <b>2 capital letters, 2 digits, a space, then 3 capital letters</b>, e.g. AB12 CDE.", accept: [">LL00 LLL", ">LL00\\ LLL", ">LL00\" \"LLL"], show: ">LL00 LLL",
+      why: "<code>&gt;LL00 LLL</code>. The space is shown as part of the mask (you can also write it as <code>\\ </code>)." },
+    { t: "text", mode: "mask", q: "Room number: <b>between one and three digits</b>, e.g. 7, 14 or 205.", accept: ["099", "0 99"], show: "099", hint: "The first digit is required; the others are optional.",
+      why: "<code>0</code> required, then <code>99</code> optional." },
+
+    { t: "mcq", q: "A student uses <code>&gt;L00</code> for 'the letter M followed by two digits'. What's the problem?", opts: ["Nothing – it's correct", "It would also accept other letters, e.g. Z55", "It makes the letter lower case", "It only allows one digit"], a: 1,
+      why: "L means 'any letter'. Only a literal <code>\\M</code> forces the M." },
+    { t: "mcq", q: "\"Quantity must be between 1 and 10.\" Which feature should you use?", opts: ["Input Mask <code>00</code>", "Validation Rule <code>Between 1 And 10</code>", "Field Size 10", "Required = Yes"], a: 1,
+      why: "That's a range. An input mask could only control how many digits, not the value – 00 would still accept 99." },
+
+    { t: "h", text: "Practise – lookups and choosing the feature" },
+
+    { t: "mcq", q: "\"Membership Type must be Gold, Silver or Bronze.\" What's the best way to implement this?", opts: ["Input Mask <code>LLLLLL</code>", "Lookup Wizard → type in the values (Gold; Silver; Bronze), Limit To List = Yes", "Lookup Wizard → type in the values, Limit To List = No", "Required = Yes"], a: 1,
+      why: "Fixed list of words → Value List. Limit To List = <b>Yes</b>, otherwise users could still type 'Platinum'." },
+    { t: "mcq", q: "In tblBooking, Course ID is a foreign key. You use the Lookup Wizard so users pick from tblCourse. What should Limit To List be set to?", opts: ["Yes – always", "No – the relationship with referential integrity already stops an invalid Course ID", "It doesn't matter", "You can't use a lookup on a foreign key"], a: 1,
+      why: "For a table lookup on a foreign key, the mark schemes expect Limit To List = <b>No</b>. Referential integrity on the relationship is what enforces that the value exists." },
+
+    { t: "match", q: "Which Access feature does each requirement need?", lh: "Requirement", rh: "Feature",
+      items: [["Learner Name must be entered", "Required = Yes"], ["Course Price must be more than £0", "Validation Rule"], ["Learner ID: L followed by two digits", "Input Mask"], ["Day must be Monday to Saturday", "Value List lookup (Limit To List = Yes)"], ["Chef ID in tblCourse must be an existing chef", "Table lookup + referential integrity (Limit To List = No)"], ["No two learners can share an email address", "Indexed – Yes (No Duplicates)"], ["Postcode no longer than 8 characters", "Field Size"]],
+      choices: ["Required = Yes", "Validation Rule", "Input Mask", "Value List lookup (Limit To List = Yes)", "Table lookup + referential integrity (Limit To List = No)", "Indexed – Yes (No Duplicates)", "Field Size"],
+      why: "This is the decoder table from the top of the page. If you got any wrong, re-read that row." },
+
+    { t: "grid", q: "Put it together. For each requirement, choose the property and type the exact setting.", head: ["Requirement", "Field", "Property", "Setting"],
+      rows: [
+        ["A course must cost from £20 to £100", "Course Price", { sel: ["Input Mask", "Validation Rule", "Default Value", "Field Size"], a: "Validation Rule" }, { accept: ["Between 20 And 100", ">=20 And <=100"], show: "Between 20 And 100" }],
+        ["Chef ID is CH then one digit, e.g. CH4", "Chef ID", { sel: ["Input Mask", "Validation Rule", "Default Value", "Field Size"], a: "Input Mask" }, { accept: ["\\C\\H0", "\"CH\"0"], mode: "mask", show: "\\C\\H0" }],
+        ["New bookings should be dated today automatically", "Booking Date", { sel: ["Input Mask", "Validation Rule", "Default Value", "Field Size"], a: "Default Value" }, { accept: ["Date()"] }],
+        ["Bookings cannot be dated in the future", "Booking Date", { sel: ["Input Mask", "Validation Rule", "Default Value", "Field Size"], a: "Validation Rule" }, { accept: ["<=Date()"] }]],
+      why: "Notice how one field (Booking Date) can have both a Default Value and a Validation Rule — the brief may ask for both." },
+
+    { t: "tip", title: "Before tomorrow's checkpoint", html: "<p>Go back over any red answers on this page. Tomorrow is a timed mini-mock on Days 1–4, then you send your first progress report.</p>" }
+  ]
+});
+
+var OAK = {
+  head: ["Instructor ID", "Instructor Name", "Instructor Phone", "Session ID", "Session Level", "Session Date", "Climber ID", "Climber Name", "Climber Age", "Belay Check Passed"],
+  rows: [
+    ["I01", "Kai Morgan", "07700 900601", "SE01", "Beginner", "06/01/2026", "CL001", "Ruby Shah", "12", "Yes"],
+    ["I01", "Kai Morgan", "07700 900601", "SE01", "Beginner", "06/01/2026", "CL002", "Leo Grant", "15", "No"],
+    ["I02", "Priya Nair", "07700 900602", "SE02", "Improver", "07/01/2026", "CL001", "Ruby Shah", "12", "Yes"],
+    ["I02", "Priya Nair", "07700 900602", "SE02", "Improver", "07/01/2026", "CL003", "Noah Evans", "17", "Yes"],
+    ["I01", "Kai Morgan", "07700 900601", "SE03", "Advanced", "09/01/2026", "CL003", "Noah Evans", "17", "Yes"],
+    ["I01", "Kai Morgan", "07700 900601", "SE03", "Advanced", "09/01/2026", "CL004", "Isla Reid", "16", "No"],
+    ["I03", "Tom Becker", "07700 900603", "SE04", "Beginner", "10/01/2026", "CL002", "Leo Grant", "15", "Yes"],
+    ["I03", "Tom Becker", "07700 900603", "SE04", "Beginner", "10/01/2026", "CL005", "Mia Lopez", "9", "Yes"]
+  ]
+};
+COURSE.days.push({
+  id: "d5", n: 5, week: 1, short: "Checkpoint 1 (Act. 1–2)",
+  title: "Checkpoint 1: mini-mock for Activities 1 and 2",
+  activity: "Activities 1–2", time: "45–60 mins",
+  intro: "Treat this like the real thing: <b>set a 45-minute timer</b> and try it <b>without</b> the reference sheet. Only check each answer once you've committed to it. When you finish, send your progress to your teacher (button at the bottom).",
+  blocks: [
+    { t: "scenario", title: "Oakridge Climbing Centre", html:
+      "<p><i>\"Oakridge Climbing Centre runs climbing sessions. Each session is led by one instructor, but an instructor can lead several sessions. Climbers can attend more than one session, and each session has a number of climbers. Every time a climber attends a session, the instructor records whether that climber passed the belay safety check in that session.\"</i></p>" +
+      "<p><b>Figure 1</b></p>" + T(OAK.head, OAK.rows) },
+
+    { t: "h", text: "Activity 1 – Database structure" },
+
+    { t: "multi", q: "Which columns will become the primary key of their own table?", opts: ["Instructor ID", "Session ID", "Climber ID", "Session Date", "Belay Check Passed"], a: [0, 1, 2],
+      why: "Three IDs → tblInstructor, tblSession, tblClimber. The fourth table has to be worked out." },
+
+    { t: "match", q: "Which table does each field belong in?", lh: "Field", rh: "Table",
+      items: [["Instructor Name", "tblInstructor"], ["Instructor Phone", "tblInstructor"], ["Session Level", "tblSession"], ["Session Date", "tblSession"], ["Climber Name", "tblClimber"], ["Climber Age", "tblClimber"], ["Belay Check Passed", "tblAttendance"]],
+      choices: ["tblInstructor", "tblSession", "tblClimber", "tblAttendance"],
+      why: "'Every time a climber attends a session… whether that climber passed… in that session' → a fact about the climber-in-a-session pairing → tblAttendance." },
+
+    { t: "mcq", q: "Which rows in Figure 1 prove that <b>Belay Check Passed</b> can't go in tblClimber?", opts: ["Rows 1 and 2 – SE01 has two climbers", "Rows 2 and 7 – Leo Grant (CL002) has 'No' in SE01 but 'Yes' in SE04", "Rows 3 and 4 – both are Improver", "None – it should go in tblClimber"], a: 1,
+      why: "The same climber has different values in different sessions, so the value depends on the pairing, not just the climber." },
+
+    { t: "match", q: "What are the relationships?", lh: "Pair", rh: "Relationship",
+      items: [["Instructor ↔ Session", "One-to-many"], ["Climber ↔ Session", "Many-to-many"], ["Instructor ↔ Climber", "No direct relationship"]],
+      choices: ["One-to-one", "One-to-many", "Many-to-many", "No direct relationship"],
+      why: "I01 leads SE01 and SE03; each session has one instructor (1:M). CL001 attends SE01 and SE02; SE01 has CL001 and CL002 (M:M)." },
+
+    { t: "grid", q: "Complete the table design.", head: ["Table", "Primary key", "Foreign key(s)"],
+      rows: [
+        ["tblInstructor", { sel: ["Instructor ID", "Session ID", "Climber ID", "Climber ID + Session ID", "AutoNumber Attendance ID"], a: "Instructor ID" }, { sel: ["None", "Instructor ID", "Session ID", "Climber ID", "Climber ID and Session ID"], a: "None" }],
+        ["tblSession", { sel: ["Instructor ID", "Session ID", "Climber ID", "Climber ID + Session ID", "AutoNumber Attendance ID"], a: "Session ID" }, { sel: ["None", "Instructor ID", "Session ID", "Climber ID", "Climber ID and Session ID"], a: "Instructor ID" }],
+        ["tblClimber", { sel: ["Instructor ID", "Session ID", "Climber ID", "Climber ID + Session ID", "AutoNumber Attendance ID"], a: "Climber ID" }, { sel: ["None", "Instructor ID", "Session ID", "Climber ID", "Climber ID and Session ID"], a: "None" }],
+        ["tblAttendance", { sel: ["Instructor ID", "Session ID", "Climber ID", "Climber ID + Session ID", "AutoNumber Attendance ID"], a: "Climber ID + Session ID" }, { sel: ["None", "Instructor ID", "Session ID", "Climber ID", "Climber ID and Session ID"], a: "Climber ID and Session ID" }]],
+      why: '<div class="erd">' + ENT("tblInstructor", ["pk:Instructor ID", "Instructor Name", "Instructor Phone"]) + ARR() + ENT("tblSession", ["pk:Session ID", "Session Level", "Session Date", "fk:Instructor ID"]) + ARR() + ENT("tblAttendance", ["pkfk:Climber ID", "pkfk:Session ID", "Belay Check Passed"], true) + '<div class="arrow"><div>∞ ← 1</div><div class="ln">⟵</div></div>' + ENT("tblClimber", ["pk:Climber ID", "Climber Name", "Climber Age"]) + "</div>" },
+
+    { t: "mcq", q: "Give the best reason for using Climber ID + Session ID as the primary key of tblAttendance.", opts: ["It's shorter than an AutoNumber", "The pair is unique for every attendance, so it stops the same climber being recorded in the same session twice", "Access needs every table to have two keys", "It makes the relationship one-to-one"], a: 1,
+      why: "This is the sentence that earns the mark: the composite key both identifies each record and prevents duplicate attendance records." },
+
+    { t: "h", text: "Activity 2 – Data types and validation" },
+
+    { t: "grid", q: "Choose the data type for each field.", head: ["Field", "Data type"],
+      rows: [
+        ["Instructor Phone", { sel: ["Short Text", "Number", "Currency", "Date/Time", "Yes/No"], a: "Short Text" }],
+        ["Session Date", { sel: ["Short Text", "Number", "Currency", "Date/Time", "Yes/No"], a: "Date/Time" }],
+        ["Climber Age", { sel: ["Short Text", "Number", "Currency", "Date/Time", "Yes/No"], a: "Number" }],
+        ["Belay Check Passed", { sel: ["Short Text", "Number", "Currency", "Date/Time", "Yes/No"], a: "Yes/No" }],
+        ["Session Level", { sel: ["Short Text", "Number", "Currency", "Date/Time", "Yes/No"], a: "Short Text" }]],
+      why: "Climber Age is a whole number you can compare and validate (&gt;=8) → Number (Integer)." },
+
+    { t: "text", mode: "mask", q: "<b>Requirement:</b> Climber ID must be the letters CL followed by three digits. Write the Input Mask.", accept: ["\\C\\L000", "\"CL\"000"], show: "\\C\\L000",
+      near: [{ re: /^>?LL000$/, msg: "LL accepts any letters – CL is fixed, so use literals." }], why: "<code>\\C\\L000</code> (or <code>\"CL\"000</code>)." },
+
+    { t: "text", mode: "expr", q: "<b>Requirement:</b> Climbers must be at least 8 years old. Write the Validation Rule for Climber Age.", accept: [">=8", ">7"], show: ">=8", near: [{ re: /^>8$/, msg: "&gt;8 would reject an 8-year-old." }], why: "<code>&gt;=8</code>." },
+
+    { t: "mcq", q: "<b>Requirement:</b> Session Level must be Beginner, Improver or Advanced. Best implementation?", opts: ["Input Mask <code>&gt;L&lt;???????</code>", "Lookup Wizard → type in the values, Limit To List = Yes", "Lookup Wizard → look up tblSession, Limit To List = No", "Validation Rule <code>Like \"*\"</code>"], a: 1, why: "A fixed list of words → Value List with Limit To List = Yes." },
+
+    { t: "text", mode: "mask", q: "<b>Requirement:</b> Instructor Phone must be 11 digits with a space after the fifth digit, e.g. 07700 900601. Write the Input Mask.", accept: ["00000 000000", "00000\\ 000000", "00000\" \"000000"], show: "00000 000000",
+      why: "Five 0s, a space, six 0s: <code>00000 000000</code>." },
+
+    { t: "text", mode: "expr", q: "<b>Requirement:</b> Session Date must be on or after 1 January 2026.", accept: [">=#01/01/2026#", ">=#1/1/2026#", ">=#2026-01-01#"], show: ">=#01/01/2026#", why: "<code>&gt;=#01/01/2026#</code> – hashes around dates." },
+
+    { t: "mcq", q: "<b>Requirement:</b> Instructor ID in tblSession must be chosen from existing instructors. Which is correct?", opts: ["Value List typed in by hand, Limit To List = Yes", "Lookup to tblInstructor, Limit To List = No, with referential integrity enforced on the relationship", "Input Mask <code>\\I00</code> only", "Required = Yes only"], a: 1,
+      why: "Foreign key → lookup to the table, Limit To List = No, and the relationship enforces that the instructor exists." },
+
+    { t: "mcq", q: "<b>Requirement:</b> Climber Name must always be entered. Which setting?", opts: ["Validation Rule <code>Like \"*\"</code>", "Required = Yes", "Default Value = \"Name\"", "Indexed – Yes (No Duplicates)"], a: 1, why: "Presence check → Required = Yes. (Not No Duplicates – two climbers could share a name.)" },
+
+    { t: "text", mode: "num", q: "What Field Size would you give <b>Climber ID</b>?", accept: ["5"], why: "CL001 is five characters." },
+
+    { t: "tip", title: "✅ End of Week 1 – send your progress now", html:
+      "<p>Go to <a href='#report'><b>My progress</b></a>, check your name and group are filled in, choose <b>End of Week 1 (Day 5)</b> and press <b>Send to my teacher</b>.</p><p>Then look back over Days 1–4 for anything still red, and redo those questions before starting Week 2.</p>" }
+  ]
+});
+
+var SORT3 = ["(blank)", "Ascending", "Descending"];
+COURSE.days.push({
+  id: "d6", n: 6, week: 2, short: "Queries: criteria",
+  title: "Queries: criteria, sorting, AND / OR",
+  activity: "Activity 3", time: "75–90 mins",
+  intro: "Activity 3 asks you to build queries (and a report) that answer the client's questions. You can't run them in Access at home – so you'll do what the query does yourself: write the criteria, then scan the data row by row to predict the result. That's excellent practice: if you can predict the output, you understand the query.",
+  blocks: [
+    { t: "learn", title: "What Activity 3 asks", html:
+      "<p>The brief gives a list of things the client wants to find out, e.g. <i>\"a list of learners who have not paid their deposit, in alphabetical order\"</i>. For each one you build a query, and you evidence the <b>Design View</b> (so the examiner sees your criteria) and the <b>results</b>.</p>" +
+      "<p>Marks come from: the right <b>tables</b>, the right <b>fields</b> shown, the correct <b>criteria</b>, the right <b>sort</b>, and fields that aren't needed in the results having <b>Show</b> unticked.</p>" },
+
+    { t: "learn", title: "The query design grid", html:
+      QBE([{ f: "Learner Name", t: "tblLearner", s: "Ascending" }, { f: "Course Name", t: "tblCourse" }, { f: "Deposit Paid", t: "tblBooking", c: "No", sh: false }], "Example: learners who have not paid their deposit, A–Z") +
+      "<ul><li><b>Field / Table</b> – what you're using and where it comes from.</li><li><b>Sort</b> – Ascending (A–Z, 0–9, oldest first) or Descending.</li><li><b>Show</b> – tick if it should appear in the results. Here Deposit Paid is only used to filter, so it's unticked.</li><li><b>Criteria</b> – the condition. <b>or</b> – an alternative condition.</li></ul>" },
+
+    { t: "learn", title: "Criteria you must know", html:
+      T(["To find…", "Criteria", "Notes"], [
+        ["Exact text", "<code>\"Monday\"</code>", "Text in quotes (Access adds them if you forget)"],
+        ["Not a value", "<code>Not \"Monday\"</code> or <code>&lt;&gt;\"Monday\"</code>", ""],
+        ["Numbers", "<code>&gt;50</code> &nbsp; <code>&lt;=40</code>", "No £ sign"],
+        ["A range", "<code>Between 45 And 55</code>", "Includes both ends"],
+        ["Dates", "<code>Between #01/10/2025# And #31/10/2025#</code>", "Hashes round dates"],
+        ["Before / after a date", "<code>&lt;#15/09/2025#</code> &nbsp; <code>&gt;=#01/10/2025#</code>", ""],
+        ["Yes/No fields", "<code>Yes</code> or <code>No</code> (also True/False)", "No quotes"],
+        ["Starts with S", "<code>Like \"S*\"</code>", "* = any number of characters"],
+        ["Contains 'Pasta'", "<code>Like \"*Pasta*\"</code>", ""],
+        ["Empty field", "<code>Is Null</code>", "<code>Is Not Null</code> for filled-in"],
+        ["Ask the user each time (parameter)", "<code>[Enter course name]</code>", "Square brackets with a prompt"]]) },
+
+    { t: "learn", title: "AND vs OR", html:
+      "<p><b>Same row = AND.</b> Criteria on the same Criteria row must <i>all</i> be true. Chef Name <code>\"Rosa Bianchi\"</code> and Deposit Paid <code>No</code> on the same row → Rosa's courses <b>and</b> not paid.</p>" +
+      "<p><b>Different rows = OR.</b> Put <code>\"Monday\"</code> on the Criteria row and <code>\"Wednesday\"</code> on the or row of Day → either day. In one cell you can write <code>\"Monday\" Or \"Wednesday\"</code> – same result.</p>" +
+      "<p><b>Range on one field</b> uses And inside one cell: <code>&gt;=45 And &lt;=55</code>.</p>" },
+
+    { t: "learn", title: "Which tables do I add?", html:
+      "<p>Add every table that holds a field you need – <b>plus any table in between</b> that joins them. To list Chef Name next to Learner Name you need tblChef → tblCourse → tblBooking → tblLearner, even if you show no fields from tblCourse or tblBooking. Without the middle tables Access can't follow the relationships.</p>" },
+
+    { t: "scenario", title: "Elmwood Cookery School – the data (from Day 2)", html: "<p>Use this data to predict what each query returns. It's the same data as Figure 1, now stored in four linked tables.</p>" + ELM.tables() + ELM.table() },
+
+    { t: "h", text: "Practise – build and predict" },
+
+    { t: "grid", qbe: true, q: "Query 1: <i>\"List the name of every learner who has <b>not paid</b> their deposit, and the course, in <b>alphabetical order of learner name</b>.\"</i> Fill in the blanks.", tag: "Query design grid",
+      rows: [
+        ["Field:", "Learner Name", "Course Name", "Deposit Paid"],
+        ["Table:", "tblLearner", "tblCourse", "tblBooking"],
+        ["Sort:", { sel: SORT3, a: "Ascending" }, { sel: SORT3, a: "(blank)" }, { sel: SORT3, a: "(blank)" }],
+        ["Criteria:", "", "", { accept: ["No", "False", "0"], show: "No" }]],
+      why: "Deposit Paid = <code>No</code> (no quotes – it's a Yes/No field). Sort Learner Name Ascending. In Access you'd also untick Show for Deposit Paid, since it's only used as a filter." },
+
+    { t: "text", mode: "num", q: "How many records will Query 1 return?", accept: ["4"], why: "Rows 2, 6, 8 and 10: Grace Kim (Italian Basics), Finn O'Neill (Curry Masterclass), Omar Haddad (Sushi Skills), Zara Ahmed (Fresh Pasta)." },
+    { t: "mcq", q: "Which learner appears <b>first</b> in Query 1's results?", opts: ["Grace Kim", "Finn O'Neill", "Omar Haddad", "Zara Ahmed"], a: 1, why: "Ascending by Learner Name: <b>F</b>inn, <b>G</b>race, <b>O</b>mar, <b>Z</b>ara. (Access sorts on the first letter of the whole field – here the first name.)" },
+
+    { t: "text", mode: "expr", q: "Query 2: <i>\"Find bookings for courses costing <b>more than £50</b>.\"</i> Criteria for Course Price?", accept: [">50"], why: "<code>&gt;50</code> – no £ sign, and 'more than' means 50 itself is excluded." },
+    { t: "text", mode: "num", q: "How many <b>bookings</b> does Query 2 return?", accept: ["5"], why: "Curry Masterclass (£55) has 3 bookings and Sushi Skills (£60) has 2 → 5. Fresh Pasta at exactly £50 is <i>not</i> more than £50." },
+
+    { t: "text", mode: "expr", q: "Query 3: <i>\"Show all bookings made in <b>October 2025</b>.\"</i> Criteria for Booking Date?", accept: ["Between #01/10/2025# And #31/10/2025#", ">=#01/10/2025# And <=#31/10/2025#", "Between #1/10/2025# And #31/10/2025#", ">=#01/10/2025# And <#01/11/2025#"], show: "Between #01/10/2025# And #31/10/2025#",
+      near: [{ re: /between"?01\/10\/2025"?and"?31\/10\/2025"?$/, msg: "Dates need hashes: <code>#01/10/2025#</code>." }],
+      why: "<code>Between #01/10/2025# And #31/10/2025#</code>." },
+    { t: "text", mode: "num", q: "How many records does Query 3 return?", accept: ["5"], why: "01/10, 02/10, 06/10, 14/10 and 20/10 – rows 6 to 10." },
+
+    { t: "mcq", q: "Query 4: <i>\"Show Rosa Bianchi's bookings where the deposit has <b>not</b> been paid.\"</i> How do you set the criteria?", opts: ["\"Rosa Bianchi\" on the Criteria row of Chef Name, and No on the <b>or</b> row of Deposit Paid", "\"Rosa Bianchi\" and No both on the <b>same</b> Criteria row", "\"Rosa Bianchi\" And No in the Chef Name column", "Two separate queries"], a: 1,
+      why: "Both conditions must be true → same row = AND. Putting No on the 'or' row would return all of Rosa's bookings plus every unpaid booking." },
+    { t: "text", mode: "num", q: "How many records does Query 4 return?", accept: ["2"], why: "Rosa runs K01 and K02. Unpaid bookings on those: Grace Kim on Italian Basics, Zara Ahmed on Fresh Pasta → 2." },
+    { t: "multi", q: "Query 4 shows Chef Name and Learner Name. Which tables must be in the query?", opts: ["tblChef", "tblCourse", "tblBooking", "tblLearner"], a: [0, 1, 2, 3],
+      why: "All four. tblCourse and tblBooking hold the links between chef and learner (and Deposit Paid is in tblBooking)." },
+
+    { t: "text", mode: "expr", q: "Query 5: <i>\"Bookings for courses that run on a <b>Monday or a Wednesday</b>.\"</i> Write the criteria for Day in <b>one cell</b>.", accept: ["\"Monday\" Or \"Wednesday\"", "\"Wednesday\" Or \"Monday\"", "In (\"Monday\",\"Wednesday\")", "=\"Monday\" Or =\"Wednesday\""], show: "\"Monday\" Or \"Wednesday\"",
+      near: [{ re: /"monday"and"wednesday"/, msg: "A course can't be on Monday AND Wednesday at the same time – you need <b>Or</b>." }],
+      why: "<code>\"Monday\" Or \"Wednesday\"</code>. (Or put each on a separate row.)" },
+    { t: "text", mode: "num", q: "How many records does Query 5 return?", accept: ["4"], why: "Italian Basics (Monday) × 2 and Fresh Pasta (Wednesday) × 2 → 4." },
+
+    { t: "text", mode: "expr", q: "Query 6: <i>\"Bookings for any course whose name <b>starts with S</b>.\"</i> Criteria for Course Name?", accept: ["Like \"S*\""], near: [{ re: /^"s\*"$|^s\*$/, msg: "Wildcards need <code>Like</code> in front." }], why: "<code>Like \"S*\"</code> → Sushi Skills (2 bookings)." },
+
+    { t: "text", mode: "num", q: "Query 7: Course Price criteria <code>Between 45 And 55</code>. How many <b>bookings</b> are returned?", accept: ["7"], why: "£45 (2 bookings), £50 (2) and £55 (3) – Between includes both ends → 7. Only Sushi Skills (£60) and Baking Bread (£40) are left out." },
+
+    { t: "mcq", q: "Query 8: the client wants to type in any course name each time the query runs. What goes in the Criteria for Course Name?", opts: ["<code>\"Course Name\"</code>", "<code>[Enter the course name]</code>", "<code>Like *</code>", "<code>Is Null</code>"], a: 1,
+      why: "Square brackets with a prompt make a <b>parameter query</b>: Access pops up a box asking for the value." },
+
+    { t: "grid", qbe: true, q: "Query 9: <i>\"Which <b>Tuesday</b> courses are run by <b>Dev Sharma</b>? Show the course name only.\"</i>", tag: "Query design grid",
+      rows: [
+        ["Field:", "Course Name", "Day", "Chef Name"],
+        ["Table:", "tblCourse", "tblCourse", "tblChef"],
+        ["Show:", { sel: ["☑ ticked", "☐ unticked"], a: "☑ ticked" }, { sel: ["☑ ticked", "☐ unticked"], a: "☐ unticked" }, { sel: ["☑ ticked", "☐ unticked"], a: "☐ unticked" }],
+        ["Criteria:", "", { accept: ["\"Tuesday\"", "Tuesday"], show: "\"Tuesday\"" }, { accept: ["\"Dev Sharma\"", "Dev Sharma"], show: "\"Dev Sharma\"" }]],
+      why: "'Show the course name only' → untick Day and Chef Name. They're still in the grid because they hold the criteria. Result: Curry Masterclass." },
+
+    { t: "mcq", q: "What does an <b>unticked Show</b> box do?", opts: ["Deletes the field", "Uses the field (e.g. for criteria or sorting) but hides it from the results", "Sorts the field", "Makes the criteria optional"], a: 1, why: "Examiners check this: if the brief asks for specific fields, only those should appear." },
+
+    { t: "mcq", q: "You want learners who have <b>no phone number</b> recorded. Criteria for Learner Phone?", opts: ["<code>0</code>", "<code>\"\"</code>", "<code>Is Null</code>", "<code>No</code>"], a: 2, why: "<code>Is Null</code> finds empty fields. <code>Is Not Null</code> finds filled-in ones." },
+
+    { t: "mcq", q: "A student writes <code>&gt;£50</code> as the criteria for Course Price. What happens?", opts: ["Works fine", "Access gives an error / won't match – criteria for a currency field should be just <code>&gt;50</code>", "Returns prices in pounds only", "Sorts the prices"], a: 1, why: "Leave out currency symbols and units in criteria." },
+
+    { t: "tip", title: "Exam habit", html: "<p>Before you screenshot, run the query and <b>check the results against the data</b> exactly like you've done today. If Query 2 returned Fresh Pasta, you'd know you'd typed <code>&gt;=50</code> by mistake.</p>" }
+  ]
+});
+
+var TOT = ["Group By", "Count", "Sum", "Avg", "Max", "Min", "Where"];
+COURSE.days.push({
+  id: "d7", n: 7, week: 2, short: "Calculations, totals & reports",
+  title: "Calculated fields, IIf, totals queries and reports",
+  activity: "Activity 3", time: "90 mins",
+  intro: "The harder half of Activity 3: working things out (VAT, discounts, amounts owed), making decisions with IIf, counting and adding up with a Totals query, and presenting it all in a grouped report.",
+  blocks: [
+    { t: "learn", title: "Calculated fields", html:
+      "<p>In an empty <b>Field</b> cell of the query grid type <b>NewName: expression</b>. Field names go in <b>[square brackets]</b>.</p>" +
+      T(["Need", "Type in the Field row"], [
+        ["VAT at 20%", "<code>VAT: [Course Price]*0.2</code>"],
+        ["Price including VAT", "<code>Price Inc VAT: [Course Price]*1.2</code>"],
+        ["10% discount", "<code>Discounted Price: [Course Price]*0.9</code>"],
+        ["Price minus a £15 deposit", "<code>Balance: [Course Price]-15</code>"],
+        ["Two fields multiplied", "<code>Total Cost: [Price]*[Quantity]</code>"]]) +
+      "<p>The name before the colon becomes the column heading. Set the field's <b>Format</b> property to <b>Currency</b> so it shows £ and 2 decimal places.</p>" +
+      "<p><b>Percentages:</b> 20% of x = <code>x*0.2</code>. x after a 10% discount = <code>x*0.9</code>. x after a 15% discount = <code>x*0.85</code>.</p>" },
+
+    { t: "learn", title: "IIf – making a decision", html:
+      "<p><code>IIf( test , value if true , value if false )</code></p>" +
+      "<p><code>Status: IIf([Deposit Paid]=Yes,\"Confirmed\",\"Reserved\")</code> → every paid booking shows <i>Confirmed</i>, every unpaid one <i>Reserved</i>.</p>" +
+      "<p><code>Amount Owed: IIf([Deposit Paid]=Yes,[Course Price]-15,[Course Price])</code> → if they've paid the £15 deposit they owe the price minus 15, otherwise the full price.</p>" +
+      "<p>Watch the details: two <b>I</b>s in IIf; commas between the three parts; text results in quotes; numbers and field names not in quotes.</p>" },
+
+    { t: "learn", title: "Totals queries – Count, Sum, Avg", html:
+      "<p>Press <b>Totals (Σ)</b> in Design View and a <b>Total</b> row appears. Use <b>Group By</b> on the field you're grouping by and an aggregate on the field you're counting or adding.</p>" +
+      QBE([{ f: "Course Name", t: "tblCourse", tot: "Group By" }, { f: "Learner ID", t: "tblBooking", tot: "Count", c: "&gt;=2" }], "Example: courses with at least 2 bookings") +
+      T(["The brief says…", "Total row"], [["\"how many…\", \"number of…\"", "Count"], ["\"total…\" (money, quantities)", "Sum"], ["\"average…\"", "Avg"], ["\"highest / most expensive\"", "Max"], ["\"lowest / cheapest\"", "Min"]]) +
+      "<p>Criteria on the Count column (<code>&gt;=2</code>) filters the <b>groups</b> – e.g. 'courses with at least 2 bookings'.</p>" },
+
+    { t: "learn", title: "Reports – bands and what goes where", html:
+      T(["Band", "Appears", "Put here"], [
+        ["Report Header", "Once, at the very start", "The report title"],
+        ["Page Header", "Top of every page", "Column headings"],
+        ["Group Header", "Before each group", "The group name, e.g. each Course Name"],
+        ["Detail", "Once per record", "The data lines, e.g. each learner"],
+        ["Group Footer", "After each group", "Group totals: <code>=Count(*)</code>, <code>=Sum([Course Price])</code>"],
+        ["Page Footer", "Bottom of every page", "Page numbers, date"],
+        ["Report Footer", "Once, at the very end", "Grand totals"]]) +
+      "<p>The <b>Report Wizard</b> builds most of this: choose the query, pick a <b>grouping</b> level, a <b>sort</b> order, and <b>Summary Options</b> (Sum/Avg/Min/Max). Then tidy it in Design/Layout View.</p>" +
+      "<p><b>Marks are lost for:</b> a default title like 'qryBookings1', cut-off data or headings (#### or half-visible text), missing grouping/sort that the brief asked for, and totals without a label.</p>" },
+
+    { t: "scenario", title: "Elmwood data (again)", html: ELM.table() },
+
+    { t: "h", text: "Practise – calculated fields and IIf", sub: "Type the expression. You can include the name and colon (e.g. VAT: …) or just the calculation." },
+
+    { t: "text", mode: "calc", q: "Show the <b>VAT at 20%</b> on each Course Price.", accept: ["[Course Price]*0.2", "[Course Price]*20/100", "[Course Price]*0.20", "[Course Price]/5", "0.2*[Course Price]", "[Course Price]*20%", "[Course Price]*(20/100)"], show: "VAT: [Course Price]*0.2",
+      why: "<code>VAT: [Course Price]*0.2</code>" },
+    { t: "text", mode: "num", q: "What VAT would be shown for <b>Sushi Skills</b> (£60.00)?", accept: ["12"], why: "60 × 0.2 = £12.00" },
+    { t: "text", mode: "calc", q: "Show each course's price after a <b>10% discount</b>.", accept: ["[Course Price]*0.9", "[Course Price]*90/100", "[Course Price]-[Course Price]*0.1", "[Course Price]-([Course Price]*0.1)", "[Course Price]*0.90", "0.9*[Course Price]", "[Course Price]-[Course Price]*10/100", "[Course Price]*90%"], show: "Discounted Price: [Course Price]*0.9",
+      near: [{ re: /^courseprice\*0\.1$/, msg: "That's the discount <i>amount</i> (10% of the price). The price <i>after</i> the discount is 90% of it." }],
+      why: "Price after 10% off = 90% of the price → <code>[Course Price]*0.9</code>." },
+    { t: "text", mode: "num", q: "What is the discounted price of <b>Fresh Pasta</b> (£50.00)?", accept: ["45"], why: "50 × 0.9 = £45.00" },
+
+    { t: "text", mode: "calc", q: "Add a field called <b>Status</b> that shows <b>Confirmed</b> if the deposit has been paid and <b>Reserved</b> if not.", accept: ["IIf([Deposit Paid]=Yes,\"Confirmed\",\"Reserved\")", "IIf([Deposit Paid]=True,\"Confirmed\",\"Reserved\")", "IIf([Deposit Paid]=-1,\"Confirmed\",\"Reserved\")", "IIf([Deposit Paid],\"Confirmed\",\"Reserved\")", "IIf([Deposit Paid]=No,\"Reserved\",\"Confirmed\")", "IIf([Deposit Paid]=False,\"Reserved\",\"Confirmed\")", "IIf([Deposit Paid]=0,\"Reserved\",\"Confirmed\")", "IIf([Deposit Paid]<>No,\"Confirmed\",\"Reserved\")"], show: "Status: IIf([Deposit Paid]=Yes,\"Confirmed\",\"Reserved\")",
+      near: [{ re: /^if\(/, msg: "It's <b>IIf</b> – two I's." }, { re: /confirmed,reserved/, msg: "Text results need quotes: <code>\"Confirmed\"</code>." }],
+      why: "<code>Status: IIf([Deposit Paid]=Yes,\"Confirmed\",\"Reserved\")</code>" },
+    { t: "text", mode: "num", q: "How many bookings would show <b>Reserved</b>?", accept: ["4"], why: "4 bookings have Deposit Paid = No." },
+
+    { t: "text", mode: "calc", q: "The deposit is £15. Add <b>Amount Owed</b>: if the deposit has been paid, the course price minus 15; otherwise the full course price.", accept: ["IIf([Deposit Paid]=Yes,[Course Price]-15,[Course Price])", "IIf([Deposit Paid]=True,[Course Price]-15,[Course Price])", "IIf([Deposit Paid],[Course Price]-15,[Course Price])", "IIf([Deposit Paid]=No,[Course Price],[Course Price]-15)", "IIf([Deposit Paid]=-1,[Course Price]-15,[Course Price])", "IIf([Deposit Paid]=False,[Course Price],[Course Price]-15)"], show: "Amount Owed: IIf([Deposit Paid]=Yes,[Course Price]-15,[Course Price])",
+      why: "<code>Amount Owed: IIf([Deposit Paid]=Yes,[Course Price]-15,[Course Price])</code>" },
+    { t: "grid", q: "Predict <b>Amount Owed</b> for these bookings.", head: ["Booking", "Course Price", "Deposit Paid", "Amount Owed (£)"],
+      rows: [["Omar Haddad – Italian Basics", "£45.00", "Yes", { accept: ["30"], mode: "num" }], ["Omar Haddad – Sushi Skills", "£60.00", "No", { accept: ["60"], mode: "num" }], ["Finn O'Neill – Baking Bread", "£40.00", "Yes", { accept: ["25"], mode: "num" }], ["Zara Ahmed – Fresh Pasta", "£50.00", "No", { accept: ["50"], mode: "num" }]],
+      why: "Paid → price − 15. Not paid → full price." },
+    { t: "text", mode: "num", q: "Across <b>both</b> of Grace Kim's bookings, how much does she owe in total?", accept: ["85"], why: "Italian Basics, not paid → £45. Curry Masterclass, paid → £55 − £15 = £40. Total £85." },
+
+    { t: "h", text: "Practise – totals queries" },
+
+    { t: "grid", qbe: true, q: "<i>\"How many bookings does each course have? Only show courses with <b>at least 2</b> bookings.\"</i>", tag: "Query design grid",
+      rows: [["Field:", "Course Name", "Learner ID"], ["Table:", "tblCourse", "tblBooking"], ["Total:", { sel: TOT, a: "Group By" }, { sel: TOT, a: "Count" }], ["Criteria:", "", { accept: [">=2", ">1"], show: ">=2" }]],
+      why: "Group By the course, Count the bookings, and put <code>&gt;=2</code> on the Count column." },
+    { t: "grid", q: "Predict the number of bookings for each course.", head: ["Course Name", "Bookings"],
+      rows: [["Italian Basics", { accept: ["2"], mode: "num" }], ["Fresh Pasta", { accept: ["2"], mode: "num" }], ["Curry Masterclass", { accept: ["3"], mode: "num" }], ["Sushi Skills", { accept: ["2"], mode: "num" }], ["Baking Bread", { accept: ["1"], mode: "num" }]],
+      why: "So the 'at least 2' query returns 4 courses – everything except Baking Bread." },
+    { t: "mcq", q: "<i>\"Show the <b>total income</b> from bookings for each chef.\"</i> Which Total setting goes on Course Price?", opts: ["Count", "Sum", "Avg", "Max"], a: 1, why: "'Total' money → Sum, with Group By on Chef Name." },
+    { t: "text", mode: "num", q: "What total income would that query show for <b>Rosa Bianchi</b>?", accept: ["190"], why: "Rosa's bookings: Italian Basics £45 × 2 + Fresh Pasta £50 × 2 = £190." },
+    { t: "mcq", q: "<i>\"What is the <b>average</b> price of a course?\"</i> (using tblCourse only). What's the answer?", opts: ["£48.00", "£50.00", "£51.50", "£55.00"], a: 1, why: "Avg of 45, 50, 55, 60, 40 = 250 ÷ 5 = £50.00. (If you averaged over the 10 bookings instead you'd get £51.50 – read the question carefully: per course or per booking?)" },
+    { t: "mcq", q: "<i>\"Which course is the <b>most expensive</b>?\"</i> One good approach is…", opts: ["Count on Course Price", "Sort Course Price Descending (and show the top value), or use Max", "Group By Course Price", "Criteria <code>&gt;Max</code>"], a: 1, why: "Sort descending puts the most expensive first; a Totals query with Max gives the highest price." },
+
+    { t: "h", text: "Practise – reports" },
+
+    { t: "match", q: "Which report band does each item belong in?", lh: "Item", rh: "Band",
+      items: [["The title 'Elmwood Bookings by Course'", "Report Header"], ["Column headings shown at the top of every page", "Page Header"], ["Each course name, as a heading above its learners", "Group Header"], ["One line for each learner's booking", "Detail"], ["The number of bookings for each course", "Group Footer"], ["Page 1 of 2", "Page Footer"], ["The grand total of all bookings", "Report Footer"]],
+      choices: ["Report Header", "Page Header", "Group Header", "Detail", "Group Footer", "Page Footer", "Report Footer"],
+      why: "Group bands repeat for every group; Report bands appear once; Page bands appear on every page." },
+    { t: "text", mode: "expr", q: "What would you type in a text box in the <b>Group Footer</b> to count the bookings in each course?", accept: ["Count(*)", "Count([Learner ID])", "Count([Learner Name])", "Count([Course ID])", "Count([Booking Date])"], show: "=Count(*)",
+      why: "<code>=Count(*)</code> (or <code>=Count([Learner ID])</code>). The same expression in the Report Footer gives the grand total." },
+    { t: "text", mode: "num", q: "What grand total would the Report Footer show?", accept: ["10"], why: "10 bookings altogether." },
+    { t: "text", mode: "expr", q: "Write the expression for a text box that adds up the <b>Course Price</b> of every booking in a group.", accept: ["Sum([Course Price])"], show: "=Sum([Course Price])", why: "<code>=Sum([Course Price])</code> – in the Report Footer it would show £515.00 in total." },
+    { t: "multi", q: "Which of these would lose marks on a report?", opts: ["The title is left as 'qryBookingsByCourse'", "Some learner names are cut off", "Grouped by course, as the brief asked", "A group total with no label next to it", "Sorted by learner name within each course"], a: [0, 1, 3],
+      why: "Give it a meaningful title, make sure every value is fully visible, and label every total ('Number of bookings:')." },
+
+    { t: "tip", title: "Tomorrow", html: "<p>Activity 4 – testing. You'll design test data for the validation you wrote on Day 4. Have a quick look back at your Day 4 answers first.</p>" }
+  ]
+});
+
+var TYPES = ["Normal", "Extreme", "Erroneous"];
+var RES = ["Accepted", "Rejected"];
+COURSE.days.push({
+  id: "d8", n: 8, week: 2, short: "Testing",
+  title: "Testing the database structure",
+  activity: "Activity 4", time: "60–75 mins",
+  intro: "Activity 4 asks you to prove your structure and validation actually work. That means choosing the right test data, predicting what should happen, and recording what did happen. All of the thinking can be practised without Access.",
+  blocks: [
+    { t: "learn", title: "What Activity 4 asks", html:
+      "<p>You test the things you set up in Activity 2 – validation rules, input masks, lookups, required fields, primary keys and relationships. For each test you record a row in a <b>test plan / test log</b> and take a screenshot as evidence (usually the error message).</p>" +
+      T(["Test no.", "What is being tested", "Test data", "Type of test", "Expected result", "Actual result"], [
+        ["1", "Climber Age validation rule <code>&gt;=8</code>", "12", "Normal", "Accepted – record saves", "As expected"],
+        ["2", "Climber Age validation rule <code>&gt;=8</code>", "8", "Extreme", "Accepted – record saves", "As expected"],
+        ["3", "Climber Age validation rule <code>&gt;=8</code>", "7", "Erroneous", "Rejected – message 'Climbers must be 8 or over' appears", "As expected (screenshot 4.3)"]]) },
+
+    { t: "learn", title: "Normal, extreme, erroneous", html:
+      T(["Type", "Meaning", "For <code>Between 16 And 99</code>"], [
+        ["<b>Normal</b>", "Sensible, valid data in the middle of the range. Should be <b>accepted</b>.", "30, 45"],
+        ["<b>Extreme</b> (boundary)", "Valid data right <b>on the edge</b> of what's allowed. Should be <b>accepted</b>.", "16 and 99"],
+        ["<b>Erroneous</b>", "Invalid data – outside the range or the wrong type. Should be <b>rejected</b>.", "15, 100, 'abc'"]]) +
+      "<p>Good test plans test <b>both</b> boundaries, and the value <b>just outside</b> each one (15 and 100). That's where mistakes like <code>&gt;</code> instead of <code>&gt;=</code> get caught.</p>" },
+
+    { t: "learn", title: "Testing everything else", html:
+      T(["What you're testing", "Erroneous test", "Expected result"], [
+        ["Input mask <code>\\C\\L000</code>", "Type CL12 (too few digits) or try a letter in a digit position", "Rejected – Access won't let you leave the field / 'The value you entered isn't appropriate for the input mask'"],
+        ["Required = Yes", "Leave the field blank and save", "Rejected – 'You must enter a value…'"],
+        ["Value List, Limit To List = Yes", "Type 'Expert' in Session Level", "Rejected – 'The text you entered isn't an item in the list'"],
+        ["Primary key", "Enter an ID that already exists (e.g. a second CL001)", "Rejected – duplicate values in the primary key"],
+        ["Composite key on a link table", "Enter the same Climber ID + Session ID pair twice", "Rejected – duplicate key"],
+        ["Referential integrity", "Enter a Session ID in tblAttendance that isn't in tblSession (e.g. SE99)", "Rejected – 'a related record is required in tblSession'"]]) +
+      "<p><b>Expected result</b> must say <b>accepted or rejected AND what you'll see</b> – e.g. the validation text you wrote. 'It works' gets nothing.</p>" },
+
+    { t: "h", text: "Practise" },
+
+    { t: "match", q: "The rule is <code>Between 1 And 20</code>. What type of test is each value?", lh: "Test data", rh: "Type",
+      items: [["10", "Normal"], ["1", "Extreme"], ["20", "Extreme"], ["0", "Erroneous"], ["21", "Erroneous"], ["ten", "Erroneous"]], choices: TYPES,
+      why: "1 and 20 are valid but on the boundary → extreme. 0 and 21 are just outside → erroneous. Text in a number field is erroneous too." },
+    { t: "text", mode: "num", q: "The rule on Climber Age is <code>&gt;=8</code>. What is the <b>extreme</b> test value?", accept: ["8"], why: "8 is the lowest value that should still be accepted." },
+    { t: "text", mode: "num", q: "…and the <b>erroneous</b> value just outside that boundary?", accept: ["7"], why: "7 should be rejected. If 8 is rejected too, the rule was probably written as &gt;8 by mistake." },
+
+    { t: "grid", q: "Complete the expected results for the Course Price rule <code>Between 20 And 100</code>.", head: ["Test data", "Type of test", "Expected result"],
+      rows: [["£55", { sel: TYPES, a: "Normal" }, { sel: RES, a: "Accepted" }], ["£20", { sel: TYPES, a: "Extreme" }, { sel: RES, a: "Accepted" }], ["£100", { sel: TYPES, a: "Extreme" }, { sel: RES, a: "Accepted" }], ["£19.99", { sel: TYPES, a: "Erroneous" }, { sel: RES, a: "Rejected" }], ["£100.01", { sel: TYPES, a: "Erroneous" }, { sel: RES, a: "Rejected" }]],
+      why: "Extreme values are accepted; erroneous values are rejected and the validation text appears." },
+
+    { t: "match", q: "Today's date is 01/03/2026 and Booking Date has the rule <code>&gt;=Date()</code>. Classify each test.", lh: "Test data", rh: "Type",
+      items: [["15/03/2026", "Normal"], ["01/03/2026", "Extreme"], ["28/02/2026", "Erroneous"]], choices: TYPES,
+      why: "Today is the boundary (accepted). Yesterday is just outside it (rejected)." },
+
+    { t: "mcq", q: "Input mask <code>\\C\\L000</code> on Climber ID. Which is a good <b>erroneous</b> test?", opts: ["CL123", "CL12 – only two digits", "CL000", "CL999"], a: 1,
+      why: "CL12 doesn't fill the required digits, so Access won't accept it. CL123, CL000 and CL999 all fit the mask and should be accepted (an input mask checks the shape, not whether the number is sensible)." },
+    { t: "mcq", q: "Session Level is a Value List (Beginner; Improver; Advanced) with Limit To List = Yes. What happens if you type <b>Expert</b>?", opts: ["Accepted – it's text", "Rejected – Access says the text isn't an item in the list", "Accepted, but shown in red", "Access adds Expert to the list"], a: 1,
+      why: "That's exactly what Limit To List = Yes is for. If it were No, Expert would be accepted – a good reason to test it." },
+    { t: "mcq", q: "You try to add a record to tblAttendance with Session ID <b>SE99</b>, which doesn't exist in tblSession. Referential integrity is enforced. Expected result?", opts: ["Accepted", "Rejected – a related record is required in tblSession", "Accepted, but SE99 is added to tblSession", "The relationship is deleted"], a: 1,
+      why: "Referential integrity stops 'orphan' records – you can't attend a session that doesn't exist." },
+    { t: "mcq", q: "You enter <b>CL001 + SE01</b> into tblAttendance, but that pair is already there. Expected result?", opts: ["Accepted – it's a second attendance", "Rejected – duplicate value in the (composite) primary key", "Accepted only if Belay Check Passed is different", "Access asks which one to keep"], a: 1,
+      why: "This test proves your composite key is doing its job." },
+    { t: "mcq", q: "You try to delete instructor <b>I01</b>, who still has sessions in tblSession. With referential integrity on (no cascade delete), what happens?", opts: ["I01 is deleted and their sessions remain", "Rejected – the record can't be deleted because related records exist in tblSession", "I01 and all their sessions are deleted", "Nothing happens and no message appears"], a: 1,
+      why: "Referential integrity also protects the 'one' side: you can't leave sessions pointing to an instructor who no longer exists." },
+    { t: "mcq", q: "Which test is the right way to check <b>Required = Yes</b> on Climber Name?", opts: ["Type a very long name", "Leave Climber Name empty and try to save the record", "Type a number in Climber Name", "Type the name in capitals"], a: 1, why: "A presence check is tested by leaving the field blank." },
+
+    { t: "mcq", q: "Which is the <b>best</b> expected result for an erroneous test of Climber Age (value 7)?", opts: ["It works", "Error", "Rejected – the message 'Climbers must be aged 8 or over' is displayed and the record isn't saved", "7"], a: 2,
+      why: "Say whether it's accepted or rejected, and quote what should appear." },
+    { t: "multi", q: "What should every row of a good test plan include?", opts: ["What is being tested (field and check)", "The test data", "The type of test (normal/extreme/erroneous)", "The expected result", "The actual result (with evidence)", "Your target grade"], a: [0, 1, 2, 3, 4],
+      why: "And if actual ≠ expected, record what you changed and re-test." },
+    { t: "mcq", q: "Your extreme test (value 8) is <b>rejected</b> but should have been accepted. What should you do?", opts: ["Change the expected result to 'Rejected'", "Ignore it", "Record it, fix the rule (it was probably <code>&gt;8</code>) and re-test, recording the new result", "Delete the test"], a: 2,
+      why: "Finding and fixing a fault is good practice – and it shows the examiner your testing actually did something." },
+
+    { t: "grid", q: "Write a mini test plan for the Member ID input mask <code>\\M00</code> (letter M then two digits). Choose the type and expected result for each.", head: ["Test data", "Type of test", "Expected result"],
+      rows: [["M07", { sel: TYPES, a: "Normal" }, { sel: RES, a: "Accepted" }], ["M7", { sel: TYPES, a: "Erroneous" }, { sel: RES, a: "Rejected" }], ["M00", { sel: TYPES, a: "Extreme" }, { sel: RES, a: "Accepted" }], ["M99", { sel: TYPES, a: "Extreme" }, { sel: RES, a: "Accepted" }], ["MAB", { sel: TYPES, a: "Erroneous" }, { sel: RES, a: "Rejected" }]],
+      why: "M00 and M99 are the lowest and highest values the mask can take. M7 is too short and MAB has letters where digits are required." },
+
+    { t: "tip", title: "Remember the screenshots", html: "<p>For each erroneous test, the evidence is a screenshot of the <b>error message</b>, ideally with the data you typed still visible. Number the screenshots so the test log can refer to them.</p>" }
+  ]
+});
+
+COURSE.days.push({
+  id: "d9", n: 9, week: 2, short: "Writing the evaluation",
+  title: "Activity 5: writing a top-band evaluation",
+  activity: "Activity 5", time: "75–90 mins",
+  intro: "Activity 5 is a written evaluation, usually worth 6 marks and marked in levels (bands) – not one mark per point. Today you'll learn what lifts an answer from the bottom band to the top, then write two full answers and mark them against a checklist and a model.",
+  blocks: [
+    { t: "learn", title: "How it's marked", html:
+      "<p>The examiner reads the whole answer and places it in a <b>band</b>:</p>" +
+      T(["Band", "Roughly what it looks like"], [
+        ["Low (1–2)", "Lists or describes what was done ('I made four tables and used validation'). Generic. Little or no 'why'."],
+        ["Middle (3–4)", "Explains some features and why they help, with some reference to the scenario. May be one-sided (only strengths)."],
+        ["Top (5–6)", "Evaluates: each point names a <b>specific feature of your design</b>, explains <b>how it meets a specific requirement</b> of the client, and the answer is <b>balanced</b> – it also considers limitations or improvements. Correct technical vocabulary throughout."]]) +
+      "<p>The key difference: <b>describe</b> = what you did. <b>Evaluate</b> = how well it meets the client's needs, and what its limits are.</p>" },
+
+    { t: "learn", title: "Build every point the same way", html:
+      "<ol><li><b>Feature</b> – name it precisely: <i>'the composite primary key (Climber ID + Session ID) in tblAttendance'</i>.</li>" +
+      "<li><b>Requirement</b> – which of the client's needs does it meet? <i>'…so each climber's attendance at each session is recorded once…'</i></li>" +
+      "<li><b>Impact</b> – why that matters: <i>'…which stops duplicate records and makes the belay check results reliable.'</i></li>" +
+      "<li><b>Limitation / improvement</b> (at least once in the answer): <i>'However, the input mask only checks the format of the phone number, not that it is the instructor's real number.'</i></li></ol>" +
+      "<p><b>What to cover</b> (pick the ones the question asks about): splitting the flat file to remove duplication and anomalies; the link table and composite key; foreign keys and referential integrity; data types and field sizes; each validation check and the error it prevents; limitations of validation.</p>" },
+
+    { t: "learn", title: "Weak vs strong", html:
+      "<p><b>Weak:</b> <i>\"My database is good because I used validation and it has four tables. I used an input mask. This makes it accurate.\"</i></p>" +
+      "<p>Why it's weak: no named fields or tables, no link to a requirement, 'accurate' isn't explained, no limitation.</p>" +
+      "<p><b>Strong:</b> <i>\"The input mask <code>\\C\\L000</code> on Climber ID forces every ID to be 'CL' followed by exactly three digits, which meets the centre's requirement for a consistent ID format and stops typing errors such as 'C001' being saved. However, it only checks the format: it cannot stop a receptionist giving a new climber an ID that is already in use – that is prevented by Climber ID being the primary key.\"</i></p>" },
+
+    { t: "tip", title: "Useful sentence starters", html: "<ul><li>\"This meets the requirement that … because …\"</li><li>\"Without this, … could happen, for example …\"</li><li>\"This is an improvement on the flat file because …\"</li><li>\"However, a limitation is …\" / \"This could be improved by …\"</li><li>\"Overall, the structure is effective because …, although …\"</li></ul>" },
+
+    { t: "h", text: "Practise – spot the quality" },
+
+    { t: "mcq", q: "Which sentence would earn the most credit?", opts: ["\"I used a composite key.\"", "\"The database has a link table which is good.\"", "\"tblBooking uses Learner ID + Course ID as a composite primary key, so a learner cannot be booked onto the same course twice, meeting the school's need for accurate booking records.\"", "\"Composite keys are made of two fields.\""], a: 2,
+      why: "It names the feature, links it to a requirement and explains the impact. A and D just describe; B gives no reason." },
+    { t: "mcq", q: "Which sentence adds the <b>balance</b> that top-band answers need?", opts: ["\"Validation makes the data correct.\"", "\"However, the validation rule <code>Between 20 And 100</code> on Course Price only checks the price is in range – it can't detect a price typed as £45 when it should be £54.\"", "\"I tested all my validation.\"", "\"Access is a good program.\""], a: 1,
+      why: "Recognising that validation checks <i>reasonableness</i>, not <i>correctness</i>, is a classic limitation point." },
+    { t: "match", q: "Label each part of this strong point.", lh: "Part of the sentence", rh: "Role",
+      items: [["\"The Value List on Session Level, with Limit To List set to Yes,…\"", "Feature"], ["\"…meets the requirement that every session is Beginner, Improver or Advanced…\"", "Requirement"], ["\"…so reports grouped by level are never split by spelling mistakes like 'Begginer'.\"", "Impact"], ["\"However, if the centre adds a new level, the list must be edited in Design View.\"", "Limitation"]],
+      choices: ["Feature", "Requirement", "Impact", "Limitation"],
+      why: "Feature → Requirement → Impact → Limitation. Aim for three or four points like this in a 6-mark answer." },
+    { t: "multi", q: "Which of these are valid <b>limitations</b> you could mention?", opts: ["An input mask checks the format, not whether the data is true", "A Value List has to be edited if the client adds a new option", "The flat file had duplicated data", "A text phone number field can't be used in calculations – but that's fine because you never calculate with it", "Validation can't stop a wrong-but-reasonable value, e.g. the wrong date of birth inside the allowed range"], a: [0, 1, 4],
+      why: "C is a strength of <i>your</i> design (you removed the duplication). D isn't a real limitation." },
+    { t: "mcq", q: "Improve this sentence: <i>\"Splitting the data into tables reduces redundancy.\"</i> Which version is best?", opts: ["\"Splitting the data into tables reduces redundancy a lot.\"", "\"Splitting Figure 1 into tblChef, tblCourse, tblLearner and tblBooking means each learner's phone number is stored once, so if Omar changes his number it only needs updating in one place – avoiding update anomalies.\"", "\"Redundancy is bad.\"", "\"Normalisation is a process with 3 stages.\""], a: 1,
+      why: "Named tables + a concrete example from the data + the consequence = evaluation." },
+
+    { t: "h", text: "Write it yourself", sub: "Write a full answer before you look at the mark scheme. Aim for 150–250 words. Then tick honestly." },
+
+    { t: "scenario", title: "Question 1 – Elmwood Cookery School (structure)", html:
+      "<p>Use your Elmwood design from Day 2:</p>" + ELM.tables() +
+      "<p><b>Evaluate how well your database structure meets Elmwood's requirements.</b> Elmwood needs to: store each chef, course and learner without repeating details; record every booking, including the date and whether the deposit was paid; and make sure a learner cannot be booked onto the same course twice. <i>(6 marks)</i></p>" },
+    { t: "essay", minWords: 150, q: "Write your evaluation of the Elmwood database structure.", check: [
+      "I explained that splitting the flat file means details (e.g. a learner's phone, a chef's name) are stored once, with an example",
+      "I named an anomaly (update, insertion or deletion) the structure prevents",
+      "I explained the link table tblBooking and why it's needed (learners ↔ courses is many-to-many)",
+      "I explained that the composite key (Learner ID + Course ID) stops a learner being booked onto the same course twice",
+      "I explained why Booking Date and Deposit Paid are in tblBooking (they're facts about each booking)",
+      "I included at least one limitation or improvement (e.g. a learner can't rebook the same course later without a different key design; referential integrity must be enforced for the links to be reliable)"],
+      model: "<p>Splitting Figure 1 into tblChef, tblCourse, tblLearner and tblBooking means each chef, course and learner is stored once. For example, Omar Haddad's phone number was repeated on three rows of the flat file; now it is in one record in tblLearner, so if it changes it only needs updating once, which prevents update anomalies. A new course can also be added to tblCourse before anyone books it, avoiding an insertion anomaly.</p><p>Learners can book several courses and each course has several learners, which is many-to-many, so I added the link table tblBooking. Its composite primary key, Learner ID + Course ID, means Access will reject a second booking for the same learner on the same course, meeting the requirement directly – an AutoNumber key would not have prevented this. Booking Date and Deposit Paid are stored in tblBooking because they belong to each booking, not to the learner or course (Omar has paid for Italian Basics but not Sushi Skills). Chef ID is a foreign key in tblCourse, linking each course to its one chef.</p><p>However, the links are only reliable if referential integrity is enforced on all three relationships, otherwise a booking could refer to a course that doesn't exist. Also, the composite key means a learner could not book the same course again in a later term; if Elmwood wanted that, I would add a term or start date to the key.</p>" },
+
+    { t: "scenario", title: "Question 2 – Oakridge Climbing Centre (validation)", html:
+      "<p>On Day 5 you set up this validation for Oakridge: Climber ID input mask <code>\\C\\L000</code>; Climber Age rule <code>&gt;=8</code>; Session Level Value List (Beginner; Improver; Advanced) with Limit To List = Yes; Instructor Phone input mask <code>00000 000000</code>; Climber Name Required = Yes; Instructor ID in tblSession looked up from tblInstructor with referential integrity.</p>" +
+      "<p><b>Evaluate how effectively the validation you used will help Oakridge keep accurate data.</b> <i>(6 marks)</i></p>" },
+    { t: "essay", minWords: 150, q: "Write your evaluation of Oakridge's validation.", check: [
+      "I explained at least two specific checks by name AND what error each one stops (e.g. 'C001' rejected by the mask; age 6 rejected by the rule)",
+      "I linked checks to the centre's needs (e.g. under-8s can't be booked – a safety requirement)",
+      "I explained the Value List keeping levels consistent (no misspellings), so searches/reports are reliable",
+      "I explained the Instructor ID lookup + referential integrity stopping sessions with an instructor who doesn't exist",
+      "I explained that validation checks format/range, not truth (e.g. a wrong but valid age or phone number is still accepted)",
+      "I suggested a sensible improvement (e.g. validation text on every check, an upper age limit, Indexed No Duplicates where needed)"],
+      model: "<p>The input mask <code>\\C\\L000</code> on Climber ID forces every ID to be 'CL' plus three digits, so a typing mistake such as 'C001' or 'CL12' cannot be saved and IDs stay consistent. The rule <code>&gt;=8</code> on Climber Age meets the centre's safety requirement that no climber under 8 is registered – an age of 6 is rejected with a validation message. The Value List on Session Level with Limit To List set to Yes means only Beginner, Improver or Advanced can be entered, so a misspelling like 'Begginer' can't split the results of a query or report on level. Looking up Instructor ID from tblInstructor, with referential integrity enforced on the relationship, means a session can't be assigned to an instructor who doesn't exist.</p><p>However, validation only checks that data is reasonable, not that it is correct. The phone mask accepts any 11 digits, so a mistyped but well-formed number is still saved, and an age of 9 entered instead of 19 passes the rule. The age rule also has no upper limit, so 150 would be accepted; <code>Between 8 And 99</code> would be better. Overall the validation greatly reduces errors at the point of entry, but staff still need to check details with climbers.</p>" },
+
+    { t: "tip", title: "Tomorrow: the full mock", html: "<p>Day 10 is a complete Part A practice – all five activities on a brand-new scenario. Give yourself about 2 hours and try it without the reference sheet.</p>" }
+  ]
+});
+
+var KW = {
+  head: ["Teacher ID", "Teacher Name", "Class ID", "Class Name", "Class Day", "Class Fee", "Student ID", "Student Name", "Student Email", "Enrol Date", "Fee Paid"],
+  rows: [
+    ["T01", "Ana Ruiz", "LC01", "Spanish Beginners", "Monday", "£120.00", "S101", "Ella Novak", "ella.novak@mail.com", "01/09/2025", "Yes"],
+    ["T01", "Ana Ruiz", "LC01", "Spanish Beginners", "Monday", "£120.00", "S102", "Jamal Reid", "jamal.reid@mail.com", "02/09/2025", "No"],
+    ["T01", "Ana Ruiz", "LC01", "Spanish Beginners", "Monday", "£120.00", "S103", "Priya Desai", "priya.desai@mail.com", "03/09/2025", "Yes"],
+    ["T02", "Ben Carter", "LC03", "French Beginners", "Tuesday", "£120.00", "S101", "Ella Novak", "ella.novak@mail.com", "04/09/2025", "Yes"],
+    ["T02", "Ben Carter", "LC03", "French Beginners", "Tuesday", "£120.00", "S104", "Tom Walsh", "tom.walsh@mail.com", "08/09/2025", "No"],
+    ["T01", "Ana Ruiz", "LC02", "Spanish Intermediate", "Wednesday", "£150.00", "S105", "Mei Lin", "mei.lin@mail.com", "09/09/2025", "Yes"],
+    ["T03", "Chloe Martin", "LC04", "German Conversation", "Thursday", "£180.00", "S102", "Jamal Reid", "jamal.reid@mail.com", "15/09/2025", "Yes"],
+    ["T03", "Chloe Martin", "LC04", "German Conversation", "Thursday", "£180.00", "S106", "Oscar Bell", "oscar.bell@mail.com", "16/09/2025", "No"],
+    ["T02", "Ben Carter", "LC05", "French Intermediate", "Saturday", "£150.00", "S103", "Priya Desai", "priya.desai@mail.com", "22/09/2025", "Yes"],
+    ["T02", "Ben Carter", "LC05", "French Intermediate", "Saturday", "£150.00", "S104", "Tom Walsh", "tom.walsh@mail.com", "23/09/2025", "Yes"],
+    ["T02", "Ben Carter", "LC05", "French Intermediate", "Saturday", "£150.00", "S105", "Mei Lin", "mei.lin@mail.com", "29/09/2025", "No"],
+    ["T01", "Ana Ruiz", "LC01", "Spanish Beginners", "Monday", "£120.00", "S106", "Oscar Bell", "oscar.bell@mail.com", "30/09/2025", "Yes"]
+  ]
+};
+var KT = ["tblTeacher", "tblClass", "tblStudent", "tblEnrolment"];
+var KPK = ["Teacher ID", "Class ID", "Student ID", "Student ID + Class ID", "AutoNumber Enrolment ID"];
+var KFK = ["None", "Teacher ID", "Class ID", "Student ID", "Student ID and Class ID"];
+COURSE.days.push({
+  id: "d10", n: 10, week: 2, short: "Full mock – Part A",
+  title: "Full mock: Part A, Activities 1–5",
+  activity: "Activities 1–5", time: "2–2½ hours",
+  intro: "Everything together, on a scenario you haven't seen. Work through it in order, <b>without the reference sheet</b>, and commit to each answer before you press Check. Write Activity 5 properly – it's where the top grades are decided. When you've finished, send your progress to your teacher.",
+  blocks: [
+    { t: "scenario", title: "Kingsway Language School", html:
+      "<p><i>\"Kingsway Language School runs evening and weekend language classes. Each class is taught by one teacher, although a teacher may teach more than one class. Students can enrol on more than one class, and every class has a number of students. When a student enrols on a class, the school records the date they enrolled and whether they have paid the fee for that class.</i></p>" +
+      "<p><i>The school needs a relational database to replace its spreadsheet. It must be able to find students who still owe fees, calculate early-enrolment discounts and produce a report of enrolments for each teacher.\"</i></p>" +
+      "<p><b>Figure 1</b></p>" + T(KW.head, KW.rows) },
+
+    { t: "h", text: "Activity 1 – Database structure" },
+    { t: "match", q: "Which table does each field belong in?", lh: "Field", rh: "Table",
+      items: [["Teacher Name", "tblTeacher"], ["Class Name", "tblClass"], ["Class Day", "tblClass"], ["Class Fee", "tblClass"], ["Student Name", "tblStudent"], ["Student Email", "tblStudent"], ["Enrol Date", "tblEnrolment"], ["Fee Paid", "tblEnrolment"]],
+      choices: KT, why: "'When a student enrols on a class… the date… and whether they have paid the fee for that class' → facts about each enrolment. Jamal Reid has Fee Paid = No for LC01 but Yes for LC04." },
+    { t: "match", q: "Relationships:", lh: "Pair", rh: "Relationship",
+      items: [["Teacher ↔ Class", "One-to-many"], ["Student ↔ Class", "Many-to-many"]], choices: ["One-to-one", "One-to-many", "Many-to-many"],
+      why: "T01 teaches LC01 and LC02 (one class → one teacher). S101 takes LC01 and LC03; LC01 has four students." },
+    { t: "grid", q: "Complete the design.", head: ["Table", "Primary key", "Foreign key(s)"],
+      rows: [["tblTeacher", { sel: KPK, a: "Teacher ID" }, { sel: KFK, a: "None" }], ["tblClass", { sel: KPK, a: "Class ID" }, { sel: KFK, a: "Teacher ID" }], ["tblStudent", { sel: KPK, a: "Student ID" }, { sel: KFK, a: "None" }], ["tblEnrolment", { sel: KPK, a: "Student ID + Class ID" }, { sel: KFK, a: "Student ID and Class ID" }]],
+      why: '<div class="erd">' + ENT("tblTeacher", ["pk:Teacher ID", "Teacher Name"]) + ARR() + ENT("tblClass", ["pk:Class ID", "Class Name", "Class Day", "Class Fee", "fk:Teacher ID"]) + ARR() + ENT("tblEnrolment", ["pkfk:Student ID", "pkfk:Class ID", "Enrol Date", "Fee Paid"], true) + '<div class="arrow"><div>∞ ← 1</div><div class="ln">⟵</div></div>' + ENT("tblStudent", ["pk:Student ID", "Student Name", "Student Email"]) + "</div>" },
+    { t: "grid", q: "How many records in each table?", head: ["Table", "Records"],
+      rows: [["tblTeacher", { accept: ["3"], mode: "num" }], ["tblClass", { accept: ["5"], mode: "num" }], ["tblStudent", { accept: ["6"], mode: "num" }], ["tblEnrolment", { accept: ["12"], mode: "num" }]],
+      why: "3 teachers, 5 classes (LC01–LC05), 6 students (S101–S106), 12 enrolments." },
+
+    { t: "h", text: "Activity 2 – Data types and validation" },
+    { t: "grid", q: "Data types:", head: ["Field", "Data type"],
+      rows: [["Class Fee", { sel: ["Short Text", "Number", "Currency", "Date/Time", "Yes/No"], a: "Currency" }], ["Student Email", { sel: ["Short Text", "Number", "Currency", "Date/Time", "Yes/No"], a: "Short Text" }], ["Enrol Date", { sel: ["Short Text", "Number", "Currency", "Date/Time", "Yes/No"], a: "Date/Time" }], ["Fee Paid", { sel: ["Short Text", "Number", "Currency", "Date/Time", "Yes/No"], a: "Yes/No" }], ["Class Day", { sel: ["Short Text", "Number", "Currency", "Date/Time", "Yes/No"], a: "Short Text" }]] },
+    { t: "grid", q: "For each requirement, choose the property and write the exact setting.", head: ["Requirement", "Property", "Setting"],
+      rows: [
+        ["Student ID must be the letter S followed by three digits", { sel: ["Input Mask", "Validation Rule", "Default Value", "Required", "Lookup"], a: "Input Mask" }, { accept: ["\\S000", "\"S\"000"], mode: "mask", show: "\\S000" }],
+        ["Class Fee must be from £100 to £250", { sel: ["Input Mask", "Validation Rule", "Default Value", "Required", "Lookup"], a: "Validation Rule" }, { accept: ["Between 100 And 250", ">=100 And <=250"], show: "Between 100 And 250" }],
+        ["Student Email must contain @", { sel: ["Input Mask", "Validation Rule", "Default Value", "Required", "Lookup"], a: "Validation Rule" }, { accept: ["Like \"*@*\"", "Like \"*@*.*\"", "Like \"?*@?*\"", "Like \"?*@?*.?*\""], show: "Like \"*@*\"" }],
+        ["Enrol Date should show today's date for new enrolments", { sel: ["Input Mask", "Validation Rule", "Default Value", "Required", "Lookup"], a: "Default Value" }, { accept: ["Date()"] }],
+        ["Enrol Date cannot be in the future", { sel: ["Input Mask", "Validation Rule", "Default Value", "Required", "Lookup"], a: "Validation Rule" }, { accept: ["<=Date()"] }]],
+      why: "Two of these are on the same field (Enrol Date) – that's allowed and common." },
+    { t: "mcq", q: "Class Day must be Monday, Tuesday, Wednesday, Thursday, Friday or Saturday.", opts: ["Lookup Wizard → type in the values, Limit To List = Yes", "Lookup Wizard → look up tblClass, Limit To List = No", "Input Mask <code>LLLLLL</code>", "Validation Rule <code>Like \"*day\"</code>"], a: 0, why: "Fixed list of words → Value List, Limit To List = Yes. (D would accept 'Funday'.)" },
+    { t: "mcq", q: "Teacher ID in tblClass must be a teacher who exists in tblTeacher.", opts: ["Value List typed in, Limit To List = Yes", "Lookup to tblTeacher, Limit To List = No, with referential integrity enforced on the relationship", "Required = Yes only", "Input Mask <code>\\T00</code> only"], a: 1, why: "Foreign key → table lookup, Limit To List = No; referential integrity does the enforcing." },
+    { t: "mcq", q: "Student Name must always be entered.", opts: ["Indexed – Yes (No Duplicates)", "Required = Yes", "Default Value = \"Student\"", "Validation Rule <code>Like \"*\"</code>"], a: 1, why: "Presence check → Required = Yes." },
+
+    { t: "h", text: "Activity 3 – Queries and report" },
+    { t: "grid", qbe: true, q: "Query A: <i>\"List students who have <b>not paid</b> for a class, with the class name, in <b>alphabetical order of student name</b>.\"</i>", tag: "Query design grid",
+      rows: [["Field:", "Student Name", "Class Name", "Fee Paid"], ["Table:", "tblStudent", "tblClass", "tblEnrolment"], ["Sort:", { sel: SORT3, a: "Ascending" }, { sel: SORT3, a: "(blank)" }, { sel: SORT3, a: "(blank)" }], ["Criteria:", "", "", { accept: ["No", "False", "0"], show: "No" }]] },
+    { t: "text", mode: "num", q: "How many records does Query A return?", accept: ["4"], why: "Jamal Reid (Spanish Beginners), Tom Walsh (French Beginners), Oscar Bell (German Conversation), Mei Lin (French Intermediate)." },
+    { t: "mcq", q: "Which student is listed <b>first</b> in Query A?", opts: ["Jamal Reid", "Mei Lin", "Oscar Bell", "Tom Walsh"], a: 0, why: "J, M, O, T." },
+    { t: "text", mode: "expr", q: "Query B: <i>\"Find enrolments on any <b>French</b> class.\"</i> Criteria for Class Name?", accept: ["Like \"French*\"", "Like \"*French*\"", "\"French Beginners\" Or \"French Intermediate\"", "In (\"French Beginners\",\"French Intermediate\")"], show: "Like \"French*\"", why: "<code>Like \"French*\"</code> catches both French classes (and any new ones)." },
+    { t: "text", mode: "num", q: "How many enrolments does Query B return?", accept: ["5"], why: "French Beginners (2) + French Intermediate (3) = 5." },
+    { t: "text", mode: "calc", q: "Query C: students who enrolled <b>before 5 September 2025</b> get a <b>15% early-enrolment discount</b>. Write the calculated field.", accept: ["[Class Fee]*0.85", "[Class Fee]*85/100", "[Class Fee]-[Class Fee]*0.15", "[Class Fee]-([Class Fee]*0.15)", "0.85*[Class Fee]", "[Class Fee]*85%", "[Class Fee]-[Class Fee]*15/100"], show: "Discounted Fee: [Class Fee]*0.85",
+      near: [{ re: /^classfee\*0\.15$/, msg: "That's the discount amount. The fee after the discount is 85%." }], why: "<code>Discounted Fee: [Class Fee]*0.85</code>" },
+    { t: "text", mode: "expr", q: "…and the criteria for Enrol Date?", accept: ["<#05/09/2025#", "<#5/9/2025#", "<=#04/09/2025#", "<#2025-09-05#"], show: "<#05/09/2025#", why: "<code>&lt;#05/09/2025#</code> – 'before' means strictly less than." },
+    { t: "grid", q: "Predict Query C's results.", head: ["Question", "Answer"],
+      rows: [["How many enrolments get the discount?", { accept: ["4"], mode: "num" }], ["Discounted fee for Spanish Beginners (£120) in £", { accept: ["102"], mode: "num" }]],
+      why: "Enrolments on 01/09, 02/09, 03/09 and 04/09 → 4. £120 × 0.85 = £102.00." },
+    { t: "text", mode: "calc", q: "Query D: add <b>Amount Due</b>: 0 if the fee has been paid, otherwise the class fee.", accept: ["IIf([Fee Paid]=Yes,0,[Class Fee])", "IIf([Fee Paid]=True,0,[Class Fee])", "IIf([Fee Paid],0,[Class Fee])", "IIf([Fee Paid]=No,[Class Fee],0)", "IIf([Fee Paid]=False,[Class Fee],0)", "IIf([Fee Paid]=-1,0,[Class Fee])"], show: "Amount Due: IIf([Fee Paid]=Yes,0,[Class Fee])", why: "<code>Amount Due: IIf([Fee Paid]=Yes,0,[Class Fee])</code>" },
+    { t: "text", mode: "num", q: "What is the <b>total</b> Amount Due across all enrolments (£)?", accept: ["570"], why: "Unpaid: £120 + £120 + £180 + £150 = £570." },
+    { t: "grid", qbe: true, q: "Query E: <i>\"Show each class that has <b>at least 3</b> students enrolled, with the number of students.\"</i>", tag: "Query design grid",
+      rows: [["Field:", "Class Name", "Student ID"], ["Table:", "tblClass", "tblEnrolment"], ["Total:", { sel: TOT, a: "Group By" }, { sel: TOT, a: "Count" }], ["Criteria:", "", { accept: [">=3", ">2"], show: ">=3" }]] },
+    { t: "multi", q: "Which classes does Query E return?", opts: ["Spanish Beginners", "Spanish Intermediate", "French Beginners", "German Conversation", "French Intermediate"], a: [0, 4], why: "Spanish Beginners 4, French Intermediate 3. The others have 1 or 2." },
+    { t: "match", q: "Report F: enrolments <b>grouped by teacher</b>, with a count for each teacher and a grand total. Where does each item go?", lh: "Item", rh: "Band",
+      items: [["'Kingsway Enrolments by Teacher'", "Report Header"], ["Each teacher's name", "Group Header"], ["Each class name and student name", "Detail"], ["=Count(*) for each teacher", "Group Footer"], ["=Count(*) for all enrolments", "Report Footer"]],
+      choices: ["Report Header", "Page Header", "Group Header", "Detail", "Group Footer", "Report Footer"] },
+    { t: "grid", q: "Predict Report F's totals.", head: ["Teacher", "Enrolments"],
+      rows: [["Ana Ruiz", { accept: ["5"], mode: "num" }], ["Ben Carter", { accept: ["5"], mode: "num" }], ["Chloe Martin", { accept: ["2"], mode: "num" }], ["Grand total", { accept: ["12"], mode: "num" }]],
+      why: "Ana: Spanish Beginners 4 + Spanish Intermediate 1. Ben: French Beginners 2 + French Intermediate 3. Chloe: German Conversation 2." },
+
+    { t: "h", text: "Activity 4 – Testing" },
+    { t: "grid", q: "Test plan for Class Fee (<code>Between 100 And 250</code>).", head: ["Test data", "Type of test", "Expected result"],
+      rows: [["£150", { sel: TYPES, a: "Normal" }, { sel: RES, a: "Accepted" }], ["£100", { sel: TYPES, a: "Extreme" }, { sel: RES, a: "Accepted" }], ["£250", { sel: TYPES, a: "Extreme" }, { sel: RES, a: "Accepted" }], ["£99", { sel: TYPES, a: "Erroneous" }, { sel: RES, a: "Rejected" }], ["£251", { sel: TYPES, a: "Erroneous" }, { sel: RES, a: "Rejected" }]] },
+    { t: "match", q: "Expected result for each structure test:", lh: "Test", rh: "Expected result",
+      items: [["Enter S101 + LC01 into tblEnrolment again", "Rejected – duplicate primary key"], ["Enter an enrolment for class LC09 (not in tblClass)", "Rejected – related record required"], ["Type ella.novakmail.com as an email", "Rejected – validation text shown"], ["Type S10 as a Student ID", "Rejected – doesn't fit the input mask"], ["Enter a new student S107 with all valid data", "Accepted"]],
+      choices: ["Accepted", "Rejected – duplicate primary key", "Rejected – related record required", "Rejected – validation text shown", "Rejected – doesn't fit the input mask"] },
+
+    { t: "h", text: "Activity 5 – Evaluation" },
+    { t: "essay", minWords: 180, q: "<b>Evaluate your database structure and validation for Kingsway Language School</b>, referring to the school's requirements. <i>(6 marks)</i>", check: [
+      "Removing duplication: explained that splitting the spreadsheet stores each teacher/class/student once, with a specific example and an anomaly avoided",
+      "Explained tblEnrolment as the link table for the many-to-many between students and classes",
+      "Explained the composite key (Student ID + Class ID) prevents a student enrolling on the same class twice",
+      "Explained why Enrol Date and Fee Paid are in tblEnrolment, and how this lets the school find students who owe fees",
+      "Explained at least two validation checks by name with the specific error each prevents (e.g. \\S000, Between 100 And 250, Like \"*@*\")",
+      "Gave a balanced limitation or improvement (e.g. validation checks format not truth; an email with @ can still be wrong; a student can't re-take the same class later)"],
+      model: "<p>Replacing the spreadsheet with tblTeacher, tblClass, tblStudent and tblEnrolment means each teacher, class and student is stored once. In Figure 1 Ana Ruiz's details appear on five rows and Spanish Beginners' fee on four; now each is a single record, so changing a fee only needs one edit, which prevents update anomalies, and a new class can be added before anyone enrols.</p><p>Students take several classes and classes have several students, so tblEnrolment links them. Its composite primary key of Student ID + Class ID stops a student being enrolled on the same class twice, which an AutoNumber key would not. Enrol Date and Fee Paid belong to each enrolment (Jamal has paid for German but not Spanish), so storing them in tblEnrolment lets the school's 'who still owes fees' query filter Fee Paid = No accurately.</p><p>Validation supports accurate data: the input mask <code>\\S000</code> forces IDs like S101 and rejects S10; <code>Between 100 And 250</code> on Class Fee stops a fee of £1,200 being typed by mistake, which would break the discount and amount-due calculations; and <code>Like \"*@*\"</code> rejects an email missing the @. The Value List on Class Day keeps days consistent for searches.</p><p>However, validation checks format and range, not truth – a valid-looking but wrong email is still accepted, so the school should confirm details with students. Also, because of the composite key a student could not re-enrol on the same class in a later term; adding a term field to the key would solve this.</p>" },
+
+    { t: "tip", title: "🎉 You've finished the programme", html:
+      "<p>Go to <a href='#report'><b>My progress</b></a>, choose <b>End of Week 2 (Day 10)</b> and press <b>Send to my teacher</b>.</p><p>Then, before you're back in college: redo any question that's still red, and re-read your Activity 5 answers against the model answers. You're ready for the mock exam.</p>" }
+  ]
+});
+
+COURSE.reference =
+  '<div class="card"><div class="toc"><a href="#ref-a1">Activity 1 – Structure</a><br><a href="#ref-types">Data types</a><br><a href="#ref-props">Field properties</a><br><a href="#ref-vr">Validation rules</a><br><a href="#ref-im">Input masks</a><br><a href="#ref-look">Lookups</a><br><a href="#ref-q">Query criteria</a><br><a href="#ref-calc">Calculations & IIf</a><br><a href="#ref-tot">Totals queries</a><br><a href="#ref-rep">Reports</a><br><a href="#ref-test">Testing</a><br><a href="#ref-eval">Evaluation</a></div></div>' +
+
+  '<div class="card learn" id="ref-a1"><h3>Activity 1 – Structure</h3><ol><li>Every ID in Figure 1 → its own table (primary key).</li><li>Each other field → the table it is a fact about.</li><li>Two-question test on each pair. Yes/No → 1:M (FK in the many table). Yes/Yes → M:M → link table.</li><li>Link table: both IDs, together the composite primary key, each also a foreign key.</li><li>Facts about the pairing ("for that…", "each time…") → link table.</li><li>Use <code>tbl</code> names and Figure 1 field names. Enforce referential integrity on each relationship.</li></ol>' +
+  '<p><b>Many words:</b> more than one, several, a number of, any number of. <b>One words:</b> only one, exactly one, a single.</p></div>' +
+
+  '<div class="card learn" id="ref-types"><h3>Data types</h3>' + T(["Type", "For"], [["Short Text (max 255)", "Names, codes, IDs with letters, phone numbers, postcodes"], ["Long Text", "Notes over 255 characters"], ["Number", "Quantities, ages (Integer / Long Integer; Double for decimals)"], ["Currency", "Money"], ["Date/Time", "Dates and times (set Format)"], ["Yes/No", "Two-option fields"], ["AutoNumber", "Numeric PK generated by Access (FK that matches it = Number, Long Integer)"]]) + "</div>" +
+
+  '<div class="card learn" id="ref-props"><h3>Field properties</h3>' + T(["Requirement says…", "Property"], [["must be entered", "Required = Yes"], ["no two the same", "Indexed = Yes (No Duplicates)"], ["filled in automatically", "Default Value (e.g. <code>Date()</code>)"], ["no longer than n characters", "Field Size"], ["a range / condition", "Validation Rule (+ Validation Text)"], ["a fixed pattern of letters/digits", "Input Mask"], ["a different label on screen", "Caption"]]) + "</div>" +
+
+  '<div class="card learn" id="ref-vr"><h3>Validation rules</h3>' + T(["Need", "Rule"], [["Between a and b", "<code>Between 15 And 50</code>"], ["At least / minimum", "<code>&gt;=16</code>"], ["At most", "<code>&lt;=100</code>"], ["More than zero", "<code>&gt;0</code>"], ["Not in the past", "<code>&gt;=Date()</code>"], ["Not in the future", "<code>&lt;=Date()</code>"], ["Before today", "<code>&lt;Date()</code>"], ["From a date", "<code>&gt;=#01/01/2026#</code>"], ["Time range", "<code>Between #09:00# And #20:00#</code>"], ["One of a list", "<code>In (\"S\",\"M\",\"L\")</code>"], ["Starts with B", "<code>Like \"B*\"</code>"], ["Contains @", "<code>Like \"*@*\"</code>"]]) + "<p>Text in \"quotes\", dates in #hashes#, numbers bare. Always write helpful Validation Text.</p></div>" +
+
+  '<div class="card learn" id="ref-im"><h3>Input masks</h3>' + T(["Char", "Meaning", "Char", "Meaning"], [["<code>0</code>", "digit, required", "<code>9</code>", "digit, optional"], ["<code>L</code>", "letter, required", "<code>?</code>", "letter, optional"], ["<code>A</code>", "letter/digit, required", "<code>&amp;</code>", "any character, required"], ["<code>&gt;</code>", "UPPER CASE after this", "<code>&lt;</code>", "lower case after this"], ["<code>\\</code>", "next character is literal", "", ""]]) +
+  T(["Format", "Mask"], [["AB1234 (2 capitals + 4 digits)", "<code>&gt;LL0000</code>"], ["M07 (fixed M + 2 digits)", "<code>\\M00</code> or <code>\"M\"00</code>"], ["CL004 (fixed CL + 3 digits)", "<code>\\C\\L000</code>"], ["11-digit phone", "<code>00000000000</code>"], ["07700 900111", "<code>00000 000000</code>"], ["AB12 CDE", "<code>&gt;LL00 LLL</code>"]]) + "<p>Masks control shape, not ranges. A fixed letter needs <code>\\</code> – <code>L</code> accepts any letter.</p></div>" +
+
+  '<div class="card learn" id="ref-look"><h3>Lookups</h3>' + T(["Kind", "Limit To List"], [["Value List (values typed in, e.g. Mon; Tue; Wed)", "<b>Yes</b>"], ["Lookup to another table (a foreign key)", "<b>No</b> – referential integrity enforces it"]]) + "</div>" +
+
+  '<div class="card learn" id="ref-q"><h3>Query criteria</h3>' + T(["Find", "Criteria"], [["Text", "<code>\"Monday\"</code>"], ["Not", "<code>Not \"Monday\"</code>"], ["Numbers", "<code>&gt;50</code>, <code>Between 45 And 55</code>"], ["Dates", "<code>Between #01/10/2025# And #31/10/2025#</code>, <code>&lt;#05/09/2025#</code>"], ["Yes/No", "<code>Yes</code> / <code>No</code>"], ["Wildcard", "<code>Like \"S*\"</code>, <code>Like \"*Pasta*\"</code>"], ["Blank", "<code>Is Null</code> / <code>Is Not Null</code>"], ["Ask the user", "<code>[Enter course name]</code>"]]) + "<p>Same row = AND. Different rows = OR. Untick Show for filter-only fields. Include linking tables in between.</p></div>" +
+
+  '<div class="card learn" id="ref-calc"><h3>Calculated fields and IIf</h3>' + T(["Need", "Field row"], [["20% VAT", "<code>VAT: [Price]*0.2</code>"], ["Price + VAT", "<code>Gross: [Price]*1.2</code>"], ["10% off", "<code>Disc: [Price]*0.9</code>"], ["15% off", "<code>Disc: [Price]*0.85</code>"], ["Two fields", "<code>Total: [Price]*[Qty]</code>"], ["Decision (text)", "<code>Status: IIf([Paid]=Yes,\"Confirmed\",\"Reserved\")</code>"], ["Decision (number)", "<code>Due: IIf([Paid]=Yes,0,[Fee])</code>"]]) + "<p>Set Format = Currency for money.</p></div>" +
+
+  '<div class="card learn" id="ref-tot"><h3>Totals queries</h3><p>Σ Totals → Total row. Group By the category; Count / Sum / Avg / Max / Min on the value. Criteria on the aggregate filters groups (e.g. Count <code>&gt;=3</code>).</p></div>' +
+
+  '<div class="card learn" id="ref-rep"><h3>Reports</h3>' + T(["Band", "Use for"], [["Report Header", "Title (once)"], ["Page Header", "Column headings (every page)"], ["Group Header", "Group name"], ["Detail", "Each record"], ["Group Footer", "<code>=Count(*)</code>, <code>=Sum([Field])</code> per group"], ["Page Footer", "Page numbers"], ["Report Footer", "Grand totals (once)"]]) + "<p>Meaningful title, nothing cut off, grouped/sorted as asked, every total labelled.</p></div>" +
+
+  '<div class="card learn" id="ref-test"><h3>Testing</h3>' + T(["Type", "Example for <code>Between 16 And 99</code>", "Expected"], [["Normal", "30", "Accepted"], ["Extreme", "16, 99", "Accepted"], ["Erroneous", "15, 100, abc", "Rejected + validation text"]]) + "<p>Also test: Required (leave blank), mask (wrong shape), Value List (value not in list), primary/composite key (duplicate), referential integrity (FK not in parent table). Columns: test no., what's tested, data, type, expected, actual, evidence.</p></div>" +
+
+  '<div class="card learn" id="ref-eval"><h3>Activity 5 – Evaluation</h3><p>Each point: <b>Feature</b> (named field/table) → <b>Requirement</b> it meets → <b>Impact</b> → at least one <b>Limitation / improvement</b>. Cover duplication & anomalies, link table & composite key, referential integrity, data types, specific validation checks, and the limit that validation checks format/range, not truth.</p></div>';
+
+</script>
+<script>
+/* Unit 2 Part A – Home Revision engine (vanilla JS, no libraries) */
+(function () {
+  "use strict";
+  var C = window.COURSE;
+  var KEY = "u2_partA_home_v1";
+
+  /* ---------- storage (never throws) ---------- */
+  function load() {
+    try { var s = JSON.parse(localStorage.getItem(KEY) || "null"); if (s && s.answers) return s; } catch (e) {}
+    return { name: "", group: "", answers: {}, essays: {}, visited: {}, sent: [] };
+  }
+  var S = load();
+  if (!S.essays) S.essays = {};
+  if (!S.visited) S.visited = {};
+  if (!S.sent) S.sent = [];
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+
+  /* ---------- helpers ---------- */
+  function $(sel, root) { return (root || document).querySelector(sel); }
+  function $$(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function el(html) { var d = document.createElement("div"); d.innerHTML = html.trim(); return d.firstChild; }
+
+  var N = {
+    quotes: function (s) { return String(s).replace(/[“”„″]/g, '"').replace(/[‘’′']/g, '"').replace(/–|—/g, "-"); },
+    expr: function (s) { s = N.quotes(s).toLowerCase().replace(/[\[\]]/g, "").replace(/\s+/g, ""); s = s.replace(/^=/, "").replace(/;+$/, ""); return s; },
+    calc: function (s) { s = N.expr(s); var i = s.indexOf(":"); return i >= 0 ? s.slice(i + 1) : s; },
+    mask: function (s) { s = N.quotes(s).replace(/\s+/g, ""); var i = s.indexOf(";"); return i >= 0 ? s.slice(0, i) : s; },
+    word: function (s) { return N.quotes(s).toLowerCase().replace(/[^a-z0-9£.\-+ ]/g, " ").replace(/\s+/g, " ").trim(); },
+    num: function (s) { var v = parseFloat(String(s).replace(/[£,\s%]/g, "")); return isNaN(v) ? "NaN" : String(Math.round(v * 100) / 100); }
+  };
+  function matches(val, accept, mode) {
+    var f = N[mode || "word"] || N.word, v = f(val);
+    if (!v || v === "NaN") return false;
+    for (var i = 0; i < accept.length; i++) {
+      var a = accept[i];
+      if (a instanceof RegExp) { if (a.test(v)) return true; }
+      else if (f(a) === v) return true;
+    }
+    return false;
+  }
+  function firstAccept(accept) { for (var i = 0; i < accept.length; i++) if (!(accept[i] instanceof RegExp)) return accept[i]; return ""; }
+
+  /* ---------- course indexing ---------- */
+  C.days.forEach(function (d) {
+    var qi = 0;
+    d.blocks.forEach(function (b) {
+      if (isQ(b)) { qi++; b._n = qi; if (!b.id) b.id = d.id + "-q" + qi; b._max = maxOf(b); }
+    });
+    d._qcount = qi;
+  });
+  function isQ(b) { return ["mcq", "multi", "text", "match", "grid", "essay"].indexOf(b.t) >= 0; }
+  function maxOf(b) {
+    if (b.t === "match") return b.items.length;
+    if (b.t === "grid") { var m = 0; b.rows.forEach(function (r) { r.forEach(function (c) { if (c && typeof c === "object") m++; }); }); return m; }
+    if (b.t === "essay") return b.check.length;
+    return 1;
+  }
+  function dayStats(d) {
+    var auto = { done: 0, total: 0, score: 0, max: 0 }, self = { done: 0, total: 0, score: 0, max: 0 };
+    d.blocks.forEach(function (b) {
+      if (!isQ(b)) return;
+      if (b.t === "essay") {
+        self.total++; self.max += b._max;
+        var e = S.essays[b.id];
+        if (e && e.marked) { self.done++; self.score += (e.ticks || []).filter(Boolean).length; }
+      } else {
+        auto.total++; auto.max += b._max;
+        var a = S.answers[b.id];
+        if (a) { auto.done++; auto.score += a.best || 0; }
+      }
+    });
+    var items = auto.total + self.total, done = auto.done + self.done;
+    return { auto: auto, self: self, pct: items ? Math.round(100 * done / items) : 0, scorePct: auto.max ? Math.round(100 * auto.score / auto.max) : 0 };
+  }
+
+  /* ---------- question renderers ---------- */
+  function qShell(b, inner, tag) {
+    return '<div class="q" id="' + b.id + '" data-q="' + b.id + '">' +
+      '<div class="qnum">Question ' + b._n + (tag ? ' <span class="tag">' + tag + "</span>" : "") + (b._max > 1 ? ' <span class="tag">' + b._max + ' points</span>' : "") + "</div>" +
+      '<div class="qtext">' + b.q + "</div>" + inner +
+      '<div class="actions"></div><div class="fbx"></div></div>';
+  }
+  function optLetter(i) { return "ABCDEFGH"[i]; }
+
+  var R = {
+    mcq: function (b) {
+      var h = '<div class="opts">' + b.opts.map(function (o, i) {
+        return '<label class="opt"><input type="radio" name="' + b.id + '" value="' + i + '"><span><b>' + optLetter(i) + ".</b> " + o + "</span></label>";
+      }).join("") + "</div>";
+      return qShell(b, h, "Choose one");
+    },
+    multi: function (b) {
+      var h = '<div class="opts">' + b.opts.map(function (o, i) {
+        return '<label class="opt"><input type="checkbox" value="' + i + '"><span>' + o + "</span></label>";
+      }).join("") + "</div>";
+      return qShell(b, h, "Choose all that apply");
+    },
+    text: function (b) {
+      var cls = (b.mode === "expr" || b.mode === "mask" || b.mode === "calc") ? "mono" : "";
+      var h = (b.pre ? '<div class="hint">' + b.pre + "</div>" : "") +
+        '<input type="text" class="' + cls + '" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="' + esc(b.ph || "Type your answer") + '">' +
+        (b.hint ? '<div class="hint">💡 ' + b.hint + "</div>" : "");
+      return qShell(b, h, b.mode === "expr" ? "Type the Access setting" : b.mode === "mask" ? "Type the input mask" : b.mode === "calc" ? "Type the calculated field" : b.mode === "num" ? "Type a number" : "Type your answer");
+    },
+    match: function (b) {
+      var opts = '<option value="">— choose —</option>' + b.choices.map(function (c) { return '<option>' + esc(c) + "</option>"; }).join("");
+      var h = '<div class="tbl-wrap"><table class="data grid-q"><tr><th>' + (b.lh || "Item") + "</th><th>" + (b.rh || "Your answer") + "</th></tr>" +
+        b.items.map(function (it, i) { return "<tr><td>" + it[0] + '</td><td><select data-i="' + i + '">' + opts + "</select></td></tr>"; }).join("") +
+        "</table></div>";
+      return qShell(b, h, "Match each one");
+    },
+    grid: function (b) {
+      var k = 0;
+      var h = (b.caption ? '<div class="qbe-title">' + b.caption + "</div>" : "") + '<div class="tbl-wrap"><table class="' + (b.qbe ? "qbe" : "data") + ' grid-q">';
+      if (b.head) h += "<tr>" + b.head.map(function (x) { return "<th>" + x + "</th>"; }).join("") + "</tr>";
+      b.rows.forEach(function (r) {
+        h += "<tr>";
+        r.forEach(function (c, ci) {
+          var tag = (b.qbe && ci === 0) ? "th" : "td";
+          if (c && typeof c === "object") {
+            if (c.sel) h += "<" + tag + '><select data-k="' + k + '"><option value="">—</option>' + c.sel.map(function (o) { return "<option>" + esc(o) + "</option>"; }).join("") + "</select></" + tag + ">";
+            else h += "<" + tag + '><input type="text" data-k="' + k + '" class="' + (c.mode === "word" || c.mode === "num" ? "" : "mono") + '" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="' + esc(c.ph || "") + '"></' + tag + ">";
+            k++;
+          } else h += "<" + tag + ">" + (c == null ? "" : c) + "</" + tag + ">";
+        });
+        h += "</tr>";
+      });
+      h += "</table></div>";
+      return qShell(b, h, b.tag || "Fill in the blanks");
+    },
+    essay: function (b) {
+      var h = '<textarea placeholder="Write your answer here…"></textarea><div class="hint wc">0 words</div>' +
+        '<div class="selfmark" style="display:none"><div class="fb info"><b class="h">Now mark yourself honestly.</b>Tick each point your answer actually makes (not just mentions in passing).</div>' +
+        b.check.map(function (c, i) { return '<label class="check"><input type="checkbox" data-c="' + i + '"><span>' + c + "</span></label>"; }).join("") +
+        '<div class="model"><b>Model answer</b><br>' + b.model + "</div></div>";
+      return qShell(b, h, "Written answer – self-marked");
+    }
+  };
+
+  /* ---------- checking ---------- */
+  function readValue(b, node) {
+    if (b.t === "mcq") { var r = $("input:checked", node); return r ? +r.value : null; }
+    if (b.t === "multi") return $$("input:checked", node).map(function (x) { return +x.value; });
+    if (b.t === "text") return $("input", node).value;
+    if (b.t === "match") return $$("select", node).map(function (s) { return s.value; });
+    if (b.t === "grid") return $$("[data-k]", node).map(function (s) { return s.value; });
+    if (b.t === "essay") return $("textarea", node).value;
+  }
+  function writeValue(b, node, v) {
+    if (v == null) return;
+    if (b.t === "mcq") { var r = $('input[value="' + v + '"]', node); if (r) { r.checked = true; mark(node); } }
+    else if (b.t === "multi") { v.forEach(function (i) { var c = $('input[value="' + i + '"]', node); if (c) c.checked = true; }); mark(node); }
+    else if (b.t === "text") $("input", node).value = v;
+    else if (b.t === "match" || b.t === "grid") { var f = b.t === "match" ? $$("select", node) : $$("[data-k]", node); f.forEach(function (s, i) { if (v[i] != null) s.value = v[i]; }); }
+    else if (b.t === "essay") $("textarea", node).value = v;
+  }
+  function mark(node) { $$(".opt", node).forEach(function (o) { o.classList.toggle("sel", $("input", o).checked); }); }
+
+  function gradableCells(b) {
+    var out = [];
+    b.rows.forEach(function (r) { r.forEach(function (c) { if (c && typeof c === "object") out.push(c); }); });
+    return out;
+  }
+  function cellOk(c, v) {
+    if (c.sel) return v === c.a || (Array.isArray(c.a) && c.a.indexOf(v) >= 0);
+    return matches(v, c.accept, c.mode || "expr");
+  }
+  function cellAnswer(c) { return c.sel ? (Array.isArray(c.a) ? c.a[0] : c.a) : (c.show || firstAccept(c.accept)); }
+
+  function grade(b, v) {
+    if (b.t === "mcq") return { score: v === b.a ? 1 : 0, empty: v == null };
+    if (b.t === "multi") {
+      var want = b.a.slice().sort().join(","), got = (v || []).slice().sort().join(",");
+      return { score: want === got ? 1 : 0, empty: !v || !v.length };
+    }
+    if (b.t === "text") return { score: matches(v, b.accept, b.mode) ? 1 : 0, empty: !String(v || "").trim() };
+    if (b.t === "match") {
+      var s = 0, per = b.items.map(function (it, i) { var ok = v[i] === it[1]; if (ok) s++; return ok; });
+      return { score: s, per: per, empty: v.every(function (x) { return !x; }) };
+    }
+    if (b.t === "grid") {
+      var cells = gradableCells(b), s2 = 0;
+      var per2 = cells.map(function (c, i) { var ok = cellOk(c, v[i] || ""); if (ok) s2++; return ok; });
+      return { score: s2, per: per2, empty: v.every(function (x) { return !String(x || "").trim(); }) };
+    }
+  }
+
+  function nearMsg(b, v) {
+    if (!b.near) return "";
+    for (var i = 0; i < b.near.length; i++) {
+      var n = b.near[i], f = N[b.mode || "word"] || N.word, vv = f(v);
+      if ((n.re && n.re.test(vv)) || (n.is && f(n.is) === vv)) return n.msg;
+    }
+    if (b.mode === "mask" && matches(String(v).toUpperCase(), b.accept.map(function (a) { return a instanceof RegExp ? a : String(a).toUpperCase(); }), "mask")) {
+      return "Very close — check UPPER/lower case. In an input mask <code>L</code> means 'letter required'; a lower-case <code>l</code> is not a mask character.";
+    }
+    return "";
+  }
+
+  function feedback(b, node, res, showAns) {
+    var fbx = $(".fbx", node), full = res.score === b._max;
+    node.classList.toggle("correct", full);
+    node.classList.toggle("wrong", !full);
+    var head;
+    if (full) head = '<b class="h">✅ Correct' + (b._max > 1 ? " — " + res.score + "/" + b._max : "") + "</b>";
+    else if (b._max > 1) head = '<b class="h">' + (res.score ? "🟡 " : "❌ ") + res.score + "/" + b._max + " correct. Red boxes need another look.</b>";
+    else head = '<b class="h">❌ Not quite.</b>';
+    var extra = "";
+    if (!full && b.t === "text") extra = nearMsg(b, readValue(b, node));
+    var answer = "";
+    if (showAns || full) {
+      if (b.t === "text" && !full) answer = '<div>Answer: <code>' + esc(b.show || firstAccept(b.accept)) + "</code></div>";
+      if ((b.t === "grid" || b.t === "match") && !full) answer = "<div>Correct answers are now shown in green under each box.</div>";
+    }
+    var why = (full || showAns) && b.why ? '<div style="margin-top:6px">' + b.why + "</div>" : (!full ? '<div style="margin-top:4px">Have another go, or press <b>Show answer</b> to see the explanation.</div>' : "");
+    fbx.innerHTML = '<div class="fb ' + (full ? "ok" : "bad") + '">' + head + (extra ? "<div>" + extra + "</div>" : "") + answer + why + "</div>";
+
+    // per-option / per-cell colouring
+    if (b.t === "mcq" || b.t === "multi") {
+      var right = b.t === "mcq" ? [b.a] : b.a;
+      $$(".opt", node).forEach(function (o, i) {
+        var chosen = $("input", o).checked;
+        o.classList.remove("ok", "bad");
+        if (chosen && right.indexOf(i) >= 0) o.classList.add("ok");
+        else if (chosen) o.classList.add("bad");
+        else if ((showAns || full) && right.indexOf(i) >= 0) o.classList.add("ok");
+      });
+    }
+    if (b.t === "text") { var inp = $("input", node); inp.classList.toggle("ok", full); inp.classList.toggle("bad", !full); }
+    if (b.t === "match" || b.t === "grid") {
+      var fields = b.t === "match" ? $$("select", node) : $$("[data-k]", node);
+      var cells = b.t === "grid" ? gradableCells(b) : null;
+      $$(".ans", node).forEach(function (a) { a.remove(); });
+      fields.forEach(function (f, i) {
+        f.classList.toggle("ok", !!res.per[i]); f.classList.toggle("bad", !res.per[i]);
+        if (showAns && !res.per[i]) {
+          var txt = b.t === "match" ? b.items[i][1] : cellAnswer(cells[i]);
+          f.insertAdjacentHTML("afterend", '<span class="ans">✔ ' + esc(txt) + "</span>");
+        }
+      });
+    }
+  }
+
+  function setupQ(b, node) {
+    var acts = $(".actions", node);
+    if (b.t === "essay") return setupEssay(b, node, acts);
+    acts.innerHTML = '<button class="btn small chk">Check answer</button><button class="btn ghost small show" style="display:none">Show answer</button>';
+    $$(".opt input", node).forEach(function (i) { i.addEventListener("change", function () { mark(node); }); });
+    var prev = S.answers[b.id];
+    if (prev) { writeValue(b, node, prev.v); var r0 = grade(b, prev.v); feedback(b, node, r0, prev.shown); if (r0.score < b._max) $(".show", node).style.display = ""; }
+    $(".chk", node).addEventListener("click", function () {
+      var v = readValue(b, node), res = grade(b, v);
+      if (res.empty) { $(".fbx", node).innerHTML = '<div class="fb info">Answer first, then check. 🙂</div>'; return; }
+      var a = S.answers[b.id] || { tries: 0, first: null, best: 0, shown: false };
+      a.tries++; if (a.first == null) a.first = res.score;
+      if (!a.shown) a.best = Math.max(a.best || 0, res.score);
+      a.v = v; S.answers[b.id] = a; save();
+      feedback(b, node, res, a.shown);
+      $(".show", node).style.display = res.score < b._max ? "" : "none";
+      refreshProgress();
+    });
+    $(".show", node).addEventListener("click", function () {
+      var v = readValue(b, node), res = grade(b, v);
+      var a = S.answers[b.id] || { tries: 0, first: 0, best: 0 };
+      if (a.first == null) a.first = 0;
+      a.shown = true; a.v = v; S.answers[b.id] = a; save();
+      feedback(b, node, res, true);
+      refreshProgress();
+    });
+  }
+
+  function setupEssay(b, node, acts) {
+    var ta = $("textarea", node), wc = $(".wc", node), sm = $(".selfmark", node);
+    var e = S.essays[b.id] || { text: "", ticks: [], marked: false };
+    ta.value = e.text || "";
+    function count() { var n = (ta.value.trim().match(/\S+/g) || []).length; wc.textContent = n + " words" + (b.minWords ? " (aim for " + b.minWords + "+)" : ""); return n; }
+    count();
+    ta.addEventListener("input", function () { count(); e.text = ta.value; S.essays[b.id] = e; save(); });
+    acts.innerHTML = '<button class="btn small done">I\'ve finished — show me the mark scheme</button>';
+    function open() {
+      sm.style.display = "";
+      $$("input[data-c]", node).forEach(function (c, i) { c.checked = !!(e.ticks && e.ticks[i]); });
+      acts.innerHTML = '<button class="btn small green savemark">Save my self-mark</button>';
+      $(".savemark", node).addEventListener("click", function () {
+        e.ticks = $$("input[data-c]", node).map(function (c) { return c.checked; });
+        e.marked = true; S.essays[b.id] = e; save();
+        var s = e.ticks.filter(Boolean).length;
+        $(".fbx", node).innerHTML = '<div class="fb ok"><b class="h">Saved: ' + s + "/" + b._max + ".</b>" + (s < b._max ? "Rewrite your answer above to add the points you missed, then re-tick. Rewriting is where the learning happens." : "Excellent — that would sit in the top band.") + "</div>";
+        refreshProgress();
+      });
+    }
+    if (e.revealed) open();
+    $(".done", node) && $(".done", node).addEventListener("click", function () {
+      if (count() < 25) { $(".fbx", node).innerHTML = '<div class="fb info">Write a proper attempt first (at least a few sentences) — you learn far more by comparing your own answer than by reading the model.</div>'; return; }
+      e.revealed = true; e.text = ta.value; S.essays[b.id] = e; save(); open();
+    });
+  }
+
+  /* ---------- pages ---------- */
+  var main, side;
+  function navHtml(cur) {
+    var h = '<nav class="nav"><a href="#home" class="' + (cur === "home" ? "active" : "") + '">🏠 Start here</a>';
+    var wk = 0;
+    C.days.forEach(function (d) {
+      if (d.week !== wk) { wk = d.week; h += '<div class="wk">Week ' + wk + "</div>"; }
+      var st = dayStats(d), cls = st.pct >= 100 ? "full" : st.pct > 0 ? "part" : "";
+      h += '<a href="#day-' + d.n + '" class="' + (cur === "day-" + d.n ? "active" : "") + '"><span class="dot ' + cls + '"></span>Day ' + d.n + ": " + d.short + '<span class="pct">' + st.pct + "%</span></a>";
+    });
+    h += '<div class="wk">Always available</div><a href="#ref" class="' + (cur === "ref" ? "active" : "") + '">📘 Reference sheet</a><a href="#report" class="' + (cur === "report" ? "active" : "") + '">📤 My progress / send to teacher</a></nav>';
+    return h;
+  }
+  function refreshProgress() {
+    var cur = (location.hash || "#home").slice(1);
+    side.innerHTML = navHtml(cur);
+    var hd = $("#dayprog");
+    if (hd) { var d = C.days[+hd.dataset.n - 1], st = dayStats(d); hd.innerHTML = progLine(st); }
+  }
+  function progLine(st) {
+    return '<div class="bar"><i style="width:' + st.pct + '%"></i></div><div class="notice" style="margin-top:4px">' + st.pct + "% of questions attempted · auto-marked score " + st.auto.score + "/" + st.auto.max + (st.self.total ? " · written answers self-marked " + st.self.score + "/" + st.self.max : "") + "</div>";
+  }
+
+  function renderHome() {
+    var h = '<div class="dayhead"><div class="kicker">Unit 2: Creating Systems to Manage Information</div><h1>Part A Home Revision Programme</h1>' +
+      '<p>Two weeks of guided practice for <b>Activities 1–5</b> of the Part A Set Task. You don\'t need Microsoft Access for any of this — Part A is about working out the right design and writing it down, and that\'s exactly what you\'ll practise here. Every question marks itself and explains the answer.</p></div>';
+    h += '<div class="card"><h3>1. Tell us who you are</h3><div class="two"><div class="field"><label for="nm">Your full name</label><input id="nm" value="' + esc(S.name) + '" placeholder="e.g. Sam Patel"></div>' +
+      '<div class="field"><label for="gp">Your class / group</label><input id="gp" value="' + esc(S.group) + '" placeholder="e.g. L3 IT Year 1 – Southall"></div></div>' +
+      '<p class="notice">Your work saves automatically <b>on this device, in this browser</b>. If you switch to a different phone or computer, it starts fresh — so try to use the same device each day. Don\'t use private/incognito browsing.</p></div>';
+    h += '<div class="card"><h3>2. How the two weeks work</h3><ul>' +
+      "<li><b>One day = one session of about 60–90 minutes.</b> Do them in order — each day builds on the one before.</li>" +
+      "<li>Every day starts with <b>Learn</b> cards (read these properly), then <b>Practise</b> questions. Press <b>Check answer</b> after each one.</li>" +
+      "<li>Got it wrong? Try again first. Only press <b>Show answer</b> when you're stuck — then read the explanation and make sure you understand <i>why</i>.</li>" +
+      "<li>Written (6-mark) questions are marked by you against a checklist and a model answer. Be honest — nobody gains from a fake tick.</li>" +
+      "<li>At the end of <b>Day 5</b> and <b>Day 10</b>, open <b>My progress</b> and press <b>Send to my teacher</b>.</li>" +
+      "<li>Keep the <b>Reference sheet</b> open in another tab — but by Day 10 try to answer without it, like the real exam.</li></ul></div>";
+    h += '<h2 style="margin-top:22px">Your plan</h2><div class="daygrid">' + C.days.map(function (d) {
+      var st = dayStats(d);
+      return '<a class="daycard" href="#day-' + d.n + '"><div class="kicker">Week ' + d.week + " · Day " + d.n + '</div><div class="t">' + d.title + '</div><div class="s">' + d.activity + " · " + d.time + '</div><div class="bar"><i style="width:' + st.pct + '%"></i></div><div class="notice" style="margin-top:3px">' + st.pct + "% done</div></a>";
+    }).join("") + "</div>";
+    main.innerHTML = h;
+    $("#nm").addEventListener("input", function (e) { S.name = e.target.value; save(); who(); });
+    $("#gp").addEventListener("input", function (e) { S.group = e.target.value; save(); });
+  }
+
+  function renderDay(n) {
+    var d = C.days[n - 1];
+    if (!d) return renderHome();
+    S.visited[d.id] = S.visited[d.id] || new Date().toISOString(); save();
+    var st = dayStats(d);
+    var h = '<div class="dayhead"><div class="kicker">Week ' + d.week + " · Day " + d.n + "</div><h1>" + d.title + '</h1><div class="meta"><span class="pill">' + d.activity + '</span><span class="pill p2">⏱ ' + d.time + '</span><span class="pill p3">' + d._qcount + " questions</span></div>" +
+      (d.intro ? "<p>" + d.intro + "</p>" : "") + '<div id="dayprog" data-n="' + d.n + '">' + progLine(st) + "</div></div>";
+    d.blocks.forEach(function (b) {
+      if (b.t === "learn" || b.t === "scenario" || b.t === "tip") h += '<div class="card ' + b.t + '"><div class="kicker">' + (b.t === "learn" ? "Learn" : b.t === "scenario" ? "Scenario" : "Exam tip") + "</div>" + (b.title ? "<h3>" + b.title + "</h3>" : "") + b.html + "</div>";
+      else if (b.t === "h") h += '<h2 style="margin:26px 0 10px">' + b.text + "</h2>" + (b.sub ? '<p class="notice" style="margin-top:-4px">' + b.sub + "</p>" : "");
+      else if (R[b.t]) h += R[b.t](b);
+    });
+    h += '<div class="pager">' + (n > 1 ? '<a class="btn ghost" href="#day-' + (n - 1) + '">← Day ' + (n - 1) + "</a>" : "<span></span>") +
+      (n < C.days.length ? '<a class="btn" href="#day-' + (n + 1) + '">Day ' + (n + 1) + " →</a>" : '<a class="btn green" href="#report">Send my progress →</a>') + "</div>";
+    main.innerHTML = h;
+    d.blocks.forEach(function (b) { if (isQ(b)) setupQ(b, document.getElementById(b.id)); });
+  }
+
+  function renderRef() {
+    main.innerHTML = '<div class="dayhead"><div class="kicker">Keep this open in another tab</div><h1>Reference sheet</h1><p>Everything you need for Activities 1–4 on one page. Use it while you learn — then try to stop needing it.</p></div>' + C.reference;
+    $$('a[href^="#ref-"]', main).forEach(function (a) {
+      a.addEventListener("click", function (e) { e.preventDefault(); var t = document.getElementById(a.getAttribute("href").slice(1)); if (t) t.scrollIntoView({ behavior: "smooth", block: "start" }); });
+    });
+  }
+
+  function reportText() {
+    var lines = [];
+    lines.push("Unit 2 Part A Home Revision – progress report");
+    lines.push("Name: " + (S.name || "(not given)") + "   Group: " + (S.group || "(not given)"));
+    lines.push("Generated: " + new Date().toLocaleString("en-GB"));
+    lines.push("");
+    var ta = 0, tm = 0;
+    C.days.forEach(function (d) {
+      var st = dayStats(d); ta += st.auto.score; tm += st.auto.max;
+      lines.push("Day " + d.n + " (" + d.short + "): " + st.pct + "% attempted | auto " + st.auto.score + "/" + st.auto.max + (st.self.total ? " | written self-mark " + st.self.score + "/" + st.self.max : ""));
+    });
+    lines.push("");
+    lines.push("TOTAL auto-marked: " + ta + "/" + tm + " (" + (tm ? Math.round(100 * ta / tm) : 0) + "%)");
+    return { text: lines.join("\n"), total: ta + "/" + tm + " (" + (tm ? Math.round(100 * ta / tm) : 0) + "%)" };
+  }
+
+  function renderReport() {
+    var rows = C.days.map(function (d) {
+      var st = dayStats(d);
+      return "<tr><td>Day " + d.n + "</td><td>" + d.short + '</td><td style="min-width:110px"><div class="bar"><i style="width:' + st.pct + '%"></i></div>' + st.pct + "%</td><td>" + st.auto.score + "/" + st.auto.max + "</td><td>" + (st.self.total ? st.self.score + "/" + st.self.max : "–") + "</td></tr>";
+    }).join("");
+    var r = reportText();
+    var h = '<div class="dayhead"><div class="kicker">Your record</div><h1>My progress</h1></div>' +
+      '<div class="card"><div class="two"><div class="field"><label for="nm2">Your full name</label><input id="nm2" value="' + esc(S.name) + '"></div><div class="field"><label for="gp2">Your class / group</label><input id="gp2" value="' + esc(S.group) + '"></div></div>' +
+      '<div class="score-big">' + esc(r.total) + '</div><div class="notice">Total auto-marked score so far</div></div>' +
+      '<div class="card"><div class="tbl-wrap"><table class="data"><tr><th>Day</th><th>Topic</th><th>Attempted</th><th>Auto-marked</th><th>Written (self)</th></tr>' + rows + "</table></div></div>" +
+      '<div class="card"><h3>Send to my teacher</h3><p>Do this at the end of <b>Day 5</b> and again at the end of <b>Day 10</b>. Make sure your name is filled in first.</p>' +
+      '<div class="field"><label for="cp">Which checkpoint is this?</label><select id="cp"><option>End of Week 1 (Day 5)</option><option>End of Week 2 (Day 10)</option><option>Other / extra update</option></select></div>' +
+      '<div class="actions"><button class="btn green" id="send">📤 Send to my teacher</button><button class="btn ghost" id="copy">📋 Copy my report</button><button class="btn ghost" id="dl">⬇️ Download my report</button></div><div id="sendfb"></div>' +
+      '<p class="notice" style="margin-top:10px">If sending doesn\'t work, press <b>Copy my report</b> and paste it into Google Classroom (or wherever your teacher asks).</p>' +
+      (S.sent.length ? '<p class="notice">Sent before: ' + S.sent.map(function (s) { return esc(s); }).join(", ") + "</p>" : "") + "</div>" +
+      '<div class="card"><h3>Start again</h3><p class="notice">Wipes every answer on this device. Only do this if your teacher tells you to.</p><button class="btn ghost small" id="reset">Reset all my progress</button></div>';
+    main.innerHTML = h;
+    $("#nm2").addEventListener("input", function (e) { S.name = e.target.value; save(); who(); });
+    $("#gp2").addEventListener("input", function (e) { S.group = e.target.value; save(); });
+    $("#copy").addEventListener("click", function () {
+      var t = reportText().text;
+      var done = function () { $("#sendfb").innerHTML = '<div class="fb ok">Copied. Now paste it where your teacher asked.</div>'; };
+      try { navigator.clipboard.writeText(t).then(done, function () { fallbackCopy(t); done(); }); } catch (e) { fallbackCopy(t); done(); }
+    });
+    $("#dl").addEventListener("click", function () {
+      var blob = new Blob([reportText().text], { type: "text/plain" }), a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = "Unit2_PartA_progress_" + (S.name || "student").replace(/[^a-z0-9]+/gi, "_") + ".txt";
+      document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+    });
+    $("#send").addEventListener("click", function () {
+      var fb = $("#sendfb");
+      if (!S.name.trim()) { fb.innerHTML = '<div class="fb bad">Please type your full name above first.</div>'; return; }
+      var rt = reportText(), cp = $("#cp").value;
+      var body = new URLSearchParams({ "form-name": "unit2-progress", student_name: S.name, class_group: S.group, checkpoint: cp, overall: rt.total, summary: rt.text }).toString();
+      this.disabled = true; var btn = this;
+      fb.innerHTML = '<div class="fb info">Sending…</div>';
+      fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body })
+        .then(function (res) {
+          if (!res.ok) throw new Error(res.status);
+          S.sent.push(cp + " – " + new Date().toLocaleDateString("en-GB")); save();
+          fb.innerHTML = '<div class="fb ok"><b class="h">✅ Sent. Well done.</b>Your teacher can now see your progress.</div>';
+        })
+        .catch(function () {
+          fb.innerHTML = '<div class="fb bad"><b class="h">Couldn\'t send from here.</b>Press <b>Copy my report</b> and paste it into Google Classroom instead.</div>';
+        })
+        .then(function () { btn.disabled = false; });
+    });
+    $("#reset").addEventListener("click", function () {
+      if (this.dataset.armed) { S = { name: "", group: "", answers: {}, essays: {}, visited: {}, sent: [] }; save(); who(); route(); return; }
+      this.dataset.armed = "1"; this.textContent = "Press again to confirm – this cannot be undone";
+    });
+  }
+  function fallbackCopy(t) { var ta = document.createElement("textarea"); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); } catch (e) {} ta.remove(); }
+  function who() { var w = $("#who"); if (w) w.textContent = S.name ? "👤 " + S.name : ""; }
+
+  function route() {
+    var h = (location.hash || "#home").slice(1);
+    side.innerHTML = navHtml(h);
+    if (/^day-\d+$/.test(h)) renderDay(+h.split("-")[1]);
+    else if (h === "ref") renderRef();
+    else if (h === "report") renderReport();
+    else renderHome();
+    window.scrollTo(0, 0);
+    side.classList.remove("open"); $(".scrim").classList.remove("show");
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    main = $("#main"); side = $("#side");
+    who();
+    $(".menu-btn").addEventListener("click", function () { side.classList.toggle("open"); $(".scrim").classList.toggle("show"); });
+    $(".scrim").addEventListener("click", function () { side.classList.remove("open"); this.classList.remove("show"); });
+    window.addEventListener("hashchange", route);
+    route();
+  });
+})();
+
+</script>
+</body>
+</html>
