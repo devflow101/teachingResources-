@@ -66,6 +66,9 @@ main{padding:26px 0 60px;display:grid;gap:22px}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .pill{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:2px 8px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
 .pill.acc{border-color:var(--accent);color:var(--accent)}
+.pill.warn{border-color:var(--warn);color:var(--warn)}
+.authbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;width:100%;justify-content:flex-end}
+.btn.small{padding:5px 11px;font-size:.85rem}
 /* blueprint */
 .bp{display:grid;gap:8px}
 .bprow{display:grid;grid-template-columns:minmax(150px,230px) 1fr 44px;gap:10px;align-items:center;font-size:.92rem}
@@ -162,9 +165,10 @@ footer{color:var(--muted);font-size:.85rem;padding:0 0 40px}
 <header class="top"><div class="wrap topin">
   <div class="brand"><a href="index.html" class="small" style="text-decoration:none">← Unit 11 resources</a><b>Unit 11 Exam Prep</b><span>Cyber Security &amp; Incident Management · BTEC L3 IT</span></div>
   <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+  <div id="authbar" class="authbar" hidden></div>
 </div></header>
 <div class="wrap"><main id="app"></main>
-<footer>Original scenarios and questions written for West London College learners by J. Mall with AI assistance (Claude), November 2026. Not Pearson material: examiner advice is paraphrased from Pearson Principal Examiner reports (2022–2025). Your progress is saved only in this browser.</footer>
+<footer>Original scenarios and questions written for West London College learners by J. Mall with AI assistance (Claude), November 2026. Not Pearson material: examiner advice is paraphrased from Pearson Principal Examiner reports (2022–2025). <span id="footnote">Your progress is saved only in this browser.</span></footer>
 </div>
 <script>
 "use strict";
@@ -963,10 +967,11 @@ ITEMS.forEach(i=>{const d=DFIX[i.id];if(d)Object.keys(d).forEach(k=>{if(+k===i.a
 
 
 /* ============ STORAGE ============ */
-const KEY="u11prep_v1";
+const BASE_KEY="u11prep_v1";let KEY=BASE_KEY;
 let S={box:{},due:{},stat:{},log:[]};
 try{const raw=localStorage.getItem(KEY); if(raw){S=Object.assign(S,JSON.parse(raw));}}catch(e){}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function save(){S.u=Date.now();saveLocal();if(typeof pushState==="function")pushState();}
 const DAY=86400000, GAPS=[0,0,1,3,7,16];
 function record(id,correct,conf){
   const b=S.box[id]||1; let nb;
@@ -1099,7 +1104,8 @@ function renderItem(item,box,done){
 
 /* ============ SESSION RUNNER ============ */
 function runSession(title,queue,host,onExit){
-  host.innerHTML="";let i=0;const res=[];
+  host.innerHTML="";let i=0;const res=[];const start=Date.now();let saved=false;
+  LIVE={kind:"session",build:()=>res.length?practicePayload(title,res,queue.length,start,true):null};
   const panel=el("section",{class:"panel"});host.append(panel);
   function show(){panel.innerHTML="";
    if(i>=queue.length){return summary();}
@@ -1110,7 +1116,7 @@ function runSession(title,queue,host,onExit){
    renderItem(item,qb,(ok,conf)=>{record(item.id,ok,conf);res.push({item,ok,conf});
      const nx=el("button",{type:"button",class:"btn"},i+1<queue.length?"Next question →":"See my results");nx.onclick=()=>{i++;show();window.scrollTo({top:0});};const rw=el("div",{class:"row"});rw.append(nx);qb.append(rw);nx.focus({preventScroll:true});});
   }
-  function summary(){panel.innerHTML="";const n=res.length,c=res.filter(r=>r.ok).length,hc=res.filter(r=>!r.ok&&r.conf==="sure").length,lucky=res.filter(r=>r.ok&&(r.conf==="guess"||r.conf==="unsure")).length;
+  function summary(){panel.innerHTML="";if(!saved){saved=true;LIVE=null;if(res.length)sendAttempt(practicePayload(title,res,queue.length,start,res.length<queue.length));}const n=res.length,c=res.filter(r=>r.ok).length,hc=res.filter(r=>!r.ok&&r.conf==="sure").length,lucky=res.filter(r=>r.ok&&(r.conf==="guess"||r.conf==="unsure")).length;
    panel.append(el("h2",{},title+": results"));
    const s=el("div",{class:"sum"});s.append(el("div",{class:"tile"},"<b>"+c+"/"+n+"</b>correct"),el("div",{class:"tile"},"<b>"+hc+"</b>confident but wrong"),el("div",{class:"tile"},"<b>"+lucky+"</b>right but unsure"));panel.append(s);
    panel.append(el("p",{class:"lede"},"Wrong answers and guesses come back soonest in <b>Review</b>. Items you got right and were sure about come back after longer gaps, which is what makes them stick."));
@@ -1250,14 +1256,15 @@ function viewTest(){
   const gl=el("label",{for:"t_group"},"<b>Group</b>");const gs=el("select",{id:"t_group",style:"font:inherit;padding:9px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);width:100%"});["Ealing","Southall","Other"].forEach(x=>gs.append(el("option",{value:x},x)));
   const d1=el("div",{style:"display:grid;gap:6px"});d1.append(nl,ni);const d2=el("div",{style:"display:grid;gap:6px"});d2.append(gl,gs);g.append(d1,d2);p.append(g);
   const msg=el("p",{class:"small",style:"color:var(--bad)"});const go=el("button",{type:"button",class:"btn"},"Start the test");p.append(msg,go);
-  go.onclick=()=>{const n=ni.value.trim();if(n.length<3||!/\s/.test(n)){msg.textContent="Enter your first name and surname to start.";ni.focus();return;}
-    TEST={name:n,group:gs.value,items:buildTest(),i:0,resp:[],conf:[],start:Date.now(),running:true};TEST.end=TEST.start+TEST_MINUTES*60000;
+  if(AUTH.user){ni.value=AUTH.user.name;ni.readOnly=true;const gv=AUTH.user.group;if(gv&&![...gs.options].some(o=>o.value===gv))gs.append(el("option",{value:gv},esc(gv)));if(gv)gs.value=gv;gs.disabled=true;}
+  go.onclick=()=>{const n=ni.value.trim();if(!AUTH.user&&(n.length<3||!/\s/.test(n))){msg.textContent="Enter your first name and surname to start.";ni.focus();return;}
+    TEST={name:n,group:gs.value,items:buildTest(),i:0,resp:[],conf:[],start:Date.now(),running:true};TEST.end=TEST.start+TEST_MINUTES*60000;LIVE={kind:"test",build:()=>TEST&&TEST.running?testPayload(TEST,true):null};
     TEST.timer=setInterval(()=>{const t=$("#t_clock");if(t)t.textContent=fmtTime(TEST.end-Date.now());if(Date.now()>=TEST.end)finishTest(true);},1000);render();};
   app.append(p);
 }
 function drawTestQ(){
   const it=TEST.items[TEST.i];const p=el("section",{class:"panel"});
-  const bar=el("div",{class:"runbar"});bar.append(el("b",{},TEST.name),el("span",{class:"muted small"},"Question "+(TEST.i+1)+" of "+TEST.items.length),
+  const bar=el("div",{class:"runbar"});bar.append(el("b",{},esc(TEST.name)),el("span",{class:"muted small"},"Question "+(TEST.i+1)+" of "+TEST.items.length),
     el("div",{class:"prog"},"<i style='width:"+(TEST.i/TEST.items.length*100)+"%'></i>"),el("span",{class:"pill acc"},"<span id='t_clock'>"+fmtTime(TEST.end-Date.now())+"</span> left"));
   p.append(bar);const qb=el("div",{class:"q"});p.append(qb);
   let sub=null;const st={resp:null,ready:false,conf:null,onchange:()=>upd()};
@@ -1275,7 +1282,7 @@ function drawTestQ(){
 }
 function finishTest(timedOut){
   if(!TEST||!TEST.running)return;clearInterval(TEST.timer);TEST.running=false;TEST.done=true;TEST.timedOut=timedOut;TEST.finished=Date.now();
-  TEST.marks=TEST.items.map((it,k)=>markItem(it,TEST.resp[k]));
+  TEST.marks=TEST.items.map((it,k)=>markItem(it,TEST.resp[k]));LIVE=null;sendAttempt(testPayload(TEST,false));
   TEST.items.forEach((it,k)=>{if(TEST.resp[k]!==undefined&&TEST.resp[k]!==null){const m=TEST.marks[k];record(it.id,m.got===m.max,TEST.conf[k]==="sure"?"sure":"unsure");}});
   if(location.hash!=="#test")location.hash="#test";else render();window.scrollTo({top:0});
 }
@@ -1292,8 +1299,8 @@ function drawReport(){
   const mins=Math.round((T.finished-T.start)/60000);
   const byLO=agg(it=>it.lo),byAct=agg(it=>actLabel(it.act)),bySk=agg(it=>skillOf(it.id));
   const p=el("section",{class:"panel",id:"report"});
-  p.append(el("div",{class:"qmeta"},"<span class='pill acc'>Diagnostic report</span><span class='pill'>"+new Date(T.finished).toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"short"})+"</span><span class='pill'>"+T.group+"</span>"),
-    el("h1",{},T.name+": "+got+"/"+max+" ("+pc+"%)"),
+  p.append(el("div",{class:"qmeta"},"<span class='pill acc'>Diagnostic report</span><span class='pill'>"+new Date(T.finished).toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"short"})+"</span><span class='pill'>"+esc(T.group)+"</span>"),
+    el("h1",{},esc(T.name)+": "+got+"/"+max+" ("+pc+"%)"),
     el("p",{class:"lede"},"<b style='color:"+b[1]+"'>"+b[0]+".</b> "+answered+" of "+T.items.length+" questions answered in "+mins+" min"+(T.timedOut?" (time ran out)":"")+". Strict marking was applied. This score covers the knowledge and exam skills that can be auto-marked; it is not a predicted exam grade."));
   const s=el("div",{class:"sum"});
   s.append(el("div",{class:"tile"},"<b>"+pc+"%</b>overall"),el("div",{class:"tile"},"<b>"+confWrong+"</b>confident but wrong"),
@@ -1330,10 +1337,174 @@ function drawReport(){
   app.append(p);
 }
 
+/* ============ SIGN-IN AND RESULTS TRACKING ============
+   Fill in the two values below after setup (see SETUP.md). Leave them empty and the site works
+   as before: no sign-in, progress kept only in the browser. */
+const CONFIG = {
+  GOOGLE_CLIENT_ID: "845964776078-t24aoaiduhqmf68h6kojap4l4rgeeqe0.apps.googleusercontent.com",   // e.g. "1234567890-abc.apps.googleusercontent.com"
+  SCRIPT_URL: "https://script.google.com/macros/s/AKfycbx4YHJvW-Djt4tuBNLoX03IRmqETrmOagB3ebgSr3rFmQpQZvbj1pBWpKXfQJWqgOsx/exec",         // e.g. "https://script.google.com/macros/s/AKfy.../exec"
+  REQUIRE_LOGIN: true     // true: students must sign in to use the site
+};
+const AUTH = { on: !!(CONFIG.GOOGLE_CLIENT_ID && CONFIG.SCRIPT_URL), ready: false, token: null, exp: 0, user: null, msg: "", busy: false, refreshTimer: null };
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+function jwtClaims(t) { try { let p = t.split(".")[1].replace(/-/g, "+").replace(/_/g, "/"); while (p.length % 4) p += "="; return JSON.parse(decodeURIComponent(escape(atob(p)))); } catch (e) { return {}; } }
+
+function api(action, data) {
+  if (!AUTH.on || !AUTH.token) return Promise.resolve({ ok: false, error: "no_token" });
+  return fetch(CONFIG.SCRIPT_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify({ token: AUTH.token, action, data }), redirect: "follow", credentials: "omit" })
+    .then(r => r.json()).catch(() => ({ ok: false, error: "network" }))
+    .then(r => { if (r && r.error === "expired") tokenExpired(); return r || { ok: false, error: "network" }; });
+}
+function tokenExpired() { AUTH.token = null; updateAuthBar(); try { google.accounts.id.prompt(); } catch (e) {} }
+
+function loadGIS() {
+  if (!AUTH.on) return;
+  const s = document.createElement("script"); s.src = "https://accounts.google.com/gsi/client"; s.async = true;
+  s.onload = () => {
+    try {
+      google.accounts.id.initialize({ client_id: CONFIG.GOOGLE_CLIENT_ID, callback: onCredential, auto_select: true, cancel_on_tap_outside: false, use_fedcm_for_prompt: true, itp_support: true });
+      AUTH.ready = true; if (!AUTH.user) { render(); google.accounts.id.prompt(); }
+    } catch (e) { AUTH.msg = "Google sign-in couldn’t start. Refresh the page to try again."; render(); }
+  };
+  s.onerror = () => { AUTH.msg = "Google sign-in couldn’t load. Check your internet connection, then refresh."; render(); };
+  document.head.append(s);
+}
+
+function onCredential(resp) {
+  const token = resp && resp.credential; if (!token) return;
+  const c = jwtClaims(token), email = String(c.email || "").toLowerCase();
+  // Silent refresh for the same person: keep going without a new login.
+  if (AUTH.user && AUTH.user.email === email) { setToken(token, c); flushOutbox(); pushState(); updateAuthBar(); return; }
+  if (AUTH.user && AUTH.user.email !== email) signOut(true);
+  setToken(token, c); AUTH.busy = true; AUTH.msg = ""; render();
+  api("login").then(r => {
+    AUTH.busy = false;
+    if (r.ok) {
+      AUTH.user = { email, name: r.name || c.name || email, group: r.group || "" };
+      useUserStore(email);
+      api("loadState").then(x => { if (x.ok && x.state && typeof x.state === "object" && (x.state.u || 0) > (S.u || 0)) { S = Object.assign({ box: {}, due: {}, stat: {}, log: [] }, x.state); saveLocal(); render(); } else pushState(); });
+      flushOutbox(); render();
+    } else {
+      AUTH.token = null;
+      AUTH.msg = r.error === "not_registered" ? "The Google account " + email + " isn’t registered for this site. Sign in with your college account, or ask your teacher to add this one."
+        : r.error === "network" ? "Couldn’t reach the results server. Check your connection and try again."
+        : "Sign-in didn’t work (" + r.error + "). Try again, or tell your teacher.";
+      try { google.accounts.id.disableAutoSelect(); } catch (e) {}
+      render();
+    }
+  });
+}
+function setToken(token, c) {
+  AUTH.token = token; AUTH.exp = (c.exp || 0) * 1000;
+  clearTimeout(AUTH.refreshTimer);
+  const wait = AUTH.exp - Date.now() - 120000;
+  if (wait > 0) AUTH.refreshTimer = setTimeout(() => { try { google.accounts.id.prompt(); } catch (e) {} }, wait);
+}
+function signOut(silent) {
+  if (!AUTH.user) return;
+  if (AUTH.token) { pushState(true); api("logout"); }
+  try { google.accounts.id.disableAutoSelect(); } catch (e) {}
+  try { localStorage.removeItem(KEY); } catch (e) {}   // progress is safe on the server; don't leave it on shared PCs
+  AUTH.user = null; AUTH.token = null; clearTimeout(AUTH.refreshTimer);
+  KEY = BASE_KEY; S = { box: {}, due: {}, stat: {}, log: [] };
+  if (!silent) { TEST = null; location.hash = "#home"; render(); }
+}
+
+/* Per-person storage, so two students on one PC never mix progress. */
+function useUserStore(email) {
+  KEY = BASE_KEY + "_" + email;
+  S = { box: {}, due: {}, stat: {}, log: [] };
+  try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(S, JSON.parse(raw)); } catch (e) {}
+}
+let pushTimer = null;
+function pushState(now) {
+  if (!AUTH.user || !AUTH.token) return;
+  clearTimeout(pushTimer);
+  const go = () => { const st = Object.assign({}, S, { log: (S.log || []).slice(-150) }); api("saveState", st); };
+  if (now) go(); else pushTimer = setTimeout(go, 4000);
+}
+
+/* Results outbox: nothing is lost if the connection drops or sign-in expires. */
+function outboxKey() { return "u11_outbox_" + (AUTH.user ? AUTH.user.email : "anon"); }
+function readOutbox() { try { return JSON.parse(localStorage.getItem(outboxKey()) || "[]"); } catch (e) { return OUTBOX_MEM; } }
+function writeOutbox(a) { OUTBOX_MEM = a; try { localStorage.setItem(outboxKey(), JSON.stringify(a)); } catch (e) {} }
+let OUTBOX_MEM = [], FLUSHING = false;
+function sendAttempt(data) {
+  if (!AUTH.on || !AUTH.user) return;
+  const a = readOutbox(); a.push(data); writeOutbox(a.slice(-50)); flushOutbox();
+}
+function flushOutbox() {
+  if (FLUSHING || !AUTH.token || !AUTH.user) return;
+  const a = readOutbox(); if (!a.length) { updateAuthBar(); return; }
+  FLUSHING = true;
+  api("attempt", a[0]).then(r => {
+    FLUSHING = false;
+    if (r.ok || r.error === "bad_request") { writeOutbox(readOutbox().slice(1)); flushOutbox(); }
+    updateAuthBar();
+  });
+}
+/* If a student closes the tab mid-session, record what they did. */
+let LIVE = null; // {data builder}
+window.addEventListener("pagehide", () => {
+  if (!AUTH.on || !AUTH.token || !LIVE) return;
+  const data = LIVE.build(); if (!data) return;
+  try { navigator.sendBeacon(CONFIG.SCRIPT_URL, new Blob([JSON.stringify({ token: AUTH.token, action: "attempt", data })], { type: "text/plain" })); } catch (e) {}
+});
+
+function loAgg(list) { const lo = {}; list.forEach(x => { const k = x.lo; lo[k] = lo[k] || { g: 0, m: 0 }; lo[k].g += x.g; lo[k].m += x.m; }); return lo; }
+function sessionKind(title) { return /matrix/i.test(title) ? "drill" : /case/i.test(title) ? "case" : /sprint/i.test(title) ? "sprint" : /^review/i.test(title) ? "review" : "practice"; }
+function practicePayload(title, res, queueLen, start, partial) {
+  const items = res.map(r => ({ id: r.item.id, lo: r.item.lo, g: r.ok ? 1 : 0, m: 1, c: r.conf }));
+  return { kind: sessionKind(title), title, questions: queueLen, answered: res.length, marks: items.filter(x => x.g).length, max: res.length,
+    confidentWrong: res.filter(r => !r.ok && r.conf === "sure").length, minutes: (Date.now() - start) / 60000, partial: !!partial, lo: loAgg(items),
+    items: items.map(x => ({ id: x.id, g: x.g, m: x.m, c: x.c })) };
+}
+function testPayload(T, abandoned) {
+  const marks = T.items.map((it, k) => T.marks ? T.marks[k] : (T.resp[k] !== undefined ? markItem(it, T.resp[k]) : { got: 0, max: maxMarks(it) }));
+  const items = T.items.map((it, k) => ({ id: it.id, lo: it.lo, g: marks[k].got, m: marks[k].max, c: T.conf[k] || "none" }));
+  return { kind: abandoned ? "abandoned" : "test", title: "Final test", questions: T.items.length, answered: T.resp.filter(r => r !== null && r !== undefined).length,
+    marks: items.reduce((s, x) => s + x.g, 0), max: items.reduce((s, x) => s + x.m, 0), confidentWrong: items.filter(x => x.c === "sure" && x.g < x.m).length,
+    minutes: ((T.finished || Date.now()) - T.start) / 60000, partial: !!abandoned, timedOut: !!T.timedOut, lo: loAgg(items), items: items.map(x => ({ id: x.id, g: x.g, m: x.m, c: x.c })) };
+}
+
+/* Header: who is signed in, saving status, sign out. */
+function updateAuthBar() {
+  const fn = document.getElementById("footnote"); if (fn && AUTH.on) fn.textContent = "When you are signed in, your progress and results are saved to your teacher\u2019s results sheet.";
+  const bar = document.getElementById("authbar"); if (!bar) return;
+  bar.innerHTML = ""; if (!AUTH.on || !AUTH.user) { bar.hidden = true; return; }
+  bar.hidden = false;
+  const who = el("span", { class: "small" }); who.textContent = AUTH.user.name + (AUTH.user.group ? " · " + AUTH.user.group : "");
+  const pending = readOutbox().length;
+  const status = el("span", { class: "pill" + (AUTH.token ? "" : " warn"), id: "savestate" });
+  status.textContent = !AUTH.token ? "Sign in again to save" : pending ? "Saving… (" + pending + ")" : "All results saved";
+  bar.append(who, status);
+  if (!AUTH.token) {
+    const b = el("div", { id: "reauth" }); bar.append(b);
+    try { google.accounts.id.renderButton(b, { theme: "outline", size: "small", text: "signin", shape: "rectangular" }); } catch (e) {}
+  }
+  if (!(TEST && TEST.running)) {
+    const out = el("button", { type: "button", class: "btn ghost small", id: "signout" }, "Sign out");
+    out.onclick = () => signOut(false); bar.append(out);
+  }
+}
+
+function viewLogin() {
+  const p = el("section", { class: "panel" });
+  p.append(el("h1", {}, "Sign in to start revising"),
+    el("p", { class: "lede" }, "Use your <b>college Google account</b> (ending <b>@wlc.ac.uk</b>). If your college account isn’t working, your teacher can add a personal Google account for you."));
+  const box = el("div", { id: "gbtn", style: "min-height:44px" }); p.append(box);
+  const msg = el("p", { class: "small", role: "status", style: "color:var(--bad)" }); msg.textContent = AUTH.msg; p.append(msg);
+  if (AUTH.busy) { const w = el("p", { class: "small muted" }); w.textContent = "Checking your account…"; p.append(w); }
+  else if (!AUTH.ready && !AUTH.msg) { const w = el("p", { class: "small muted" }); w.textContent = "Loading Google sign-in…"; p.append(w); }
+  p.append(el("div", { class: "model" }, "<h4>What is saved, and who sees it</h4><ul class='notes'><li>Your name, email and group, when you sign in and out, and the questions you answer: your answers’ marks, how sure you were, scores and time spent.</li><li>It is saved in a Google Sheet that only your teacher can open. It is used to see how you are doing and to help you prepare for the exam. It is not shared with anyone else.</li><li>Your progress is also saved, so you can carry on from any device.</li><li>Your Google password never comes to this site. Google only tells it your name and email.</li></ul>"));
+  app.append(p);
+  if (AUTH.ready) { try { google.accounts.id.renderButton(box, { theme: "filled_blue", size: "large", text: "signin_with", shape: "rectangular", width: 280 }); } catch (e) {} }
+}
+
 /* ============ VIEWS ============ */
 const app=$("#app");
 const NAV=[["home","Home"],["lo-a","A"],["lo-b","B"],["lo-c","C"],["lo-d","D"],["lo-e","E"],["sprint","Mixed sprint"],["review","Review"],["test","Final test"],["plan","Revision plan"]];
-function nav(cur){const t=$("#tabs");t.innerHTML="";if(TEST&&TEST.running){t.append(el("span",{class:"pill acc"},"Test in progress"));return;}NAV.forEach(([h,l])=>{const a=el("a",{href:"#"+h},l);if(h===cur)a.classList.add("on");if(h.startsWith("lo-"))a.title=LOS[h.slice(3).toUpperCase()].name;t.append(a);});}
+function nav(cur){const t=$("#tabs");t.innerHTML="";if(AUTH.on&&CONFIG.REQUIRE_LOGIN&&!AUTH.user)return;if(TEST&&TEST.running){t.append(el("span",{class:"pill acc"},"Test in progress"));return;}NAV.forEach(([h,l])=>{const a=el("a",{href:"#"+h},l);if(h===cur)a.classList.add("on");if(h.startsWith("lo-"))a.title=LOS[h.slice(3).toUpperCase()].name;t.append(a);});}
 
 function viewHome(){
   const p1=el("section",{class:"panel"});
@@ -1443,12 +1614,15 @@ function viewPlan(){
 }
 
 function render(){
-  let h=(location.hash||"#home").slice(1);app.innerHTML="";if(TEST&&TEST.running&&h!=="test"){h="test";try{history.replaceState(null,"","#test");}catch(e){}}
+  if(LIVE&&LIVE.kind==="session"){const d=LIVE.build();LIVE=null;if(d)sendAttempt(d);}
+  let h=(location.hash||"#home").slice(1);app.innerHTML="";
+  if(AUTH.on&&CONFIG.REQUIRE_LOGIN&&!AUTH.user){nav("");updateAuthBar();viewLogin();return;}if(TEST&&TEST.running&&h!=="test"){h="test";try{history.replaceState(null,"","#test");}catch(e){}}
   const valid=NAV.map(n=>n[0]);const v=valid.includes(h)?h:"home";nav(v);
   if(v==="home")viewHome();else if(v.startsWith("lo-"))viewLO(v.slice(3).toUpperCase());else if(v==="sprint")viewSprint();else if(v==="review")viewReview();else if(v==="test")viewTest();else viewPlan();
+  updateAuthBar();
 }
 window.addEventListener("hashchange",()=>{render();window.scrollTo({top:0});});
-render();
+render();loadGIS();
 </script>
 </body>
 </html>
