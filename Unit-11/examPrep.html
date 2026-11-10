@@ -979,8 +979,11 @@ function record(id,correct,conf){
   S.box[id]=nb; S.due[id]=Date.now()+GAPS[nb]*DAY;
   const st=S.stat[id]||{c:0,w:0}; correct?st.c++:st.w++; S.stat[id]=st;
   S.log.push({id,correct,conf,t:Date.now()}); if(S.log.length>500)S.log=S.log.slice(-500);
+  S.first=S.first||{};S.last=S.last||{};if(!S.first[id])S.first[id]=Date.now();S.last[id]=correct?1:0;
   save();
 }
+/* Per-answer facts for the results sheet: seconds taken, which attempt, days since first seen, previous outcome. Read BEFORE record(). */
+function itemMeta(id,qStart){const st=S.stat[id],f=S.first&&S.first[id],l=S.last&&S.last[id];return {s:Math.max(0,Math.round((Date.now()-qStart)/1000)),n:(st?st.c+st.w:0)+1,d:f?Math.floor((Date.now()-f)/DAY):0,p:(l===0||l===1)?l:-1};}
 function mastery(lo){const its=ITEMS.filter(i=>i.lo===lo); const m=its.filter(i=>(S.box[i.id]||0)>=3).length; return {m,n:its.length,seen:its.filter(i=>S.stat[i.id]).length};}
 function isDue(i){return S.stat[i.id] && (S.due[i.id]||0)<=Date.now() && (S.box[i.id]||1)<5;}
 
@@ -1109,11 +1112,11 @@ function runSession(title,queue,host,onExit){
   const panel=el("section",{class:"panel"});host.append(panel);
   function show(){panel.innerHTML="";
    if(i>=queue.length){return summary();}
-   const item=queue[i];
+   const item=queue[i];const qStart=Date.now();
    const bar=el("div",{class:"runbar"});const pg=el("div",{class:"prog"},"<i style='width:"+(i/queue.length*100)+"%'></i>");
    bar.append(el("b",{},title),el("span",{class:"muted small"},"Question "+(i+1)+" of "+queue.length),pg,el("button",{type:"button",class:"btn ghost",onclick:()=>{summary();}},"Finish now"));
    panel.append(bar);const qb=el("div",{class:"q"});panel.append(qb);
-   renderItem(item,qb,(ok,conf)=>{record(item.id,ok,conf);res.push({item,ok,conf});
+   renderItem(item,qb,(ok,conf)=>{const meta=itemMeta(item.id,qStart);record(item.id,ok,conf);res.push({item,ok,conf,meta});
      const nx=el("button",{type:"button",class:"btn"},i+1<queue.length?"Next question →":"See my results");nx.onclick=()=>{i++;show();window.scrollTo({top:0});};const rw=el("div",{class:"row"});rw.append(nx);qb.append(rw);nx.focus({preventScroll:true});});
   }
   function summary(){panel.innerHTML="";if(!saved){saved=true;LIVE=null;if(res.length)sendAttempt(practicePayload(title,res,queue.length,start,res.length<queue.length));}const n=res.length,c=res.filter(r=>r.ok).length,hc=res.filter(r=>!r.ok&&r.conf==="sure").length,lucky=res.filter(r=>r.ok&&(r.conf==="guess"||r.conf==="unsure")).length;
@@ -1268,7 +1271,7 @@ function drawTestQ(){
     el("div",{class:"prog"},"<i style='width:"+(TEST.i/TEST.items.length*100)+"%'></i>"),el("span",{class:"pill acc"},"<span id='t_clock'>"+fmtTime(TEST.end-Date.now())+"</span> left"));
   p.append(bar);const qb=el("div",{class:"q"});p.append(qb);
   let sub=null;const st={resp:null,ready:false,conf:null,onchange:()=>upd()};
-  tRender(it,qb,st);
+  TEST.qStart=Date.now();tRender(it,qb,st);
   const cr=el("div",{class:"conf"},"<span class='muted'>How sure are you?</span>");
   [["sure","Sure"],["unsure","Not sure"],["guess","Guessing"]].forEach(([k,l])=>{const b=el("button",{type:"button"},l);b.onclick=()=>{st.conf=k;[...cr.querySelectorAll("button")].forEach(x=>x.classList.toggle("on",x===b));upd();};cr.append(b);});
   qb.append(cr);
@@ -1276,7 +1279,7 @@ function drawTestQ(){
   const skip=el("button",{type:"button",class:"btn ghost"},"Skip (scores 0)");row.append(sub,skip);qb.append(row);
   const hint=el("p",{class:"small muted"},"Answer the question and choose how sure you are to submit.");qb.append(hint);
   function upd(){if(sub)sub.disabled=!(st.ready&&st.conf);}
-  const adv=(resp,conf)=>{TEST.resp[TEST.i]=resp;TEST.conf[TEST.i]=conf;TEST.i++;if(TEST.i>=TEST.items.length)finishTest(false);else{render();window.scrollTo({top:0});}};
+  const adv=(resp,conf)=>{TEST.meta=TEST.meta||[];TEST.meta[TEST.i]=itemMeta(it.id,TEST.qStart);TEST.resp[TEST.i]=resp;TEST.conf[TEST.i]=conf;TEST.i++;if(TEST.i>=TEST.items.length)finishTest(false);else{render();window.scrollTo({top:0});}};
   sub.onclick=()=>adv(st.resp,st.conf);skip.onclick=()=>adv(null,"skip");
   app.append(p);
 }
@@ -1454,17 +1457,17 @@ window.addEventListener("pagehide", () => {
 function loAgg(list) { const lo = {}; list.forEach(x => { const k = x.lo; lo[k] = lo[k] || { g: 0, m: 0 }; lo[k].g += x.g; lo[k].m += x.m; }); return lo; }
 function sessionKind(title) { return /matrix/i.test(title) ? "drill" : /case/i.test(title) ? "case" : /sprint/i.test(title) ? "sprint" : /^review/i.test(title) ? "review" : "practice"; }
 function practicePayload(title, res, queueLen, start, partial) {
-  const items = res.map(r => ({ id: r.item.id, lo: r.item.lo, g: r.ok ? 1 : 0, m: 1, c: r.conf }));
+  const items = res.map(r => Object.assign({ id: r.item.id, lo: r.item.lo, g: r.ok ? 1 : 0, m: 1, c: r.conf }, r.meta || {}));
   return { kind: sessionKind(title), title, questions: queueLen, answered: res.length, marks: items.filter(x => x.g).length, max: res.length,
     confidentWrong: res.filter(r => !r.ok && r.conf === "sure").length, minutes: (Date.now() - start) / 60000, partial: !!partial, lo: loAgg(items),
-    items: items.map(x => ({ id: x.id, g: x.g, m: x.m, c: x.c })) };
+    items: items.map(x => ({ id: x.id, g: x.g, m: x.m, c: x.c, s: x.s, n: x.n, d: x.d, p: x.p })) };
 }
 function testPayload(T, abandoned) {
   const marks = T.items.map((it, k) => T.marks ? T.marks[k] : (T.resp[k] !== undefined ? markItem(it, T.resp[k]) : { got: 0, max: maxMarks(it) }));
-  const items = T.items.map((it, k) => ({ id: it.id, lo: it.lo, g: marks[k].got, m: marks[k].max, c: T.conf[k] || "none" }));
+  const items = T.items.map((it, k) => Object.assign({ id: it.id, lo: it.lo, g: marks[k].got, m: marks[k].max, c: T.conf[k] || "none" }, (T.meta && T.meta[k]) || {}));
   return { kind: abandoned ? "abandoned" : "test", title: "Final test", questions: T.items.length, answered: T.resp.filter(r => r !== null && r !== undefined).length,
     marks: items.reduce((s, x) => s + x.g, 0), max: items.reduce((s, x) => s + x.m, 0), confidentWrong: items.filter(x => x.c === "sure" && x.g < x.m).length,
-    minutes: ((T.finished || Date.now()) - T.start) / 60000, partial: !!abandoned, timedOut: !!T.timedOut, lo: loAgg(items), items: items.map(x => ({ id: x.id, g: x.g, m: x.m, c: x.c })) };
+    minutes: ((T.finished || Date.now()) - T.start) / 60000, partial: !!abandoned, timedOut: !!T.timedOut, lo: loAgg(items), items: items.map(x => ({ id: x.id, g: x.g, m: x.m, c: x.c, s: x.s, n: x.n, d: x.d, p: x.p })) };
 }
 
 /* Header: who is signed in, saving status, sign out. */
