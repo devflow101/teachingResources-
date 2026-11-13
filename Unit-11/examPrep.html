@@ -147,6 +147,12 @@ td.s-Low{background:var(--sev-low)} td.s-Medium{background:var(--sev-med)} td.s-
 table.mx td.hl{outline:3px solid var(--ink);outline-offset:1px}
 .mxwrap{overflow-x:auto}
 .runbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.today{display:grid;gap:10px;margin:0;padding-left:22px}.today li{padding-left:4px}.today li::marker{font-weight:700;color:var(--muted)}.today .btn{margin-right:10px}.today span{display:inline-block;margin-top:4px}
+.wssteps{display:grid;gap:10px}.wsstep{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--bg)}
+.wsstep .n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:700;border:2px solid var(--line);color:var(--muted)}.wsstep.done .n{border-color:var(--ok);color:var(--ok)}
+.wsstep p{margin:2px 0 0}.wsfield{display:grid;gap:6px}.wsfield textarea{min-height:84px}.model.sample{border-left:4px solid var(--muted);font-size:.97rem}
+a.pill{text-decoration:none}
+@media (max-width:560px){.wsstep{grid-template-columns:30px 1fr}.wsstep .btn{grid-column:1/-1}}
 .runbar .prog{flex:1;min-width:120px}
 .sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
 .tile{border:1px solid var(--line);border-radius:9px;padding:12px;background:var(--bg)}
@@ -772,6 +778,76 @@ E:[
 ]};
 
 ITEMS.push(...EXTRA_ITEMS);
+/* Targeted extra questions (Nov 2026): added where the bank was thin and the exam marks are heavy. New ids only; no old id is reused. */
+const MORE_ITEMS = [
+{id:"A35",lo:"A",act:"1",type:"mcq",q:"A florist’s only till PC is hit by ransomware in Valentine’s week and card payments stop for two days. Which size of loss fits best?",
+ opts:["Minor, because a till PC is cheap and can be swapped for a new one within a few weeks of the attack","Major: no card sales in its busiest week, plus recovery costs and lost trust","Moderate, because the main effect is that staff are annoyed and morale drops for a short while","Major, because every ransomware attack is rated Major whatever the business or the timing"],ans:1,
+ why:"Size of loss is judged for <b>this</b> business: what stops, for how long and what it costs. It is not decided by the name of the threat."},
+{id:"A36",lo:"A",act:"1",type:"mcq",q:"Which ‘potential size of loss’ entry gives an examiner the most to reward?",
+ opts:["Major. The business would lose a great deal of money and a large number of its customers.","Moderate. Online orders stop for a day (operational) and about £900 of sales is lost; no personal data is exposed.","High. Hackers could get into the system and go on to cause serious damage to the company.","Major. It is a very dangerous threat that has affected many well-known companies in recent years."],ans:1,
+ why:"Use a label from the template (Minor, Moderate or Major) and then say what is lost in this scenario. ‘High’ is a risk severity word, not a size of loss."},
+{id:"A37",lo:"A",act:"1",type:"mcq",q:"A clinic’s patient records are leaked. Which of these is a <b>legal</b> impact?",
+ opts:["Appointments are cancelled for several days while the systems are rebuilt and checked","Patients post bad reviews online and some move to a different clinic nearby","The clinic must report the breach to the ICO within 72 hours and may be fined","Reception staff work overtime to re-enter the appointment data that was lost"],ans:2,
+ why:"Reporting duties and fines under UK GDPR / the Data Protection Act 2018 are legal impacts. Cancelled appointments and overtime are operational; reviews are reputational."},
+{id:"A38",lo:"A",act:"1",type:"mcq",q:"A small accountancy firm faces two threats: (1) its public website is defaced for an afternoon; (2) clients’ tax files are stolen. How should size of loss compare?",
+ opts:["Both Major, because any attack that succeeds is serious for a small firm like this one","(1) Minor or Moderate; (2) Major: personal data, the law and client trust","(1) Major, because the public can see it; (2) Minor, because nobody outside would notice","Both Moderate, because the middle of the matrix is the safest rating to choose"],ans:1,
+ why:"Different threats to the same firm deserve different ratings. Rating everything the same suggests you have not thought about consequences, which keeps an answer in a lower band."},
+{id:"A39",lo:"A",act:"2",type:"mcq",q:"A café adds CCTV covering the till. What must it do to stay within data protection law?",
+ opts:["Nothing extra, because CCTV recorded on your own premises does not count as personal data","Put up clear signs, limit who can view the footage and delete it after a set period","Get written consent from every customer at the door before they are allowed to walk in","Register each camera with the local police station before it is switched on for the first time"],ans:1,
+ why:"Images of people are personal data. The café must be open about recording (signs), control access and not keep footage longer than it needs."},
+{id:"C36",lo:"C",act:"2",type:"mcq",q:"Your measure is to replace a shop’s Windows 7 till PCs. Which is a <b>technical</b> constraint rather than a financial one?",
+ opts:["The new PCs are priced at about £450 each, which adds up across four shops","The till software only runs on Windows 7 until the supplier updates it","The owner would need to take out a small loan in order to buy them","Training staff on the new tills would mean paying them for overtime"],ans:1,
+ why:"Technical constraints are about what the technology can or can’t do (compatibility, skills, connections). Prices, loans and overtime are financial."},
+{id:"C37",lo:"C",act:"2",type:"mcq",q:"Which ‘outline cost-benefit’ entry is strongest for adding nightly cloud backup at £8 a month?",
+ opts:["It is cheap, and taking backups is always a sensible idea for any firm of any size.","About £96 a year, against losing every order and customer record.","The benefit is high and the cost is low, so on balance it is clearly worth doing.","It costs £8 a month, which the owner can easily afford to pay out of petty cash."],ans:1,
+ why:"Cost-benefit means putting the cost next to what it protects in this scenario. Give a figure where you can and compare it with the loss it prevents."},
+{id:"C38",lo:"C",act:"2",type:"mcq",q:"Your measure locks the busy reception PC after 2 minutes. Which ‘overview of usability’ is strongest?",
+ opts:["There is no real effect, because users will hardly notice a screen that locks itself","Staff sign in many times an hour; a 5-minute lock or tap card keeps it workable","It makes the PC much harder to use, so the measure should not go ahead at all","Usability does not need to be discussed for a measure like this one, so leave it out"],ans:1,
+ why:"Say honestly how the measure affects people doing their job, then show how to keep it usable. ‘No effect’ and ‘don’t do it’ both miss the point."},
+{id:"C39",lo:"C",act:"2",type:"mcq",q:"Test plan row: ‘guest Wi-Fi is separated from the office network’. Which test and expected result is best?",
+ opts:["Test: check that the guest Wi-Fi works. Expected result: a phone connects and loads a web page.","Test: from guest Wi-Fi, try to open the file server share. Expected: refused.","Test: ask the staff whether they feel the network is safer now. Expected result: they say yes.","Test: install the VLAN on the router. Expected result: the VLAN has been installed correctly."],ans:1,
+ why:"A test tries the thing the measure is meant to stop, and the expected result says what success looks like. Installing the measure is an action, not a test."},
+{id:"C40",lo:"C",act:"3",type:"mcq",q:"The Activity 3 grid rewards justification that ‘integrates’ the risk assessment and the security plan. What does that look like?",
+ opts:["Copying the whole risk assessment table into the report as an appendix at the end","Linking each measure to a named risk, e.g. ‘MFA addresses risk 1 (Extreme)’","Listing every measure again in exactly the same order as they appear in the plan","Explaining in general terms what a risk assessment is and why firms carry them out"],ans:1,
+ why:"Integrating means linking: this measure, for that risk, because of its severity. Refer to your risks by number so the examiner can follow the chain."},
+{id:"C41",lo:"C",act:"3",type:"mcq",q:"The management report should show how the plan protects the system through hardware, software and physical measures. Which set covers all three?",
+ opts:["New firewall rules, anti-malware on each PC and automatic operating system updates","A hardware firewall, anti-malware on each PC and a locked cabinet for the server","Better door locks, CCTV at the entrance and a sign-in book for all visitors","A password policy, staff awareness training and a written incident response plan"],ans:1,
+ why:"Hardware (firewall appliance), software (anti-malware) and physical (locked cabinet). The other sets are all one type, or are policies."},
+{id:"D22",lo:"D",act:"5",type:"mcq",q:"Activity 5 asks you to review the incident. Which three areas does the mark grid want balanced?",
+ opts:["Threats to the system, its vulnerabilities and the likely impacts","Forensic procedures, protection measures and security documentation","Hardware measures, software measures and physical security","Probability, potential size of loss and overall risk severity"],ans:1,
+ why:"The Activity 5 grid names three areas: forensic procedures, protection measures and security documentation. Missing or skimping one holds the answer down."},
+{id:"D23",lo:"D",act:"5",type:"mcq",q:"Which Activity 5 point would score best?",
+ opts:["They should improve their security a great deal across the business so that nothing like this can ever happen again.","Port 3306 was open to the internet. Block it at the firewall so outsiders can’t reach the database.","They need a much better firewall, much better passwords and much better trained staff.","The company should hire a full-time cyber security team to watch the network day and night."],ans:1,
+ why:"Name the specific weakness from the evidence, give a realistic fix and say why it reduces the chance of a repeat."},
+{id:"D24",lo:"D",act:"5",type:"mcq",q:"A learner writes two pages on protection measures and one line each on forensic procedures and documentation. What is the likely effect?",
+ opts:["No effect at all, because marks are given for the total number of points made","A lower band, because the grid asks for balanced consideration of all three","A higher band, because great depth in one area shows real expertise in the subject","The answer is not marked, because it has been written in the wrong format"],ans:1,
+ why:"Lower bands describe ‘incomplete or imbalanced’ consideration. Plan three sections of similar weight before you start writing."},
+{id:"D25",lo:"D",act:"5",type:"mcq",q:"Suggestions must be ‘realistic in the context of the scenario’. Which fits a four-shop bakery?",
+ opts:["Build a security operations centre that is staffed around the clock","Pay the IT contractor for a yearly check and switch on automatic updates","Replace every system with a new platform that is built specially for them","Employ a trained forensic analyst to work at each of the four shops"],ans:1,
+ why:"Realistic means the organisation could actually afford and run it. Examiners mark down suggestions that only a large company could carry out."},
+{id:"D26",lo:"D",act:"5",type:"mcq",q:"A password policy says ‘use a strong password’. Which rewrite is clear enough to follow and to check?",
+ opts:["Passwords must be very strong indeed and extremely hard for anyone else to guess","At least 12 characters, not reused elsewhere, and MFA on admin accounts","Passwords should be changed on a regular basis by all members of staff in every shop","Always choose a password that only you would know and never tell anyone what it is"],ans:1,
+ why:"A policy line should be specific enough that someone can check whether it was followed. ‘Strong’ and ‘regular’ can’t be checked."},
+{id:"D27",lo:"D",act:"5",type:"mcq",q:"Why should staff sign the acceptable use policy?",
+ opts:["Signing it turns the policy into a legal contract between the firm and its customers","It shows they have read the rules, so misuse can be dealt with fairly","Signing it removes the firm’s own duties under data protection law","It means the IT contractor no longer needs to monitor anything at all"],ans:1,
+ why:"A signature is evidence that staff were told the rules. It doesn’t remove the firm’s legal duties."},
+{id:"D28",lo:"D",act:"5",type:"mcq",q:"An incident response plan lists roles. Who should decide whether to tell the ICO and customers about a data breach?",
+ opts:["The first member of staff who happens to notice that something is wrong","A named senior person, such as the owner or the data protection lead","The external IT contractor, acting on their own without asking the firm","Whoever is working on the reception desk on the day it happens"],ans:1,
+ why:"Decisions with legal consequences need a named, senior decision-maker in the plan, with a deputy for when they are away."},
+{id:"D29",lo:"D",act:"5",type:"mcq",q:"The review finds staff had never practised the incident plan. Which documentation improvement fits best?",
+ opts:["Make the plan a good deal longer and add far more technical detail to it","Add a yearly walk-through exercise and record the date and the lessons learned","Send the same plan to all staff again by email and ask them to read it","Remove the plan altogether, because nobody used it when it was needed"],ans:1,
+ why:"Plans need testing. A scheduled exercise with a record shows the plan is practised and improved (the ‘check’ and ‘act’ of Plan–Do–Check–Act)."},
+{id:"E38",lo:"E",act:"5",type:"mcq",q:"Logs from the incident were copied to the manager’s own USB stick and emailed between staff. Which Activity 5 recommendation is strongest?",
+ opts:["Next time, restart the server straight away so that the damage is limited as far as possible","Export to write-once media, record a hash, and log everyone who handles the copy","Delete the logs as soon as the website is working normally again to save space","Let the manager decide on her own which pieces of evidence are worth keeping"],ans:1,
+ why:"This is ‘adherence to forensic procedures’: integrity (hash, write-once) and chain of custody (who handled it and when)."},
+{id:"E39",lo:"E",act:"5",type:"mcq",q:"Which sentence is a <b>justification</b> with a chain of reasoning, not just a suggestion?",
+ opts:["They should take the admin password off the office whiteboard as soon as possible.","With the password off the whiteboard, only named staff know it, so a login can be traced.","A whiteboard is a very bad place to keep a password in any office of any size.","The admin password should be changed, and doing that is extremely important."],ans:1,
+ why:"A justification says what the change does and why that reduces the chance of a repeat: action → effect → benefit."},
+{id:"E40",lo:"E",act:"4",type:"mcq",q:"Two evidence items conflict: the manager blames a staff member, but the logs show an outside IP address. What should your analysis do?",
+ opts:["Ignore the statement completely, because an opinion can never count as evidence","Say which is more reliable and why; keep the other as a less likely alternative","Believe the manager, because she knows her own staff far better than any log does","Say that the cause cannot be known and leave the conclusion box empty"],ans:1,
+ why:"Top-band conclusions weigh the evidence and give ‘balanced consideration of alternative possibilities’. Don’t discard an item; explain why it carries less weight."}
+];
+ITEMS.push(...MORE_ITEMS);
 /* Balanced options: correct answers are no longer the longest; distractors are plausible misconceptions. Answer index unchanged. */
 const OPTFIX = {
 A01:["Good range: four different threats have been identified","One malware threat repeated, so the range is actually narrow","Acceptable, provided each one is given a different severity","Only the rootkit row counts, as it is hardest to detect"],
@@ -849,7 +925,7 @@ A32:["Hardware protects the network edge; software protects one device","They ar
 A34:["No-one knows how to report a suspicious email","An unpatched operating system","WEP encryption on the router","Port 3389 left open to the internet"],
 B13:["An extranet","An intranet","A PAN","A SAN"],
 B14:["No central device controls who joins","They are too fast to be monitored","Ad-hoc networks can’t use encryption","There is no security concern"],
-B15:["Easy to isolate devices, but the switch is a single point","It is the least secure of all topologies","Individual devices can never be isolated","The switch needs no physical protection"],
+B15:["Easy to isolate one device, but the switch is a single point of failure","It is the least secure of all topologies","Individual devices can never be isolated","The switch needs no physical protection"],
 B16:["Names to IP addresses; tampering redirects users","Hands out IP addresses; it can run out of them","Encrypts email; its keys can be stolen","Stores backups; its disks can fail"],
 B18:["Anyone reaching that path may reach the database","Nothing: 5G traffic is always encrypted","The tablets’ battery life","Weak Bluetooth pairing on the tablets"],
 B19:["A locked room or cabinet with named access","A warning sign on the server case","Anti-malware installed on the server","Hiding the Wi-Fi network name"],
@@ -929,7 +1005,7 @@ A23:{0:"A password and a memorable word chosen by the user",3:"A PIN and the ans
 A27:{0:"It is far too expensive for a small business to buy and run",3:"It is illegal under GDPR to filter which devices can connect"},
 A31:{1:"Fingerprints can be shared with friends, just like a card can be lent"},
 A34:{1:"An unpatched operating system on the reception PC",3:"Port 3389 left open to the internet on the router"},
-B15:{0:"It is the least secure topology because every device is connected",2:"Individual devices can never be isolated without shutting the switch"},
+B15:{1:"It is the least secure topology because every device is connected",2:"Individual devices can never be isolated without shutting the switch"},
 B18:{1:"Nothing: 5G mobile data is always encrypted end to end",3:"Weak Bluetooth pairing between the tablets and the boats"},
 B19:{1:"A warning label on the server case asking people not to touch it",2:"Anti-malware installed on the server with daily scans"},
 B20:{1:"It is the strongest Wi-Fi protection available to small firms",3:"It stops brute-force attacks because the key can’t be guessed"},
@@ -984,7 +1060,11 @@ function record(id,correct,conf){
 }
 /* Per-answer facts for the results sheet: seconds taken, which attempt, days since first seen, previous outcome. Read BEFORE record(). */
 function itemMeta(id,qStart){const st=S.stat[id],f=S.first&&S.first[id],l=S.last&&S.last[id];return {s:Math.max(0,Math.round((Date.now()-qStart)/1000)),n:(st?st.c+st.w:0)+1,d:f?Math.floor((Date.now()-f)/DAY):0,p:(l===0||l===1)?l:-1};}
-function mastery(lo){const its=ITEMS.filter(i=>i.lo===lo); const m=its.filter(i=>(S.box[i.id]||0)>=3).length; return {m,n:its.length,seen:its.filter(i=>S.stat[i.id]).length};}
+/* Kept out of practice until a student has met them in a final test, so the test can show whether they understand the topic or only remember the practice questions. */
+const HOLD=new Set(["A16","A19","A20","A23","A29","A30","B05","B10","B15","C16","C28","C34","D02","D07","D10","D17","D19","D21","E02","E17","E22","E25","E28","E30"]);
+const HOLD_PER_TEST={A:2,B:1,C:1,D:2,E:2};
+function practisable(){return ITEMS.filter(i=>!HOLD.has(i.id)||S.stat[i.id]);}
+function mastery(lo){const its=practisable().filter(i=>i.lo===lo); const m=its.filter(i=>(S.box[i.id]||0)>=3).length; return {m,n:its.length,seen:its.filter(i=>S.stat[i.id]).length};}
 function isDue(i){return S.stat[i.id] && (S.due[i.id]||0)<=Date.now() && (S.box[i.id]||1)<5;}
 
 /* ============ HELPERS ============ */
@@ -1003,23 +1083,28 @@ function head(item){
   return m;
 }
 function feedback(ok,title,body,partial){const f=el("div",{class:"fb "+(partial?"part":ok?"ok":"no")});f.append(el("h4",{},title));if(body)f.append(el("div",{},body));return f;}
-function confRow(state){const r=el("div",{class:"conf"},"<span class='muted'>How sure are you?</span>");
- [["sure","Sure"],["unsure","Not sure"],["guess","Guessing"]].forEach(([k,l])=>{const b=el("button",{type:"button",onclick:()=>{state.conf=k;[...r.querySelectorAll("button")].forEach(x=>x.classList.toggle("on",x===b));}},l);if(state.conf===k)b.classList.add("on");r.append(b);});return r;}
+function confRow(state,onChange){const r=el("div",{class:"conf",role:"group","aria-label":"How sure are you?"},"<span class='muted'>How sure are you?</span>");
+ [["sure","Sure"],["unsure","Not sure"],["guess","Guessing"]].forEach(([k,l])=>{const b=el("button",{type:"button","aria-pressed":"false",onclick:()=>{state.conf=k;[...r.querySelectorAll("button")].forEach(x=>{x.classList.toggle("on",x===b);x.setAttribute("aria-pressed",x===b);});if(onChange)onChange();}},l);r.append(b);});return r;}
+/* Nothing is pre-selected: the Check button stays off until the student has chosen an answer AND tapped how sure they are. */
+const CONF_HINT="Choose your answer and tap how sure you are.";
 
 function renderMCQ(item,box,done,multi){
-  const st={sel:multi?new Set():null,conf:"unsure"};
+  const st={sel:multi?new Set():null,conf:null};
+  const upd=()=>{const has=multi?st.sel.size>0:st.sel!==null;chk.disabled=!(has&&st.conf);hint.hidden=!chk.disabled;};
   if(item.ctx)box.append(el("div",{class:"ctx"},item.ctx));
   box.append(el("div",{class:"qtext"},item.q+(multi?" <span class='muted small'>(select all that apply)</span>":"")));
   const order=shuffle(item.opts.map((o,i)=>i));
   const opts=el("div",{class:"opts"});const btns=[];
   order.forEach((oi,k)=>{const b=el("button",{type:"button",class:"opt"},"<span class='key'>"+LET[k]+"</span><span>"+item.opts[oi]+"</span>");b.dataset.i=oi;
-    b.onclick=()=>{if(multi){st.sel.has(oi)?st.sel.delete(oi):st.sel.add(oi);b.classList.toggle("sel");}else{st.sel=oi;btns.forEach(x=>x.classList.toggle("sel",x===b));}chk.disabled=multi?st.sel.size===0:false;};
+    b.onclick=()=>{if(multi){st.sel.has(oi)?st.sel.delete(oi):st.sel.add(oi);b.classList.toggle("sel");}else{st.sel=oi;btns.forEach(x=>x.classList.toggle("sel",x===b));}upd();};
     btns.push(b);opts.append(b);});
-  box.append(opts,confRow(st));
+  box.append(opts,confRow(st,()=>upd()));
   const chk=el("button",{type:"button",class:"btn",disabled:"disabled"},"Check answer");
-  const rw=el("div",{class:"row"});rw.append(chk);box.append(rw);
+  const hint=el("span",{class:"small muted confhint"},CONF_HINT);
+  const rw=el("div",{class:"row"});rw.append(chk,hint);box.append(rw);
   chk.onclick=()=>{
-    if(!multi&&st.sel===null)return;
+    if((!multi&&st.sel===null)||!st.conf)return;
+    hint.remove();
     let ok;
     if(multi){const a=new Set(item.ans);ok=a.size===st.sel.size&&[...a].every(x=>st.sel.has(x));}
     else ok=st.sel===item.ans;
@@ -1032,7 +1117,7 @@ function renderMCQ(item,box,done,multi){
   };
 }
 function renderMatrix(item,box,done){
-  const st={sel:null,conf:"unsure"};const rev=item.gen==="rev";
+  const st={sel:null,conf:null};const rev=item.gen==="rev";const upd=()=>{chk.disabled=!(st.sel!==null&&st.conf);hint.hidden=!chk.disabled;};
   const p=PROBS[Math.floor(Math.random()*3)],li=Math.floor(Math.random()*3),l=LOSS[li],s=SEV[p][li];
   let q,opts,ans;
   if(rev){ // pick a combo where answer unique given severity+loss
@@ -1041,9 +1126,9 @@ function renderMatrix(item,box,done){
   }else{q="Probability: <b>"+p+"</b>. Size of loss: <b>"+l+"</b>. What risk severity goes in the template?";opts=["Low","Medium","High","Extreme"];ans=[s];}
   box.append(el("div",{class:"qtext"},q+" <span class='muted small'>No peeking at the matrix.</span>"));
   const o=el("div",{class:"opts"});const btns=[];
-  opts.forEach((x,k)=>{const b=el("button",{type:"button",class:"opt"},"<span class='key'>"+LET[k]+"</span><span>"+x+"</span>");b.onclick=()=>{st.sel=x;btns.forEach(y=>y.classList.toggle("sel",y===b));chk.disabled=false;};btns.push(b);o.append(b);});
-  box.append(o,confRow(st));const chk=el("button",{type:"button",class:"btn",disabled:"disabled"},"Check answer");box.append(chk);
-  chk.onclick=()=>{const ok=ans.includes(st.sel);btns.forEach(b=>{b.disabled=true;const v=b.textContent.slice(1);if(ans.includes(v))b.classList.add("right");else if(v===st.sel)b.classList.add("wrong");});chk.remove();
+  opts.forEach((x,k)=>{const b=el("button",{type:"button",class:"opt"},"<span class='key'>"+LET[k]+"</span><span>"+x+"</span>");b.onclick=()=>{st.sel=x;btns.forEach(y=>y.classList.toggle("sel",y===b));upd();};btns.push(b);o.append(b);});
+  box.append(o,confRow(st,()=>upd()));const chk=el("button",{type:"button",class:"btn",disabled:"disabled"},"Check answer");const hint=el("span",{class:"small muted confhint"},CONF_HINT);const mrw=el("div",{class:"row"});mrw.append(chk,hint);box.append(mrw);
+  chk.onclick=()=>{if(st.sel===null||!st.conf)return;hint.remove();const ok=ans.includes(st.sel);btns.forEach(b=>{b.disabled=true;const v=b.textContent.slice(1);if(ans.includes(v))b.classList.add("right");else if(v===st.sel)b.classList.add("wrong");});chk.remove();
    if(!ok&&st.conf==="sure")box.append(el("div",{class:"hyper"},"Confident and wrong: this is exactly the error examiners report every year. Trace the row and column on the matrix below."));
    box.append(feedback(ok,ok?"Correct":"Not quite","<p>Read across from <b>"+p+"</b> and up from <b>"+l+"</b>: they meet at <b>"+s+"</b>.</p>"+matrixHTML(p,l)+(rev&&ans.length>1?"<p class='small muted'>Here more than one probability gives this result; any of them counts.</p>":"")));done(ok,st.conf);};
 }
@@ -1106,9 +1191,10 @@ function renderItem(item,box,done){
 }
 
 /* ============ SESSION RUNNER ============ */
+function newSid(){try{const a=new Uint8Array(9);crypto.getRandomValues(a);return Array.from(a,x=>x.toString(36).padStart(2,"0")).join("").slice(0,16);}catch(e){return (Date.now().toString(36)+Math.random().toString(36).slice(2)).slice(0,16);}}
 function runSession(title,queue,host,onExit){
-  host.innerHTML="";let i=0;const res=[];const start=Date.now();let saved=false;
-  LIVE={kind:"session",build:()=>res.length?practicePayload(title,res,queue.length,start,true):null};
+  host.innerHTML="";let i=0;const res=[];const start=Date.now();let saved=false;const sid=newSid();
+  LIVE={kind:"session",build:()=>res.length?practicePayload(title,res,queue.length,start,true,sid):null};
   const panel=el("section",{class:"panel"});host.append(panel);
   function show(){panel.innerHTML="";
    if(i>=queue.length){return summary();}
@@ -1119,7 +1205,7 @@ function runSession(title,queue,host,onExit){
    renderItem(item,qb,(ok,conf)=>{const meta=itemMeta(item.id,qStart);record(item.id,ok,conf);res.push({item,ok,conf,meta});
      const nx=el("button",{type:"button",class:"btn"},i+1<queue.length?"Next question →":"See my results");nx.onclick=()=>{i++;show();window.scrollTo({top:0});};const rw=el("div",{class:"row"});rw.append(nx);qb.append(rw);nx.focus({preventScroll:true});});
   }
-  function summary(){panel.innerHTML="";if(!saved){saved=true;LIVE=null;if(res.length)sendAttempt(practicePayload(title,res,queue.length,start,res.length<queue.length));}const n=res.length,c=res.filter(r=>r.ok).length,hc=res.filter(r=>!r.ok&&r.conf==="sure").length,lucky=res.filter(r=>r.ok&&(r.conf==="guess"||r.conf==="unsure")).length;
+  function summary(){panel.innerHTML="";if(!saved){saved=true;LIVE=null;if(res.length)sendAttempt(practicePayload(title,res,queue.length,start,res.length<queue.length,sid));}const n=res.length,c=res.filter(r=>r.ok).length,hc=res.filter(r=>!r.ok&&r.conf==="sure").length,lucky=res.filter(r=>r.ok&&(r.conf==="guess"||r.conf==="unsure")).length;
    panel.append(el("h2",{},title+": results"));
    const s=el("div",{class:"sum"});s.append(el("div",{class:"tile"},"<b>"+c+"/"+n+"</b>correct"),el("div",{class:"tile"},"<b>"+hc+"</b>confident but wrong"),el("div",{class:"tile"},"<b>"+lucky+"</b>right but unsure"));panel.append(s);
    panel.append(el("p",{class:"lede"},"Wrong answers and guesses come back soonest in <b>Review</b>. Items you got right and were sure about come back after longer gaps, which is what makes them stick."));
@@ -1130,7 +1216,7 @@ function runSession(title,queue,host,onExit){
   show();
 }
 function pickMixed(n){
-  const pool=ITEMS.slice();const due=shuffle(pool.filter(isDue));const fresh=shuffle(pool.filter(i=>!S.stat[i.id]));const rest=shuffle(pool.filter(i=>S.stat[i.id]&&!isDue(i)));
+  const pool=practisable();const due=shuffle(pool.filter(isDue));const fresh=shuffle(pool.filter(i=>!S.stat[i.id]));const rest=shuffle(pool.filter(i=>S.stat[i.id]&&!isDue(i)));
   const w=lo=>LOS[lo].weight;const chosen=[];
   const take=src=>{src.sort((a,b)=>w(b.lo)*Math.random()-w(a.lo)*Math.random());for(const it of src){if(chosen.length>=n)break;if(!chosen.includes(it))chosen.push(it);}};
   take(due);take(fresh);take(rest);
@@ -1164,6 +1250,10 @@ SKILL["Reasoning from the scenario"].push("C25","C29");
 SKILL["Policies & incident management"].push("D13","D14","D15","D16","D17","D18","D19","D20","D21");
 SKILL["Forensic procedure"].push("E27","E28","E31");
 SKILL["Evidence analysis (Activity 4)"].push("E22","E23","E24","E25","E26","E29","E30","E32","E33","E34");
+SKILL["Impacts (size of loss)"].push("A35","A36","A37","A38");SKILL["Legal responsibilities"].push("A39");
+SKILL["Security plan (Activity 2)"].push("C36","C37","C38","C39");SKILL["Management report (Activity 3)"].push("C40","C41");
+SKILL["Activity 5 structure"].push("D22","D23","D24","D25","E38","E39");SKILL["Policies & incident management"].push("D26","D27","D28","D29");
+SKILL["Evidence analysis (Activity 4)"].push("E40");
 SKILL["Activity 5 structure"].push("E35","E36");
 function skillOf(id){for(const k in SKILL)if(SKILL[k].includes(id))return k;return "Other";}
 const TEST_BLUEPRINT={A:7,B:5,C:11,D:7,E:10}; // 40 questions, weighted by exam marks
@@ -1177,6 +1267,9 @@ function buildTest(){
     let n=TEST_BLUEPRINT[lo];
     let pool=ITEMS.filter(i=>i.lo===lo&&i.type!=="write"&&i.type!=="matrix");
     let pick=[];
+    // a few questions this student has never practised; the rest of the unseen held-back ones are saved for later tests
+    const fresh=shuffle(pool.filter(i=>HOLD.has(i.id)&&!S.stat[i.id])).slice(0,HOLD_PER_TEST[lo]||0);
+    pool=pool.filter(i=>!HOLD.has(i.id)||S.stat[i.id]);
     if(lo==="C"){ // always 2 matrix lookups + 1 scenario chain
       for(let k=0;k<2;k++){const p=PROBS[Math.floor(Math.random()*3)],li=Math.floor(Math.random()*3);pick.push({id:"C0"+(k+1),lo:"C",act:"1",type:"matrix",tp:p,tl:LOSS[li]});}
       pick.push(shuffle(pool.filter(i=>i.type==="chain"))[0]);
@@ -1186,7 +1279,8 @@ function buildTest(){
       pick.push(ITEMS.find(i=>i.id==="E01"));pick.push(shuffle(pool.filter(i=>["E08","E09","E10","E11"].includes(i.id)))[0]);pick.push(shuffle(pool.filter(i=>["E32","E33","E34"].includes(i.id)))[0]);
       pool=pool.filter(i=>!pick.includes(i));
     }
-    pick=pick.concat(shuffle(pool).slice(0,n-pick.length));
+    pick=pick.concat(fresh);
+    pick=pick.concat(shuffle(pool).slice(0,Math.max(0,n-pick.length)));
     out.push(...pick);
   }
   // interleave outcomes
@@ -1253,7 +1347,7 @@ function viewTest(){
   if(TEST&&TEST.done){return drawReport();}
   const p=el("section",{class:"panel"});
   p.append(el("h1",{},"Final test"),el("p",{class:"lede"},"A timed, auto-marked test across all five learning outcomes, weighted the way the exam is. You get no feedback until the end. Then you get a full diagnostic: your score, which outcomes and exam activities are weak, and every answer explained."));
-  p.append(el("div",{class:"model"},"<h4>Rules</h4><ul class='notes'><li>"+Object.values(TEST_BLUEPRINT).reduce((a,b)=>a+b,0)+" questions, "+TEST_MINUTES+" minutes. When time runs out the test is marked as it stands.</li><li>No going back. You can skip, but a skipped question scores 0.</li><li><b>Strict marking.</b> Multiple choice: right or nothing. ‘Select all’: every correct option and no wrong ones, or 0. Sorting: each wrong row cancels a right one. Ordering: must be perfect. Scenarios: picking non-security details loses marks.</li><li>Say how sure you are for every question. The report shows where you were confident but wrong.</li><li>Written answers can’t be auto-marked, so they aren’t in this test. This is not a predicted grade for the exam.</li></ul>"));
+  p.append(el("div",{class:"model"},"<h4>Rules</h4><ul class='notes'><li>"+Object.values(TEST_BLUEPRINT).reduce((a,b)=>a+b,0)+" questions, "+TEST_MINUTES+" minutes. When time runs out the test is marked as it stands.</li><li>No going back. You can skip, but a skipped question scores 0.</li><li><b>Strict marking.</b> Multiple choice: right or nothing. ‘Select all’: every correct option and no wrong ones, or 0. Sorting: each wrong row cancels a right one. Ordering: must be perfect. Scenarios: picking non-security details loses marks.</li><li>Say how sure you are for every question. The report shows where you were confident but wrong.</li><li>Each test includes a few questions that are not in the practice sets, to check you understand the topic and not only the questions.</li><li>Written answers can’t be auto-marked, so they aren’t in this test. This is not a predicted grade for the exam.</li></ul>"));
   const g=el("div",{class:"grid2"});
   const nl=el("label",{for:"t_name"},"<b>Your full name</b>");const ni=el("input",{id:"t_name",type:"text",autocomplete:"name",style:"font:inherit;padding:9px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);width:100%"});
   const gl=el("label",{for:"t_group"},"<b>Group</b>");const gs=el("select",{id:"t_group",style:"font:inherit;padding:9px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);width:100%"});["Ealing","Southall","Other"].forEach(x=>gs.append(el("option",{value:x},x)));
@@ -1261,7 +1355,7 @@ function viewTest(){
   const msg=el("p",{class:"small",style:"color:var(--bad)"});const go=el("button",{type:"button",class:"btn"},"Start the test");p.append(msg,go);
   if(AUTH.user){ni.value=AUTH.user.name;ni.readOnly=true;const gv=AUTH.user.group;if(gv&&![...gs.options].some(o=>o.value===gv))gs.append(el("option",{value:gv},esc(gv)));if(gv)gs.value=gv;gs.disabled=true;}
   go.onclick=()=>{const n=ni.value.trim();if(!AUTH.user&&(n.length<3||!/\s/.test(n))){msg.textContent="Enter your first name and surname to start.";ni.focus();return;}
-    TEST={name:n,group:gs.value,items:buildTest(),i:0,resp:[],conf:[],start:Date.now(),running:true};TEST.end=TEST.start+TEST_MINUTES*60000;LIVE={kind:"test",build:()=>TEST&&TEST.running?testPayload(TEST,true):null};
+    TEST={name:n,group:gs.value,items:buildTest(),i:0,resp:[],conf:[],start:Date.now(),running:true,sid:newSid()};TEST.end=TEST.start+TEST_MINUTES*60000;LIVE={kind:"test",build:()=>TEST&&TEST.running?testPayload(TEST,true):null};
     TEST.timer=setInterval(()=>{const t=$("#t_clock");if(t)t.textContent=fmtTime(TEST.end-Date.now());if(Date.now()>=TEST.end)finishTest(true);},1000);render();};
   app.append(p);
 }
@@ -1456,18 +1550,18 @@ window.addEventListener("pagehide", () => {
 
 function loAgg(list) { const lo = {}; list.forEach(x => { const k = x.lo; lo[k] = lo[k] || { g: 0, m: 0 }; lo[k].g += x.g; lo[k].m += x.m; }); return lo; }
 function sessionKind(title) { return /matrix/i.test(title) ? "drill" : /case/i.test(title) ? "case" : /sprint/i.test(title) ? "sprint" : /^review/i.test(title) ? "review" : "practice"; }
-function practicePayload(title, res, queueLen, start, partial) {
+function practicePayload(title, res, queueLen, start, partial, sid) {
   const items = res.map(r => Object.assign({ id: r.item.id, lo: r.item.lo, g: r.ok ? 1 : 0, m: 1, c: r.conf }, r.meta || {}));
   return { kind: sessionKind(title), title, questions: queueLen, answered: res.length, marks: items.filter(x => x.g).length, max: res.length,
-    confidentWrong: res.filter(r => !r.ok && r.conf === "sure").length, minutes: (Date.now() - start) / 60000, partial: !!partial, lo: loAgg(items),
-    items: items.map(x => ({ id: x.id, g: x.g, m: x.m, c: x.c, s: x.s, n: x.n, d: x.d, p: x.p })) };
+    confidentWrong: res.filter(r => !r.ok && r.conf === "sure").length, minutes: (Date.now() - start) / 60000, partial: !!partial, lo: loAgg(items), sid: sid || "",
+    items: items.map((x, q) => ({ id: x.id, g: x.g, m: x.m, c: x.c, s: x.s, n: x.n, d: x.d, p: x.p, q })) };
 }
 function testPayload(T, abandoned) {
   const marks = T.items.map((it, k) => T.marks ? T.marks[k] : (T.resp[k] !== undefined ? markItem(it, T.resp[k]) : { got: 0, max: maxMarks(it) }));
-  const items = T.items.map((it, k) => Object.assign({ id: it.id, lo: it.lo, g: marks[k].got, m: marks[k].max, c: T.conf[k] || "none" }, (T.meta && T.meta[k]) || {}));
+  const items = T.items.map((it, k) => Object.assign({ id: it.id, lo: it.lo, g: marks[k].got, m: marks[k].max, c: (T.resp[k] === undefined || T.resp[k] === null) ? (T.conf[k] === "skip" ? "skip" : "none") : (T.conf[k] || "none") }, (T.meta && T.meta[k]) || {}));
   return { kind: abandoned ? "abandoned" : "test", title: "Final test", questions: T.items.length, answered: T.resp.filter(r => r !== null && r !== undefined).length,
     marks: items.reduce((s, x) => s + x.g, 0), max: items.reduce((s, x) => s + x.m, 0), confidentWrong: items.filter(x => x.c === "sure" && x.g < x.m).length,
-    minutes: ((T.finished || Date.now()) - T.start) / 60000, partial: !!abandoned, timedOut: !!T.timedOut, lo: loAgg(items), items: items.map(x => ({ id: x.id, g: x.g, m: x.m, c: x.c, s: x.s, n: x.n, d: x.d, p: x.p })) };
+    minutes: ((T.finished || Date.now()) - T.start) / 60000, partial: !!abandoned, timedOut: !!T.timedOut, lo: loAgg(items), sid: T.sid || "", items: items.map((x, q) => ({ id: x.id, g: x.g, m: x.m, c: x.c, s: x.s, n: x.n, d: x.d, p: x.p, q })) };
 }
 
 /* Header: who is signed in, saving status, sign out. */
@@ -1506,15 +1600,22 @@ function viewLogin() {
 
 /* ============ VIEWS ============ */
 const app=$("#app");
-const NAV=[["home","Home"],["lo-a","A"],["lo-b","B"],["lo-c","C"],["lo-d","D"],["lo-e","E"],["sprint","Mixed sprint"],["review","Review"],["test","Final test"],["plan","Revision plan"]];
+const NAV=[["home","Home"],["lo-a","A"],["lo-b","B"],["lo-c","C"],["lo-d","D"],["lo-e","E"],["write","Exam answers"],["sprint","Mixed sprint"],["review","Review"],["test","Final test"],["plan","Revision plan"]];
 function nav(cur){const t=$("#tabs");t.innerHTML="";if(AUTH.on&&CONFIG.REQUIRE_LOGIN&&!AUTH.user)return;if(TEST&&TEST.running){t.append(el("span",{class:"pill acc"},"Test in progress"));return;}NAV.forEach(([h,l])=>{const a=el("a",{href:"#"+h},l);if(h===cur)a.classList.add("on");if(h.startsWith("lo-"))a.title=LOS[h.slice(3).toUpperCase()].name;t.append(a);});}
 
 function viewHome(){
   const p1=el("section",{class:"panel"});
   p1.append(el("h1",{},"Get the marks the examiners are looking for"),el("p",{class:"lede"},"<b>New here?</b> Start with the <a href='#plan'>6-week revision plan</a>."),
-   el("p",{class:"lede"},"Full notes, "+ITEMS.length+" practice questions and a strictly marked final test for all five learning outcomes, built from the 2022–2025 Unit 11 papers, mark grids and examiner reports. The marks are concentrated in the security plan, the forensic analysis and the improvements report, so those outcomes get the most practice."),
+   el("p",{class:"lede"},"Full notes, "+(ITEMS.length-HOLD.size)+" practice questions, written-answer practice for all five exam activities and a strictly marked final test, covering all five learning outcomes, built from the 2022–2025 Unit 11 papers, mark grids and examiner reports. The marks are concentrated in the security plan, the forensic analysis and the improvements report, so those outcomes get the most practice."),
    el("p",{class:"lede"},"<b>How to use it:</b> before each section, try to recall the key ideas without looking. Answer, say how sure you are, read the feedback. Come back to <b>Review</b> every few days."));
-  const r=el("div",{class:"row"});r.append(el("a",{class:"btn",href:"#sprint"},"Start a mixed sprint (12 questions)"),el("a",{class:"btn ghost",href:"#test"},"Take the final test"),el("a",{class:"btn ghost",href:"#review"},"Review what’s due ("+ITEMS.filter(isDue).length+")"));p1.append(r);
+  const dueN=ITEMS.filter(isDue).length,nx=wsNext(),untouched=Object.keys(LOS).filter(k=>mastery(k).seen===0);
+  const todo=el("ol",{class:"today"});
+  todo.append(el("li",{},"<a class='btn' href='#sprint'>Today’s practice: 12 mixed questions</a><span class='small muted'>Picked for you from all five outcomes, so you don’t get stuck on one.</span>"));
+  todo.append(el("li",{},"<a class='btn ghost' href='#review'>Review what’s due ("+dueN+")</a><span class='small muted'>Getting a question right again on a later day is what makes it stick.</span>"));
+  todo.append(el("li",{},"<a class='btn ghost' href='"+(nx?"#write-"+nx.act:"#write")+"'>"+(nx?"Exam answers: "+nx.name.replace(/^Activity (\d): /,"Activity $1, "):"Exam answers: all steps done, practise again")+"</a><span class='small muted'>The exam is written. Learn the template, mark like an examiner, then write.</span>"));
+  p1.append(el("h2",{},"What to do today"),todo);
+  if(untouched.length&&untouched.length<5)p1.append(el("p",{class:"small",id:"nudge"},"<b>Not started yet:</b> outcome"+(untouched.length>1?"s ":" ")+untouched.join(", ")+". The mixed practice will bring "+(untouched.length>1?"them":"it")+" in."));
+  const r=el("div",{class:"row"});r.append(el("a",{class:"btn ghost",href:"#test"},"Take the final test"));p1.append(r);
 
   const p2=el("section",{class:"panel"});p2.append(el("h2",{},"Where the 80 marks are"));
   const bp=el("div",{class:"bp"});let last="";
@@ -1536,7 +1637,7 @@ function viewHome(){
   app.append(p1,pp,p2,p3,p4);
 }
 function viewLO(k){
-  const L=LOS[k],items=ITEMS.filter(i=>i.lo===k),m=mastery(k);
+  const L=LOS[k],items=practisable().filter(i=>i.lo===k),m=mastery(k);
   const p1=el("section",{class:"panel"});p1.append(el("div",{class:"qmeta"},"<span class='pill acc'>Learning outcome "+k+"</span><span class='pill'>"+L.acts+"</span>"),el("h1",{},L.name),el("p",{class:"lede"},L.why),
    el("p",{class:"small muted"},m.m+" of "+m.n+" items secure · "+items.length+" items in this outcome"));
   const host=el("div");
@@ -1564,8 +1665,8 @@ function viewSprint(){
 function viewReview(){
   const due=ITEMS.filter(isDue);const host=el("div");app.append(host);
   const p=el("section",{class:"panel"});p.append(el("h1",{},"Review"),el("p",{class:"lede"},"Questions come back on a schedule: wrong or guessed answers the same day, then after 1, 3, 7 and 16 days as you keep getting them right and feeling sure."));
-  const s=el("div",{class:"sum"});const seen=ITEMS.filter(i=>S.stat[i.id]).length,sec=ITEMS.filter(i=>(S.box[i.id]||0)>=3).length;
-  s.append(el("div",{class:"tile"},"<b>"+due.length+"</b>due now"),el("div",{class:"tile"},"<b>"+seen+"/"+ITEMS.length+"</b>tried"),el("div",{class:"tile"},"<b>"+sec+"</b>secure"));p.append(s);
+  const s=el("div",{class:"sum"});const PR=practisable(),seen=PR.filter(i=>S.stat[i.id]).length,sec=PR.filter(i=>(S.box[i.id]||0)>=3).length;
+  s.append(el("div",{class:"tile"},"<b>"+due.length+"</b>due now"),el("div",{class:"tile"},"<b>"+seen+"/"+PR.length+"</b>tried"),el("div",{class:"tile"},"<b>"+sec+"</b>secure"));p.append(s);
   const r=el("div",{class:"row"});
   const b=el("button",{type:"button",class:"btn"},due.length?"Review "+Math.min(due.length,15)+" due items":"Nothing due: do a mixed sprint");
   b.onclick=()=>{if(!due.length){location.hash="#sprint";return;}runSession("Review",pickMixed(0).concat(shuffle(due).slice(0,15)),host,()=>render());};r.append(b);
@@ -1616,12 +1717,236 @@ function viewPlan(){
   app.append(p);
 }
 
+/* ============ EXAM ANSWERS: learn the template, mark like an examiner, build an answer, write your own ============
+   Teaching and practice only. Nothing here feeds the readiness figures; results are saved as kind "workshop". */
+const WS_HARBOUR="<b>Harbourside Physio</b> is a three-room clinic in Ealing. The two receptionists share one Windows login. Patient notes are stored on a NAS drive on a shelf in the staff kitchen, backed up nightly to a USB drive that stays plugged into it. Patients in the waiting room use the same Wi-Fi network as the reception PCs. The physios take a laptop on home visits.";
+const WS_LARKSPUR="<b>Larkspur Print Co</b> has nine staff. Customers hand in artwork on their own USB sticks, which designers plug into their PCs. To let the owner work from home, Remote Desktop was opened to the internet with the password ‘Larkspur2020’. A designer who left in June still has an active account. Windows updates are set to ‘ask me later’.";
+const WS_QUAY=CASE+EV1+EV2+EV3+EV4;
+const WS=[
+{act:1,name:"Activity 1: Risk assessment",marks:8,mins:8,scen:WS_HARBOUR,
+ bands:[["Band 1","1–3 marks","Superficial. Generic threats that could be about any business. Ratings often don’t make sense."],["Band 2","4–6 marks","Sound. Threats come from the scenario with some chains of reasoning. Ratings mostly reasonable."],["Band 3","7–8 marks","In-depth. Perceptive use of the scenario, clear chains of reasoning, ratings consistently reasonable."]],
+ how:[["Threat title","Name what could happen to <b>this</b> organisation, not a type of malware.","Loss of all patient notes if the NAS is stolen or fails"],
+  ["Probability","Very likely, Likely or Unlikely, with the scenario detail that makes you say so.","Likely: the NAS sits on an open shelf in the staff kitchen"],
+  ["Potential size of loss / impact level","Minor, Moderate or Major, then what is actually lost: operations, money, legal, reputation.","Major: every treatment history is gone, so the clinic can’t treat safely; health data means an ICO report; patients lose trust"],
+  ["Risk severity","Read it from the matrix. Never guess it.","Likely × Major = High"],
+  ["Explanation of the threat in context","The chain: scenario detail → weakness → what happens → consequence.","The only backup is a USB drive plugged into the NAS itself. A thief, a fire or ransomware that reaches the NAS reaches the backup too, so there would be no copy to restore from."]],
+ mark:[
+  {id:"M1a",band:0,text:"<b>Threat:</b> Virus. <b>Probability:</b> Very likely. <b>Size of loss:</b> High. <b>Risk severity:</b> Extreme.<br><b>Explanation:</b> Viruses are very dangerous and can destroy computers, so the clinic must be careful.",
+   why:["‘Virus’ could be written about any business: nothing comes from the scenario.","‘High’ is not a size of loss. The template only allows Minor, Moderate or Major.","No chain of reasoning: it doesn’t say how it would happen here or what would be lost."],up:"Start from a detail in the scenario and say what it lets happen."},
+  {id:"M1b",band:1,text:"<b>Threat:</b> Patients on the Wi-Fi getting into the reception PCs. <b>Probability:</b> Likely. <b>Size of loss:</b> Moderate. <b>Risk severity:</b> Medium.<br><b>Explanation:</b> The waiting room Wi-Fi is the same network as the reception PCs, so a patient could access them and see data.",
+   why:["The threat comes from a real scenario detail, and Likely × Moderate = Medium is read correctly from the matrix.","The reasoning stops early: which data, and what happens to the clinic if it is seen?","The size of loss is a label with no explanation."],up:"Finish the chain: say it is patients’ health records, and give the legal and reputational consequence."},
+  {id:"M1c",band:2,text:"<b>Threat:</b> Changes to patient records that can’t be traced to a person. <b>Probability:</b> Likely. <b>Size of loss:</b> Moderate. <b>Risk severity:</b> Medium.<br><b>Explanation:</b> The two receptionists share one Windows login, so every action is recorded under the same name. If notes are changed or viewed wrongly, the clinic cannot show who did it. Health records are special category data, so the clinic could not prove to the ICO that access is controlled, and a wrong record could lead to the wrong treatment.",
+   why:["A perceptive threat: it isn’t an obvious one, and it comes straight from ‘share one Windows login’.","A full chain: detail → weakness (no accountability) → what happens → legal and patient-safety consequences.","The ratings are reasonable and the matrix is read correctly."],up:"This is top-band work. To stay there, keep the same depth for every threat."}],
+ build:{id:"B1",type:"order",q:"Build the chain of reasoning for one Harbourside threat. Put the sentences in the order an examiner wants to read them.",
+  steps:["Scenario detail: the nightly backup goes to a USB drive that stays plugged into the NAS.","Weakness: the backup is kept in the same place, on the same device, as the original.","What happens: a thief or ransomware that reaches the NAS reaches the backup as well.","Consequence: every patient record is lost, treatment stops and the ICO must be told.","Rating: Likely × Major = High."],
+  why:"Detail → weakness → what happens → consequence → rating. If any link is missing, the examiner has to guess it, and guesses don’t earn marks."},
+ write:{id:"W1",title:"Write one full risk assessment entry",task:"Threat to assess: <b>the laptop the physios take on home visits</b>.",
+  fields:["Threat title","Probability","Potential size of loss / impact level","Risk severity","Explanation of the threat in context"],
+  model:["Patient data exposed if the home-visit laptop is lost or stolen","Likely: it leaves the clinic every day and is carried in cars and into patients’ homes","Major: it holds health records, so a loss must be reported to the ICO, may bring a fine and would damage patients’ trust","Likely × Major = High","The physios take a laptop on home visits. The scenario doesn’t mention encryption or a screen lock, so anyone who picks it up could open the patient notes. Because it is used outside the building, it is far more likely to be left behind or stolen than the reception PCs."],
+  checklist:["My threat title is about this clinic, not a general type of attack","My probability gives a reason from the scenario","My size of loss is Minor, Moderate or Major and says what is actually lost","My risk severity matches the matrix for my two ratings","My explanation links a scenario detail to what happens and to a consequence"]}},
+{act:2,name:"Activity 2: Cyber security plan",marks:20,mins:20,scen:WS_LARKSPUR,
+ bands:[["Band 1","1–5 marks","Limited. Few measures, little protection, headings empty or one word."],["Band 2","6–10 marks","Basic. Some measures against common threats; reasons and headings thin."],["Band 3","11–15 marks","Adequate and mostly effective. Sound, logical reasons; every heading used; relevant tests."],["Band 4","16–20 marks","Robust. In-depth reasons, all headings in real detail, a comprehensive test plan."]],
+ how:[["Threat(s) addressed by the protection measure","Name the threat, and its number from your risk assessment. A threat, not an action.","Brute-force login through internet-facing Remote Desktop (risk 1)"],
+  ["Details of action(s) to be taken","Exactly what will be done, by whom.","Close the Remote Desktop port on the router. The owner connects through a VPN with an authenticator app on her phone."],
+  ["Reasons for the actions","How each action stops the threat.","Closing the port hides the login page from the internet. The VPN encrypts her connection. MFA means a guessed password is not enough."],
+  ["Overview of constraints – technical and financial","What limits it: compatibility, skills, money.","Technical: the router must support VPN; the owner needs a smartphone. Financial: about £5 a month, plus an hour of the contractor’s time."],
+  ["Overview of legal responsibilities","Which law, and what it requires here.","Customer artwork and contact details are personal data, so UK GDPR requires appropriate security for remote access."],
+  ["Overview of usability of the system","The honest effect on people doing their job.","The owner has one extra step each time she connects. ‘Remember this device for 30 days’ keeps it workable."],
+  ["Outline cost-benefit","The cost next to what it protects.","About £60 a year, against an attacker taking control of the office PC and every customer file."],
+  ["Test plan","A test that tries the thing you are stopping, with the expected result and what to do if it fails.","Test: scan the public IP address for port 3389. Expected: closed. If open: recheck the router’s port-forwarding rules."]],
+ mark:[
+  {id:"M2a",band:0,text:"<b>Threat:</b> install antivirus. <b>Actions:</b> put antivirus on. <b>Reasons:</b> because viruses are bad. <b>Constraints:</b> none. <b>Legal:</b> none. <b>Usability:</b> fine. <b>Cost-benefit:</b> cheap. <b>Test:</b> check it works.",
+   why:["The ‘threat’ box holds an action, not a threat.","Every heading is a word or two: there is no understanding to reward.","‘Check it works’ is not a test: there is no method and no expected result."],up:"Name the scenario threat first (malware on customers’ USB sticks), then give each heading a full sentence."},
+  {id:"M2b",band:2,text:"<b>Threat:</b> malware brought in on customers’ USB sticks (risk 2). <b>Actions:</b> a stand-alone check-in PC scans each stick before files are copied to the designers. <b>Reasons:</b> infected files are stopped before they reach the design PCs. <b>Constraints:</b> one spare PC is needed. <b>Legal:</b> customers’ files belong to them. <b>Usability:</b> adds a couple of minutes to each job. <b>Cost-benefit:</b> cheap compared with an outbreak. <b>Test:</b> plug in a stick holding the EICAR test file. Expected: blocked.",
+   why:["A real scenario threat, a sensible measure and a sound reason. Every heading is used.","Constraints, legal and cost-benefit are thin: no technical/financial split, no named law, no figures.","One genuine test with an expected result, but only one."],up:"Add figures and the named law, split the constraints, and give two or three tests with ‘further action’."},
+  {id:"M2c",band:3,text:"<b>Threat:</b> malware brought in on customers’ USB sticks (risk 2, High). <b>Actions:</b> a stand-alone check-in PC, not on the office network, scans every stick; clean artwork is copied to a shared folder. Autorun is switched off on all design PCs. <b>Reasons:</b> the stick never touches a networked PC, so malware can’t spread; with autorun off, nothing runs just by plugging in. <b>Constraints:</b> technical: needs one spare PC and anti-malware that updates offline; financial: about £40 a year for the licence. <b>Legal:</b> a ransomware outbreak could expose customer contact details, which UK GDPR requires the firm to protect. <b>Usability:</b> two extra minutes a job; customers can upload through the website to skip the queue. <b>Cost-benefit:</b> £40 a year against days of lost printing and paying for recovery. <b>Tests:</b> EICAR file on a stick: expected blocked, else update definitions. Plug a stick into a design PC: expected nothing runs, else recheck the autorun policy.",
+   why:["Robust measures (two layers) aimed at a named risk and its severity.","In-depth reasons: it explains <b>how</b> each action stops the threat.","Every heading is detailed and specific to Larkspur, with figures.","The test plan has two real tests, each with an expected result and a further action."],up:"This is top-band work. In the exam, keep this depth for every measure, not only the first."}],
+ build:{id:"B2",type:"sort",q:"Measure: automatic Windows updates overnight. Put each sentence under the heading where it earns marks.",buckets:["Constraints","Legal responsibilities","Usability","Cost-benefit"],
+  items:[{t:"The till software must be checked against each new Windows version before it is rolled out.",b:0,why:"A technical constraint: compatibility."},
+   {t:"UK GDPR expects systems that hold customer data to be kept patched and secure.",b:1,why:"Names the law and what it requires here."},
+   {t:"PCs restart at 2am, so designers must save their work before going home.",b:2,why:"The effect on people doing their job."},
+   {t:"Updates are free; the cost is about ten minutes of the contractor’s time, against a ransomware outbreak.",b:3,why:"Cost set against what it protects."},
+   {t:"Two older PCs don’t have enough disk space for the latest feature update.",b:0,why:"A technical constraint: hardware."},
+   {t:"A long update first thing in the morning could delay the first print jobs.",b:2,why:"Usability again: a real effect on the working day."}]},
+ write:{id:"W2",title:"Write a full security plan entry",task:"Scenario detail to deal with: <b>a designer who left in June still has an active account</b>.",
+  fields:["Threat(s) addressed by the protection measure","Details of action(s) to be taken","Reasons for the actions","Overview of constraints – technical and financial","Overview of legal responsibilities","Overview of usability of the system","Outline cost-benefit","Test plan"],
+  model:["Unauthorised access through a former employee’s account that still works (risk 3)","Disable the leaver’s account today. Add a leavers’ checklist: on someone’s last day the office manager disables their account, changes shared passwords and collects keys. Review all accounts every three months.","A disabled account can’t be used to log in, so the ex-designer, or anyone who has their password, loses access. The checklist stops it happening again; the review catches any that are missed.","Technical: someone needs admin rights and to know which accounts exist. Financial: no purchase, about 15 minutes of staff time per leaver.","The Computer Misuse Act makes use of the old account an offence, but UK GDPR still requires the firm to restrict access to personal data to people who need it.","No effect on current staff. Files owned by the leaver must be moved to a shared folder first so work isn’t lost.","Almost no cost, against a disgruntled ex-employee deleting or copying every customer’s artwork.","Test: try to sign in with the leaver’s username and old password. Expected: refused. If it works: check the account is disabled, not just renamed. Test: list active accounts against the staff list. Expected: they match."],
+  checklist:["My first box names a threat, not an action","My actions say exactly what is done and by whom","My reasons explain how the actions stop the threat","I gave both a technical and a financial constraint","I named a relevant law and what it requires here","I said honestly how it affects people using the system","My cost-benefit sets the cost against what it protects","My test tries the thing I am stopping and gives an expected result"]}},
+{act:3,name:"Activity 3: Management report",marks:12,mins:10,scen:WS_LARKSPUR,
+ bands:[["Band 1","1–3 marks","Limited. Alternatives missing or unsuitable; little justification."],["Band 2","4–6 marks","Basic. Alternatives for some measures; justification refers to the plan in places."],["Band 3","7–9 marks","Sound. Suitable alternatives for a range of measures; mostly logical justification that links risks and plan."],["Band 4","10–12 marks","Comprehensive. Logical justification that fully links the risk assessment and plan to what the organisation needs."]],
+ how:[["Title and introduction","Say who it is for and what it covers, in plain language for a manager.","Report to the owner of Larkspur Print Co: why the proposed security plan is the right one."],
+  ["Appropriateness","Why this measure suits this organisation. Link it to a numbered risk and its severity.","Closing Remote Desktop and using a VPN with MFA deals with risk 1 (Extreme): the login page is on the internet behind a guessable password."],
+  ["Alternative","A real alternative that does the same job in a different way.","Keep Remote Desktop but restrict it to the owner’s home IP address and set a long password."],
+  ["Rationale","Compare the two on this scenario’s facts, then choose.","Her home IP address changes and she also works from cafés, so an IP rule would lock her out. The VPN works anywhere and MFA still protects her if the password leaks, for about £5 a month."],
+  ["Coverage and conclusion","Show the plan covers hardware, software and physical measures, then sum up.","Together the router changes (hardware), anti-malware and updates (software) and the locked comms cupboard (physical) deal with the five highest risks."]],
+ mark:[
+  {id:"M3a",band:0,text:"The security plan is good because it uses a VPN and antivirus, which are the best security. There are other things they could use, but these are better. The plan will make the company safe.",
+   why:["No alternative is actually named.","‘The best’ and ‘better’ are claims with no reasons.","Nothing refers to the risk assessment or to Larkspur."],up:"Name one alternative for one measure and compare the two using facts from the scenario."},
+  {id:"M3b",band:1,text:"The VPN with MFA is appropriate because the owner works from home and Remote Desktop was open to the internet. An alternative would be to use a stronger password instead. I chose the VPN because it is more secure than a password.",
+   why:["It names a measure, links it to the scenario and gives a real alternative.","The rationale is thin: ‘more secure’ is not explained.","No risk number or severity, and only one measure is discussed."],up:"Explain why a strong password alone still leaves the login page open to the internet, and refer to the risk by number."},
+  {id:"M3c",band:3,text:"<b>Appropriateness:</b> Risk 1 (Extreme) was brute-force login through Remote Desktop, which was open to the internet behind the password ‘Larkspur2020’. Closing the port removes that route, and the VPN with MFA gives the owner a protected way in. <b>Alternative:</b> keep Remote Desktop but allow only her home IP address. <b>Rationale:</b> home broadband addresses change, and she also works from cafés, so the rule would lock her out or have to be widened. The VPN works from anywhere, and MFA still protects her if the password is phished (risk 4). It costs about £5 a month, far less than one day of lost printing.",
+   why:["Tied to a numbered risk and its severity, and to exact scenario details.","A genuine alternative that does the same job differently.","The comparison uses this scenario’s facts and links to a second risk: that is ‘integrating’ the risk assessment and the plan.","A clear choice, with cost."],up:"This is top-band work. Repeat it for a range of measures and add a short conclusion."}],
+ build:{id:"B3",type:"sort",q:"Measure: turn on automatic Windows updates. Sort each sentence into the part of the report it belongs to.",buckets:["Appropriateness","Alternative","Rationale"],
+  items:[{t:"Updates were set to ‘ask me later’, so known weaknesses stayed open: this is risk 5 (High).",b:0,why:"Why the measure suits this scenario, linked to a risk."},
+   {t:"The IT contractor could install updates by hand on a monthly visit.",b:1,why:"A different way to do the same job."},
+   {t:"A monthly visit leaves up to four weeks unprotected and costs a call-out fee each time.",b:2,why:"Compares the two on cost and effectiveness."},
+   {t:"Nine PCs with no IT staff on site means nobody is there to click ‘install’.",b:0,why:"Appropriateness: fits the organisation."},
+   {t:"A patch management tool could approve and schedule updates from one console.",b:1,why:"Another genuine alternative."},
+   {t:"Automatic updates are free and need no skills, so they suit a firm this size best.",b:2,why:"The reasoned choice."}]},
+ write:{id:"W3",title:"Write one management report section",task:"Your Activity 2 measure: <b>a stand-alone check-in PC that scans customers’ USB sticks before artwork is copied to the designers</b>.",
+  fields:["Appropriateness","Alternative","Rationale"],
+  model:["Customers bring artwork on their own USB sticks, which designers plug straight into networked PCs (risk 2, High). Scanning on a PC that is off the network means an infected stick can’t spread malware to the design PCs or the server.","Stop accepting USB sticks and ask customers to upload artwork through the website or by email.","Upload-only removes the risk completely and costs nothing, but many walk-in customers arrive with a stick and the firm would lose that trade. The check-in PC keeps those customers for about £40 a year. Uploads can be offered as well, so the queue at the check-in PC stays short."],
+  checklist:["I said why the measure suits this firm, using a scenario detail","I referred to the risk it addresses","My alternative is realistic and does the same job differently","I compared the two on cost, effectiveness or practicality for this firm","I made a clear choice"]}},
+{act:4,name:"Activity 4: Forensic incident analysis",marks:14,mins:10,scen:WS_QUAY,
+ bands:[["Band 1","1–3 marks","Limited. Describes the evidence; few links; conclusion unsupported."],["Band 2","4–7 marks","Basic. Some links between items; a plausible, partly supported conclusion."],["Band 3","8–11 marks","Sound. Links most of the evidence; conclusion mostly supported, alternatives considered."],["Band 4","12–14 marks","Comprehensive. Links all the evidence and the scenario; convincing conclusion with balanced alternatives."]],
+ how:[["Method of acquiring the evidence","How it was collected and by whom, and anything that weakens it.","Screenshot of the router’s web page, taken by the owner’s nephew at about 10:15, after the server had been restarted. No hash or original export."],
+  ["Evidence detail","What it shows, with times, addresses and numbers.","Ports 80/443 and 3306 (MySQL) are open to any address. 1,214 connection attempts from 198.51.100.4 between 01:10 and 01:40, all rejected."],
+  ["Evidence reliability","How far it can be trusted, and why.","A screenshot is easy to edit and shows only a summary, so it is weaker than an exported log. It is system-generated, so better than a statement."],
+  ["Conclusions","What this item suggests about the cause. Not its reliability.","The database port should not be open to the internet. The rejected attempts came from a different address, 75 minutes before the price change, so they were probably unrelated scanning."],
+  ["Overall conclusion (after all the items)","One most probable cause, the evidence that supports it, and why the alternatives are less likely.","Most probably SQL injection from 203.0.113.77 (Evidence 1 and 4). An insider is less likely: someone who knew the password would not need to probe first."]],
+ mark:[
+  {id:"M4a",band:0,text:"<b>Evidence 4. Method:</b> it is a log. <b>Detail:</b> it shows someone logged in as admin. <b>Reliability:</b> reliable. <b>Conclusion:</b> the admin did it.",
+   why:["It describes the evidence and stops: no times, addresses or numbers.","‘Reliable’ has no reason.","The conclusion doesn’t follow: the log shows an outside address, and nothing is linked to the other items or the brief."],up:"Quote the time and IP address, then compare them with Evidence 1."},
+  {id:"M4b",band:1,text:"<b>Evidence 4. Method:</b> exported from the website’s admin log by the nephew. <b>Detail:</b> a successful admin login at 02:57 from 203.0.113.77, then 247 prices changed to £0.01 at 02:58. <b>Reliability:</b> fairly reliable because it is made by the system. <b>Conclusion:</b> someone from outside logged in and changed the prices.",
+   why:["Accurate detail, with times and the address.","A reason is given for reliability, but it misses that the server was restarted first.","The conclusion is plausible, but it isn’t linked to Evidence 1 and no alternative is considered."],up:"Link the address to the probing in Evidence 1, and deal with the manager’s suggestion that it was Dan."},
+  {id:"M4c",band:3,text:"<b>Evidence 4. Method:</b> the nephew exported the admin log at 10:15, after restarting the server; no hash was taken. <b>Detail:</b> admin login succeeded at 02:57:20 from 203.0.113.77 with no failed attempts; 247 prices set to £0.01 at 02:58:31. The previous login was on Saturday from the office PC. <b>Reliability:</b> system-generated, so stronger than Priya’s statement, but the restart and the lack of a hash mean it could be incomplete. <b>Conclusion:</b> the same address that tested SQL injection in Evidence 1 (02:51–02:52) logged in five minutes later at the first attempt, which suggests the password was read from the database, not guessed. A staff member such as Dan could have known the password from the whiteboard, but would have had no need to probe first, and nothing ties him to that address.",
+   why:["It says how the evidence was obtained and what weakens it.","Precise detail, linked to Evidence 1 and to the client brief.","Reliability is weighed against another item, with reasons.","The conclusion reasons from the evidence and gives balanced consideration to an alternative."],up:"This is top-band work. Finish with one overall conclusion that covers all four items."}],
+ build:{id:"B4",type:"sort",q:"Evidence 1 (web server access log). Put each sentence in the template box where it belongs.",buckets:["Method of acquiring","Evidence detail","Evidence reliability","Conclusions"],
+  items:[{t:"Exported by the owner’s nephew at 10:15, after he had restarted the server.",b:0,why:"How and when it was collected."},
+   {t:"From 02:51 one address requested product.php with a quote mark, then OR 1=1, then a UNION SELECT.",b:1,why:"What the item shows, with specifics."},
+   {t:"System-generated, but the restart and the missing hash mean entries could have been lost or changed.",b:2,why:"How far it can be trusted, and why."},
+   {t:"These requests are the usual steps of testing for SQL injection and then reading the admin table.",b:3,why:"What it suggests about the cause."},
+   {t:"38 checkouts from 21 different addresses followed between 03:05 and 06:50.",b:1,why:"Detail again: numbers and times."},
+   {t:"The orders from many addresses suggest the £0.01 prices were shared online, not used by one person.",b:3,why:"A conclusion drawn from the detail."}]},
+ write:{id:"W4",title:"Write a full evidence entry",task:"Complete the template for <b>Evidence 3: Priya’s written statement</b>.",
+  fields:["Method of acquiring the evidence","Evidence detail","Evidence reliability","Conclusions"],
+  model:["A written statement from the manager, Priya, taken at 16:00 on Tuesday, more than eight hours after she found the orders.","She believes Dan, a Saturday worker, did it because his hours had been cut. She says the admin password is on the office whiteboard and everyone knows it.","Low for the cause: it is her opinion, given after the event, with no proof. Higher for the fact about the whiteboard, which she saw herself and which can be checked.","It doesn’t show who changed the prices, but it does show weak password handling: anyone in the office could have logged in as admin. That keeps an insider as a possibility, though Evidence 1 and 4 point to an outside address."],
+  checklist:["I said how and when the statement was obtained","My detail separates what she believes from what she saw","I judged reliability and gave a reason","My conclusion is about the cause, not about reliability","I linked this item to at least one other piece of evidence"]}},
+{act:5,name:"Activity 5: Security improvements report",marks:20,mins:15,scen:WS_QUAY,
+ bands:[["Band 1","1–5 marks","Limited. Generic weaknesses, unrealistic suggestions, one area dominates."],["Band 2","6–10 marks","Basic. A few real weaknesses; some suggestions realistic; areas unbalanced."],["Band 3","11–15 marks","Sound. Appropriate weaknesses across the three areas; mostly realistic suggestions, justified."],["Band 4","16–20 marks","Perceptive. All three areas balanced; realistic suggestions that would greatly reduce a repeat; fully justified."]],
+ how:[["Adherence to forensic procedures","What was done wrong when the incident was handled, and what should happen next time.","Weakness: the server was restarted before anything was collected. Improve: leave it running, capture memory and logs first and record who did what. Why: volatile evidence survives and stands up if the police are involved."],
+  ["Procedure and protection measures","Technical and physical weaknesses that let it happen.","Weakness: the site built SQL from whatever was typed into the address. Improve: validate input and use parameterised queries. Why: typed text can no longer run as a database command."],
+  ["Security documentation","Policies and plans that were missing or vague.","Weakness: the admin password was on the office whiteboard. Improve: a password policy with individual admin accounts kept in a password manager. Why: every login is tied to one person."],
+  ["For every point","Weakness from the evidence → realistic improvement → why it reduces the chance of a repeat.","Keep the three areas about the same length. Suggest only what a four-shop bakery could afford."]],
+ mark:[
+  {id:"M5a",band:0,text:"The bakery needs better security. They should get a better firewall and antivirus and train all the staff. They should also hire a security company to watch the website 24 hours a day so this never happens again.",
+   why:["The weaknesses are generic: none comes from the evidence.","Round-the-clock monitoring is not realistic for a four-shop bakery.","Nothing on forensic procedures or documentation, and no justification."],up:"Pick one weakness the evidence actually shows, such as the open MySQL port, and say how to fix it."},
+  {id:"M5b",band:2,text:"<b>Forensic procedures:</b> the nephew restarted the server before exporting the logs, so evidence may have been lost. Next time, export the logs first. <b>Protection measures:</b> MySQL port 3306 was open to the internet and the site allowed SQL injection. Close the port and fix the code so the database can’t be attacked. <b>Documentation:</b> the admin password was on the whiteboard. Write a password policy.",
+   why:["All three areas are covered with weaknesses taken from the evidence.","The suggestions are realistic for a small business.","The justification is brief: it rarely explains how each change reduces the chance of a repeat, and the documentation point is one line."],up:"Add the ‘because’ to each point, and give documentation the same weight as the other two."},
+  {id:"M5c",band:3,text:"<b>Forensic procedures:</b> the server was restarted ‘to clear it’ before the logs were exported, and no hash was taken, so memory contents were lost and the logs can’t be shown to be unchanged. In future the duty manager should leave the system running, call the contractor, export logs to write-once media with a hash, and record who handled them. This keeps evidence usable if the police or an insurer need it. <b>Protection measures:</b> the site passed typed text straight into the database, and port 3306 was open to any address. Parameterised queries stop typed text running as commands; a firewall rule limiting 3306 to the server itself removes a second route in. Both cost only the contractor’s time. <b>Documentation:</b> one shared admin password was written on the whiteboard, and there was no incident procedure, so Priya rang a relative. A password policy with individual admin accounts makes every login traceable; a one-page incident procedure with out-of-hours numbers means the right person is called first.",
+   why:["Three balanced sections, each with weaknesses taken from the evidence and the brief.","Every suggestion is realistic for a four-shop bakery.","Each point is justified: it says how the change reduces the chance of a repeat.","Perceptive links, such as the missing procedure explaining why the server was restarted."],up:"This is top-band work. Check each section is about the same length before you finish."}],
+ build:{id:"B5",type:"sort",q:"Quayside Bakery. Sort each sentence: is it a weakness, an improvement or a justification?",buckets:["Weakness","Improvement","Justification"],
+  items:[{t:"Logs were kept for only 24 hours.",b:0,why:"What was wrong."},
+   {t:"Keep web and firewall logs for at least 90 days on a separate drive.",b:1,why:"What to change."},
+   {t:"Earlier probing could then be seen, and logs survive if the server itself is wiped.",b:2,why:"Why the change reduces the chance of a repeat."},
+   {t:"There was no written incident procedure, so the manager rang a relative.",b:0,why:"A documentation weakness from the brief."},
+   {t:"Write a one-page procedure with who to call, including out of hours.",b:1,why:"A realistic improvement."},
+   {t:"The right person is called first, so evidence is collected before anything is restarted.",b:2,why:"The ‘because’ that earns the marks."}]},
+ write:{id:"W5",title:"Write a balanced improvements section",task:"Write <b>one</b> strong point for each of the three areas, using the Quayside evidence. Each point needs a weakness, an improvement and a reason.",
+  fields:["Adherence to forensic procedures","Procedure and protection measures","Security documentation"],
+  model:["The logs were exported only after the server was restarted, and they were not hashed. Next time, capture memory and export logs before any restart, hash the files and note who handled them. That keeps the evidence complete and shows it has not been changed.","The admin login had no limit on where it could be used from, so an outside address logged in at the first try. Restrict the admin page to the office network or add MFA. A stolen password alone would then not be enough to change prices.","Nothing said how long logs are kept or who checks them, so the 01:10 scanning went unnoticed. Add a short logging policy: keep 90 days and review weekly. Unusual activity is then seen before it becomes an incident."],
+  checklist:["I wrote about all three areas at similar length","Each point starts from a weakness shown in the evidence or the brief","Each improvement is realistic for a small bakery","Each point says why it reduces the chance of a repeat","I used correct technical terms"]}}
+];
+/* ---- Exam answers: views and tasks ---- */
+function wsState(a){S.ws=S.ws||{};return S.ws[a]=S.ws[a]||{};}
+function wsSend(act,step,marks,max,start){sendAttempt({kind:"workshop",title:"Exam answers · Act "+act+" · "+step,questions:max,answered:max,marks,max,confidentWrong:0,minutes:(Date.now()-start)/60000,partial:false,lo:{},sid:newSid(),items:[]});}
+function wsDone(a){const st=(S.ws||{})[a]||{};return ["how","mark","build","write"].filter(k=>st[k]).length;}
+function wsNext(){for(const w of WS){if(wsDone(w.act)<4)return w;}return null;}
+function viewWrite(h){
+  const m=/^write-([1-5])$/.exec(h);if(m)return viewWriteAct(WS.find(w=>w.act===+m[1]));
+  const p=el("section",{class:"panel"});
+  p.append(el("h1",{},"Exam answers"),el("p",{class:"lede"},"The exam is written. You type your answers into templates, and examiners mark them against bands. This section teaches that: how each template is filled in, what each band looks like, and then you write your own."),
+   el("p",{class:"lede"},"For each activity: <b>1</b> see a model answer, <b>2</b> mark three answers like an examiner, <b>3</b> build an answer from parts, <b>4</b> write one yourself, mark it and download it."));
+  const g=el("div",{class:"grid3"});
+  WS.forEach(w=>{const d=wsDone(w.act);const a=el("a",{class:"locard",href:"#write-"+w.act});a.append(el("div",{class:"k"},String(w.act)),el("b",{},w.name.replace(/^Activity \d: /,"")),el("span",{class:"small muted"},w.marks+" marks"),
+    el("div",{class:"prog","aria-label":"Steps done"},"<i style='width:"+(d/4*100)+"%'></i>"),el("span",{class:"small muted"},d+" of 4 steps done"));g.append(a);});
+  p.append(g,el("p",{class:"small muted"},"Activities 2 and 5 carry 20 marks each: start there if time is short. Your marks here are practice only and are not part of your test scores."));
+  app.append(p);
+}
+function viewWriteAct(w){
+  const st=wsState(w.act);const host=el("div");
+  const p=el("section",{class:"panel"});
+  p.append(el("div",{class:"qmeta"},"<a class='pill' href='#write'>← All activities</a><span class='pill acc'>"+w.marks+" marks</span>"),el("h1",{},w.name));
+  const d=el("details",{class:"fc"});d.append(el("summary",{class:"front",style:"cursor:pointer"},"The scenario for this practice"),el("div",{class:"ctx"},w.scen));p.append(d);
+  const tb=el("div",{class:"tblwrap"});tb.innerHTML="<table class='tbl'><tr><th>Band</th><th>Marks</th><th>What the examiner sees</th></tr>"+w.bands.map(b=>"<tr><td><b>"+b[0]+"</b></td><td>"+b[1]+"</td><td>"+b[2]+"</td></tr>").join("")+"</table>";
+  p.append(el("h2",{},"What each band looks like"),tb,el("p",{class:"small muted"},"Summarised from Pearson’s mark grid for this activity."));
+  const steps=el("div",{class:"wssteps"});
+  const stepBox=(n,key,title,desc,btn,fn)=>{const b=el("div",{class:"wsstep"+(st[key]?" done":"")});b.append(el("div",{class:"n"},st[key]?"✓":String(n)));const t=el("div");t.append(el("b",{},title),el("p",{class:"small muted"},desc+(st[key]&&Array.isArray(st[key])?" Last time: "+st[key][0]+" of "+st[key][1]+".":"")));
+    const go=el("button",{type:"button",class:"btn"+(st[key]?" ghost":"")},st[key]?btn+" again":btn);go.onclick=()=>{fn();host.scrollIntoView({block:"start"});};b.append(t,go);steps.append(b);};
+  const back=()=>render();
+  stepBox(1,"how","See how it’s filled in","Each box of the template, what it needs and a model entry.","Show me",()=>wsHow(w,host,back));
+  stepBox(2,"mark","Mark it like an examiner","Three answers. You choose the band, then see the examiner’s reasons.","Start marking",()=>wsMark(w,host,back));
+  stepBox(3,"build","Build an answer","Put the parts of an answer where they earn marks.","Start building",()=>wsBuild(w,host,back));
+  stepBox(4,"write","Write it yourself","About "+w.mins+" minutes. Type into the template, compare with a model, mark yourself and download it.","Start writing",()=>wsWrite(w,host,back));
+  p.append(el("h2",{},"Four steps"),steps);
+  app.append(p,host);
+}
+function wsHow(w,host,back){
+  host.innerHTML="";const p=el("section",{class:"panel"});const st=wsState(w.act);
+  p.append(el("h2",{},"How the template is filled in"),el("p",{class:"lede"},"Read what each box needs, then cover the model entry and say your own before you look."),el("div",{class:"ctx"},w.scen));
+  const tb=el("div",{class:"tblwrap"});tb.innerHTML="<table class='tbl'><tr><th>Template box</th><th>What it needs</th><th>Model entry</th></tr>"+w.how.map(h=>"<tr><td><b>"+h[0]+"</b></td><td>"+h[1]+"</td><td>"+h[2]+"</td></tr>").join("")+"</table>";p.append(tb);
+  const b=el("button",{type:"button",class:"btn"},"I’ve read it: next step");b.onclick=()=>{if(!st.how){st.how=1;save();wsSend(w.act,"See it",1,1,Date.now());}back();location.hash="#write-"+w.act;};
+  const r=el("div",{class:"row"});r.append(b);p.append(r);host.append(p);
+}
+function wsMark(w,host,back){
+  host.innerHTML="";const p=el("section",{class:"panel"});host.append(p);const start=Date.now();const list=shuffle(w.mark.slice());let i=0,got=0;const res=[];
+  function show(){p.innerHTML="";if(i>=list.length)return fin();const s=list[i];
+    p.append(el("div",{class:"runbar"},"<b>Mark it: "+w.name+"</b><span class='muted small'>Answer "+(i+1)+" of "+list.length+"</span>"));
+    const q=el("div",{class:"q"});q.dataset.ws=s.id;const d=el("details",{class:"fc"});d.append(el("summary",{class:"front",style:"cursor:pointer"},"Show the scenario"),el("div",{class:"ctx"},w.scen));
+    q.append(d,el("div",{class:"qtext"},"A learner wrote this. If their whole answer were like it, which band would it be in?"),el("div",{class:"model sample"},s.text));
+    const o=el("div",{class:"opts"});let sel=null;const bs=[];
+    w.bands.forEach((b,k)=>{const x=el("button",{type:"button",class:"opt"},"<span class='key'>"+(k+1)+"</span><span><b>"+b[0]+"</b> ("+b[1]+"): "+b[2]+"</span>");x.onclick=()=>{sel=k;bs.forEach(y=>y.classList.toggle("sel",y===x));chk.disabled=false;};bs.push(x);o.append(x);});
+    const chk=el("button",{type:"button",class:"btn",disabled:"disabled"},"Check my band");const rw=el("div",{class:"row"});rw.append(chk);q.append(o,rw);p.append(q);
+    chk.onclick=()=>{const diff=Math.abs(sel-s.band),pts=diff===0?2:diff===1?1:0;got+=pts;res.push({s,sel,pts});chk.remove();
+      bs.forEach((x,k)=>{x.disabled=true;if(k===s.band)x.classList.add("right");else if(k===sel)x.classList.add("wrong");});
+      q.append(feedback(pts===2,pts===2?"Yes: "+w.bands[s.band][0]:pts===1?"Close. The examiner would say "+w.bands[s.band][0]:"Not this time. The examiner would say "+w.bands[s.band][0],"<p><b>Why:</b></p><ul>"+s.why.map(t=>"<li>"+t+"</li>").join("")+"</ul><p><b>To improve it:</b> "+s.up+"</p>",pts===1));
+      const nx=el("button",{type:"button",class:"btn"},i+1<list.length?"Next answer →":"See how I did");nx.onclick=()=>{i++;show();window.scrollTo({top:host.offsetTop-10});};const r2=el("div",{class:"row"});r2.append(nx);q.append(r2);nx.focus({preventScroll:true});};
+  }
+  function fin(){const max=list.length*2;const st=wsState(w.act);st.mark=[got,max];save();wsSend(w.act,"Mark it",got,max,start);
+    p.append(el("h2",{},"Marking: "+got+" of "+max),el("p",{class:"lede"},got===max?"You marked all three as the examiner would. You know what each band looks like.":"2 points for the exact band, 1 if you were one band out. Re-read the reasons for any you missed: they are what to copy in your own answers."));
+    const ul=el("ul",{class:"notes"});res.forEach(r=>ul.append(el("li",{},"You said "+w.bands[r.sel][0]+"; examiner: <b>"+w.bands[r.s.band][0]+"</b>. "+r.s.why[0])));p.append(ul);
+    const r=el("div",{class:"row"});r.append(el("button",{type:"button",class:"btn",onclick:back},"Back to the steps"));p.append(r);}
+  show();
+}
+function wsBuild(w,host,back){
+  host.innerHTML="";const p=el("section",{class:"panel"});host.append(p);const start=Date.now();const it=w.build;
+  p.append(el("div",{class:"runbar"},"<b>Build it: "+w.name+"</b>"));const d=el("details",{class:"fc"});d.append(el("summary",{class:"front",style:"cursor:pointer"},"Show the scenario"),el("div",{class:"ctx"},w.scen));p.append(d);
+  const q=el("div",{class:"q"});q.dataset.ws=it.id;p.append(q);
+  const done=()=>{const tot=(it.items||it.steps).length;const right=q.querySelectorAll(".sortrow.right,.ordrow.right").length;const st=wsState(w.act);st.build=[right,tot];save();wsSend(w.act,"Build it",right,tot,start);
+    const r=el("div",{class:"row"});r.append(el("button",{type:"button",class:"btn",onclick:back},"Back to the steps"));q.append(r);};
+  if(it.type==="sort")renderSort(it,q,done);else renderOrder(it,q,done);
+}
+function wsBand(w,share){const n=w.bands.length;return w.bands[Math.min(n-1,Math.floor(share*n-1e-9)<0?0:Math.floor(share*n-1e-9))];}
+function rtfEsc(t){return String(t).replace(/[\\{}]/g,"\\$&").replace(/\r?\n/g,"\\line ").replace(/[^\x00-\x7f]/g,c=>"\\u"+c.charCodeAt(0)+"?");}
+function wsRtf(w,vals){const tx=x=>x.replace(/<[^>]+>/g,"").replace(/&amp;/g,"&");
+  return "{\\rtf1\\ansi\\ansicpg1252\\deff0{\\fonttbl{\\f0 Arial;}}\\f0\\fs22 {\\b\\fs28 Unit 11 "+rtfEsc(w.name)+"}\\par "+rtfEsc("Practice answer: "+tx(w.write.task))+"\\par\\par "+w.write.fields.map((f,k)=>"{\\b "+rtfEsc(f)+"}\\par "+rtfEsc(vals[k]||"")+"\\par\\par ").join("")+"}";}
+function wsWrite(w,host,back){
+  host.innerHTML="";const p=el("section",{class:"panel"});host.append(p);const T=w.write;const start=Date.now();
+  const clock=el("span",{class:"pill acc"},"0:00");const tm=setInterval(()=>{if(!document.body.contains(clock)){clearInterval(tm);return;}clock.textContent=fmtTime(Date.now()-start);},1000);
+  const bar=el("div",{class:"runbar"});bar.append(el("b",{},"Write it: "+w.name),el("span",{class:"muted small"},"Aim for about "+w.mins+" minutes"),clock);p.append(bar);
+  const q=el("div",{class:"q"});q.dataset.ws=T.id;p.append(q);
+  q.append(el("div",{class:"ctx"},w.scen),el("div",{class:"qtext"},T.task),el("p",{class:"small muted"},"Type into every box, as you will in the exam. Don’t look back at the model entries: this is the practice that counts."));
+  const tas=T.fields.map((f,k)=>{const id="wsf_"+w.act+"_"+k;const wrap=el("div",{class:"wsfield"});const ta=el("textarea",{id,rows:"3"});wrap.append(el("label",{for:id},"<b>"+f+"</b>"),ta);q.append(wrap);return {ta,wrap};});
+  const msg=el("p",{class:"small",style:"color:var(--bad)","aria-live":"polite"});const go=el("button",{type:"button",class:"btn"},"Compare with the model answer");const r0=el("div",{class:"row"});r0.append(go);q.append(msg,r0);
+  go.onclick=()=>{const empty=tas.filter(x=>x.ta.value.trim().length<8).length;if(empty){msg.textContent="Write something in every box first ("+empty+" still "+(empty===1?"needs":"need")+" an answer).";return;}
+    clearInterval(tm);msg.remove();r0.remove();const vals=tas.map(x=>x.ta.value);
+    tas.forEach((x,k)=>{x.ta.readOnly=true;x.wrap.append(el("div",{class:"model"},"<h4>Model answer</h4><div>"+T.model[k]+"</div>"));});
+    const m=el("div",{class:"model"});m.append(el("h4",{},"Mark yourself: tick only what YOUR answer does"));const c=el("div",{class:"check"});
+    const boxes=T.checklist.map((t,k)=>{const id="wsc_"+w.act+"_"+k;const l=el("label",{for:id});const cb=el("input",{type:"checkbox",id});l.append(cb,el("span",{},t));c.append(l);return cb;});
+    const sv=el("button",{type:"button",class:"btn"},"Save my self-mark");m.append(c,sv);q.append(m);
+    sv.onclick=()=>{const n=boxes.filter(b=>b.checked).length,tot=boxes.length;boxes.forEach(b=>b.disabled=true);sv.remove();const bd=wsBand(w,n/tot);const st=wsState(w.act);st.write=[n,tot];save();wsSend(w.act,"Write it",n,tot,start);
+      q.append(feedback(n===tot,n+" of "+tot+" ticked: about "+bd[0],"<p>If your whole answer were like this, it would sit around <b>"+bd[0]+" ("+bd[1]+")</b>. "+(n===tot?"Now do the same at this depth for every part of the task.":"Rewrite the parts you didn’t tick, in your own words, then try again another day.")+"</p><p class='small muted'>This is your own estimate, not an examiner’s mark.</p>",n<tot&&n>=tot/2));
+      const dl=el("button",{type:"button",class:"btn ghost"},"Download my answer (.rtf)");dl.onclick=()=>{try{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([wsRtf(w,vals)],{type:"application/rtf"}));a.download="Unit11_Activity"+w.act+"_my_answer.rtf";document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);dl.textContent="Downloaded. Open it in Word";}catch(e){dl.textContent="Download didn’t work here: copy your text instead";}};
+      const r=el("div",{class:"row"});r.append(dl,el("button",{type:"button",class:"btn",onclick:back},"Back to the steps"));q.append(r);};
+  };
+}
+
 function render(){
   if(LIVE&&LIVE.kind==="session"){const d=LIVE.build();LIVE=null;if(d)sendAttempt(d);}
   let h=(location.hash||"#home").slice(1);app.innerHTML="";
   if(AUTH.on&&CONFIG.REQUIRE_LOGIN&&!AUTH.user){nav("");updateAuthBar();viewLogin();return;}if(TEST&&TEST.running&&h!=="test"){h="test";try{history.replaceState(null,"","#test");}catch(e){}}
-  const valid=NAV.map(n=>n[0]);const v=valid.includes(h)?h:"home";nav(v);
-  if(v==="home")viewHome();else if(v.startsWith("lo-"))viewLO(v.slice(3).toUpperCase());else if(v==="sprint")viewSprint();else if(v==="review")viewReview();else if(v==="test")viewTest();else viewPlan();
+  const valid=NAV.map(n=>n[0]);const hv=/^write-[1-5]$/.test(h)?"write":h;const v=valid.includes(hv)?hv:"home";nav(v);
+  if(v==="home")viewHome();else if(v.startsWith("lo-"))viewLO(v.slice(3).toUpperCase());else if(v==="write")viewWrite(h);else if(v==="sprint")viewSprint();else if(v==="review")viewReview();else if(v==="test")viewTest();else viewPlan();
   updateAuthBar();
 }
 window.addEventListener("hashchange",()=>{render();window.scrollTo({top:0});});
