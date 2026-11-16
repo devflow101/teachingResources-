@@ -2,7 +2,7 @@
 "use strict";
 const fs=require("fs"),path=require("path"),vm=require("vm");
 const dir=__dirname,ctx={console};vm.createContext(ctx);
-const order=["mock.js","core.js",...fs.readdirSync(dir).filter(f=>/^items-\d\.js$/.test(f)).sort(),"learn-b.js","ws.js","types.js"];
+const order=["mock.js","core.js",...fs.readdirSync(dir).filter(f=>/^items-\d\.js$/.test(f)).sort(),"learn-b.js","ws.js","ctx.js","types.js"];
 for(const f of order){const p=path.join(dir,f);if(!fs.existsSync(p))continue;
   try{vm.runInContext(fs.readFileSync(p,"utf8"),ctx,{filename:f});}catch(e){console.log("LOAD ERROR in "+f+": "+e.message);process.exit(1);}}
 vm.runInContext("this.LEARN=LEARN;this.ITEMS=ITEMS;this.SKILL=SKILL;this.HOLD=HOLD;this.LOS=LOS;",ctx);const {ITEMS,SKILL,HOLD,LOS}=ctx;const E=[];const err=(id,m)=>E.push(id+": "+m);
