@@ -561,7 +561,7 @@ function drawReport(){
    as before: no sign-in, progress kept only in the browser. */
 const CONFIG = {
   GOOGLE_CLIENT_ID: "845964776078-t24aoaiduhqmf68h6kojap4l4rgeeqe0.apps.googleusercontent.com",   // e.g. "1234567890-abc.apps.googleusercontent.com"
-  SCRIPT_URL: "",         // e.g. "https://script.google.com/macros/s/AKfy.../exec"
+  SCRIPT_URL: "https://script.google.com/macros/s/AKfycbyoVZ122AjfHKRMSvIDWE1j0e7D-qLn1RljOY_1Y46V0SkgpQFk2vzAeuCE9G0lNWkL/exec",         // e.g. "https://script.google.com/macros/s/AKfy.../exec"
   REQUIRE_LOGIN: true     // true: students must sign in to use the site
 };
 const AUTH = { on: !!(CONFIG.GOOGLE_CLIENT_ID && CONFIG.SCRIPT_URL), ready: false, token: null, exp: 0, user: null, msg: "", busy: false, refreshTimer: null };
