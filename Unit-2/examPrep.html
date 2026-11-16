@@ -940,7 +940,7 @@ function render(){
   let h=(location.hash||"#home").slice(1);app.innerHTML="";
   if(AUTH.on&&CONFIG.REQUIRE_LOGIN&&!AUTH.user){nav("");updateAuthBar();viewLogin();return;}if(TEST&&TEST.running&&h!=="test"){h="test";try{history.replaceState(null,"","#test");}catch(e){}}
   const valid=NAV.map(n=>n[0]);const hv=/^write-[1-8]$/.test(h)?"write":h;const v=valid.includes(hv)?hv:"home";nav(v);
-  if(v==="home")viewHome();else if(v.startsWith("lo-"))viewLO(v.slice(3).toUpperCase());else if(v==="write")viewWrite(h);else if(v==="sprint")viewSprint();else if(v==="review")viewReview();else if(v==="test")viewTest();else if(v==="decode")viewDecode();else viewPlan();
+  if(v==="home")viewHome();else if(v.startsWith("lo-"))viewLO(v.slice(3).toUpperCase());else if(v==="write")viewWrite(h);else if(v==="sprint")viewSprint();else if(v==="review")viewReview();else if(v==="test")viewTest();else if(v==="decode"){if(typeof viewDecode==="function")viewDecode();}else viewPlan();
   updateAuthBar();
 }
 window.addEventListener("hashchange",()=>{render();window.scrollTo({top:0});});

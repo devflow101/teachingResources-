@@ -141,7 +141,11 @@ function decUI(it,box){const on=new Set();let pick=null;const wrap=h("div",{clas
   const ch=h("div",{class:"chips","aria-label":"Requirement wording"}),op=h("div",{class:"opts"});
   it.chips.forEach((c,i)=>{const b=btn(c[0],"chip",()=>{on.has(i)?on.delete(i):on.add(i);b.classList.toggle("on");b.setAttribute("aria-pressed",on.has(i));});b.setAttribute("aria-pressed","false");ch.append(b);});
   const ord=shuffle(it.opts.map((o,i)=>i)),bs=[];ord.forEach((k,j)=>{const b=h("button",{type:"button",class:"opt",onclick:()=>{pick=k;bs.forEach(x=>x.classList.toggle("sel",x===b));}},h("span",{class:"key"},String.fromCharCode(65+j)),h("span",{html:it.opts[k]}));bs.push(b);op.append(b);});
-  wrap.append(h("p",{},h("b",{},"1. Tap the words that decide it.")),ch,h("p",{},h("b",{},"2. Choose what Access needs.")),op);box.append(wrap);
+  const n=it.chips.filter(c=>c[1]).length;
+  wrap.append(h("p",{class:"hint"},"This is a requirement worded the way the exam paper words it:"),
+    h("p",{},h("b",{},"Step 1. "),"Which words tell you what to build in Access? Tap ",h("b",{},n===1?"1 phrase":n+" phrases"),"."),ch,
+    h("p",{class:"hint"},"Ignore the words that only name the field or the form. Look for the words that say what must happen to it."),
+    h("p",{},h("b",{},"Step 2. "),"Choose what you would set up in Access."),op);box.append(wrap);
   return {resp:()=>({chips:[...on],opt:pick}),wrap,chipsEl:ch,optBtns:bs,ord};}
 const decCue=it=>it.chips.map((c,i)=>c[1]?i:-1).filter(i=>i>=0);
 function decScore(it,r){const a=sameSet(decCue(it),r.chips||[]),b=r.opt===it.ans;return {a,b,got:(a?1:0)+(b?1:0),max:2,ok:a&&b};}
@@ -154,7 +158,7 @@ function stepsUI(it,box){const pick=it.steps.map(()=>null);const wrap=h("div",{c
 /* ============ practice wrapper ============ */
 function render(it,box,done){
   if(it.ctx)box.append(h("div",{class:"ctx",html:ctxOf(it)}));
-  box.append(h("div",{class:"qtext",html:it.q||""}));
+  if(it.type!=="decode")box.append(h("div",{class:"qtext",html:it.q||""}));
   const ui=it.type==="norm"?normUI(it,box):it.type==="assemble"?asmUI(it,box):it.type==="grid"?gridUI(it,box):it.type==="steps"?stepsUI(it,box):decUI(it,box);
   const msg=h("p",{class:"small",style:"color:var(--bad)","aria-live":"polite"});
   const chk=btn("Check my answer","btn",()=>{const r=ui.resp();
@@ -174,13 +178,14 @@ function render(it,box,done){
         fb(box,ok?"ok":"no",ok?"Right":"Not quite",(ok?"":"<p>You built "+"<code>"+esc(k)+"</code>. "+(near?esc(near):"")+"</p><p><b>Accepted:</b> "+it.accept.map(a=>"<code>"+esc(a.join(" "))+"</code>").join(" or ")+"</p>")+"<p>"+it.why+"</p>");}
       else{const s=decScore(it,r);ok=s.ok;const cue=decCue(it);ui.chipsEl.querySelectorAll(".chip").forEach((e,i)=>{if(cue.includes(i))e.classList.add("cue");else if(e.classList.contains("on"))e.classList.add("miss");});
         ui.optBtns.forEach((b,j)=>{const k=ui.ord[j];if(k===it.ans)b.classList.add("right");else if(k===r.opt)b.classList.add("wrong");});
-        fb(box,ok?"ok":s.got?"part":"no",ok?"Right on both steps":(s.a?"Right words, ":"Look again at the words, ")+(s.b?"right technique":"wrong technique"),"<p><b>The deciding words:</b> "+cue.map(i=>"‘"+esc(it.chips[i][0])+"’").join(", ")+"</p><p>"+it.why+"</p>"+(it.trap?"<p><b>Trap:</b> "+it.trap+"</p>":""));}
+        const title=ok?"Right on both steps":s.b?"Right Access feature. Step 1 wasn’t quite right":s.a?"You found the right words, but chose the wrong feature":"Not yet: look at both steps";
+        fb(box,ok?"ok":s.got?"part":"no",title,"<p><b>The words that decide it:</b> "+cue.map(i=>"‘"+esc(it.chips[i][0])+"’").join(" and ")+". Green outline = the right words; red dashes = words you tapped that don’t decide it.</p><p>"+it.why+"</p>"+(it.trap?"<p><b>Trap:</b> "+it.trap+"</p>":""));}
       done(ok,conf);});
   });
   box.append(msg,h("div",{class:"row"},chk));
 }
 /* ============ test mode (no feedback) ============ */
-function test(it,box,st){if(it.ctx)box.append(h("div",{class:"ctx",html:ctxOf(it)}));box.append(h("div",{class:"qtext",html:it.q||""}));
+function test(it,box,st){if(it.ctx)box.append(h("div",{class:"ctx",html:ctxOf(it)}));if(it.type!=="decode")box.append(h("div",{class:"qtext",html:it.q||""}));
   const ui=it.type==="norm"?normUI(it,box):it.type==="assemble"?asmUI(it,box):it.type==="grid"?gridUI(it,box):it.type==="steps"?stepsUI(it,box):decUI(it,box);
   const ready=r=>it.type==="norm"?Object.values(r.place).some(x=>x.length):it.type==="assemble"?r.length>0:it.type==="grid"?r.length>0:it.type==="steps"?r.every(x=>x!==null):r.opt!==null;
   const save=()=>{const r=ui.resp();st.resp=r;st.ready=ready(r);if(st.onchange)st.onchange();};box.addEventListener("click",()=>setTimeout(save,0));box.addEventListener("change",save);st.resp=null;st.ready=false;st.read=ui.resp;}
