@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 2 Exam Prep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: an incident-room case file. One reading column, a sticky tab rail of the five learning outcomes, severity colours used only for meaning. */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --ink:#152132; --muted:#566476; --line:#d5dbe3; --accent:#0f6e6e; --accent-soft:#dff1ef; --on-accent:#ffffff; --on-sev:#ffffff;
+  --ok:#23704a; --ok-soft:#e2f2e9; --bad:#b4232a; --bad-soft:#fbe7e7; --warn:#a2630f; --warn-soft:#fbf0dc;
+  --sev-low:#2f7d50; --sev-med:#8a6200; --sev-high:#b04a0c; --sev-ext:#b4232a;
+  --display:"Archivo", "Helvetica Neue", Arial, sans-serif;
+  --body:"Source Sans 3", "Segoe UI", Roboto, Arial, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e141c; --surface:#16202c; --ink:#e5eaf1; --muted:#9ba8b8; --line:#2b3746; --accent:#5fd0c8; --accent-soft:#1c2c47; --on-accent:#0b1220; --on-sev:#0b1220;
+    --ok:#5cc58b; --ok-soft:#14301f; --bad:#ff7b7b; --bad-soft:#3a1719; --warn:#e5ad4f; --warn-soft:#3a2a10;
+    --sev-low:#4fae77; --sev-med:#d6ad34; --sev-high:#ec8240; --sev-ext:#f05a5a; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e141c; --surface:#16202c; --ink:#e5eaf1; --muted:#9ba8b8; --line:#2b3746; --accent:#5fd0c8; --accent-soft:#1c2c47; --on-accent:#0b1220; --on-sev:#0b1220;
+  --ok:#5cc58b; --ok-soft:#14301f; --bad:#ff7b7b; --bad-soft:#3a1719; --warn:#e5ad4f; --warn-soft:#3a2a10;
+  --sev-low:#4fae77; --sev-med:#d6ad34; --sev-high:#ec8240; --sev-ext:#f05a5a; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:1.9rem;font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.4rem;font-weight:700}
+h3{font-size:1.1rem;font-weight:700}
+p{margin:0}
+a{color:var(--accent)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:960px;margin:0 auto;padding:0 18px}
+header.top{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.topin{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:10px 0}
+.brand{display:flex;flex-direction:column}
+.brand b{font-family:var(--display);font-weight:800;font-size:1.05rem}
+.brand span{font-size:.8rem;color:var(--muted)}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+nav.tabs a{text-decoration:none;color:var(--ink);padding:6px 11px;border-radius:7px;border:1px solid var(--line);font-weight:600;font-size:.9rem;background:var(--bg)}
+nav.tabs a.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+nav.tabs a:hover{border-color:var(--accent)}
+main{padding:26px 0 60px;display:grid;gap:22px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;display:grid;gap:14px}
+.lede{color:var(--muted);max-width:68ch}
+.muted{color:var(--muted)}
+.small{font-size:.88rem}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:var(--on-accent);font-weight:700;cursor:pointer;text-decoration:none}
+.btn.ghost{background:var(--surface);color:var(--accent)}
+.btn:hover:not(:disabled){filter:brightness(1.08)}
+.btn.ghost:hover:not(:disabled){background:var(--accent-soft)}
+.btn:disabled,.btn.ghost:disabled{background:var(--bg);border-color:var(--line);color:var(--muted);cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:2px 8px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
+.pill.acc{border-color:var(--accent);color:var(--accent)}
+.pill.warn{border-color:var(--warn);color:var(--warn)}
+.authbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;width:100%;justify-content:flex-end}
+.btn.small{padding:5px 11px;font-size:.85rem}
+/* blueprint */
+.bp{display:grid;gap:8px}
+.bprow{display:grid;grid-template-columns:minmax(150px,230px) 1fr 44px;gap:10px;align-items:center;font-size:.92rem}
+.bar{height:16px;background:var(--bg);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent)}
+.bar i.b{background:var(--muted)}
+.num{font-variant-numeric:tabular-nums;text-align:right;font-weight:700}
+.taskhd{font-family:var(--display);font-weight:700;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+/* LO cards */
+.locard{border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:8px;background:var(--bg);text-decoration:none;color:var(--ink)}
+.locard:hover{border-color:var(--accent)}
+.locard .k{font-family:var(--display);font-weight:800;font-size:1.6rem;color:var(--accent)}
+.prog{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.prog i{display:block;height:100%;background:var(--ok)}
+.warnlist{margin:0;padding-left:20px;display:grid;gap:6px}
+.warnlist li::marker{color:var(--sev-high);font-weight:700}
+/* flash cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px}
+.fc{border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:14px;display:grid;gap:10px;align-content:start}
+.fc .front{font-weight:700}
+.fc .back{display:none;border-top:1px dashed var(--line);padding-top:10px;font-size:.95rem}
+.fc.open .back{display:block}
+.fc ul{margin:0;padding-left:18px}
+/* question card */
+.q{display:grid;gap:14px}
+.qmeta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.qtext{font-size:1.08rem;font-weight:600;max-width:72ch}
+.ctx{background:var(--bg);border-left:4px solid var(--accent);padding:12px 14px;border-radius:0 8px 8px 0;max-width:76ch}
+.ctx pre,.log{font-family:var(--mono);font-size:.8rem;white-space:pre-wrap;overflow-x:auto;margin:6px 0 0;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:8px}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:10px;align-items:flex-start;text-align:left;padding:11px 13px;border:1px solid var(--line);border-radius:9px;background:var(--surface);cursor:pointer}
+.opt:hover{border-color:var(--accent)}
+.opt .key{font-family:var(--mono);font-weight:600;color:var(--muted);min-width:1.4em}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt[disabled]{cursor:default}
+.conf{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:.9rem}
+.conf button{padding:5px 11px;border-radius:99px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.conf button.on{border-color:var(--accent);background:var(--accent-soft);font-weight:700}
+.fb{border-radius:9px;padding:12px 14px;display:grid;gap:6px}
+.fb.ok{background:var(--ok-soft);border:1px solid var(--ok)}
+.fb.no{background:var(--bad-soft);border:1px solid var(--bad)}
+.fb.part{background:var(--warn-soft);border:1px solid var(--warn)}
+.fb h4{font-size:1rem}
+.hyper{background:var(--warn-soft);border:1px solid var(--warn);border-radius:8px;padding:8px 12px;font-weight:600}
+/* chain scenario */
+.scen{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px 16px;line-height:1.9;max-width:78ch}
+.clue{border:none;border-bottom:2px dotted var(--muted);background:transparent;padding:0 2px;cursor:pointer;line-height:1.5;text-align:left}
+.clue.sel{background:var(--accent-soft);border-bottom:2px solid var(--accent)}
+.clue.hit{background:var(--ok-soft);border-bottom:2px solid var(--ok)}
+.clue.miss{background:var(--warn-soft);border-bottom:2px solid var(--warn)}
+.clue.decoy{background:var(--bad-soft);border-bottom:2px solid var(--bad)}
+.notes{display:grid;gap:6px;margin:0;padding-left:18px;font-size:.95rem}
+/* sort */
+.sortrow{display:grid;grid-template-columns:1fr minmax(170px,240px);gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.sortrow select{font:inherit;padding:6px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+.sortrow.right{border-color:var(--ok);background:var(--ok-soft)}
+.sortrow.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.sortrow .why{grid-column:1/-1;font-size:.9rem;color:var(--muted)}
+@media (max-width:520px){.sortrow{grid-template-columns:1fr}}
+/* order */
+.ordrow{display:flex;gap:8px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.ordrow .t{flex:1}
+.ordrow button{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:3px 9px;cursor:pointer}
+.ordrow.right{border-color:var(--ok);background:var(--ok-soft)}
+.ordrow.wrong{border-color:var(--bad);background:var(--bad-soft)}
+textarea{width:100%;min-height:150px;font:inherit;padding:10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.model{background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:12px 14px;display:grid;gap:8px}
+.check label{display:flex;gap:9px;align-items:flex-start;padding:4px 0}
+/* matrix */
+table.mx{border-collapse:separate;border-spacing:4px;font-size:.9rem}
+table.mx th{font-weight:600;color:var(--muted);text-align:left;padding:4px 6px}
+table.mx td{padding:8px 10px;border-radius:6px;font-weight:700;text-align:center;color:var(--on-sev);min-width:84px}
+td.s-Low{background:var(--sev-low)} td.s-Medium{background:var(--sev-med)} td.s-High{background:var(--sev-high)} td.s-Extreme{background:var(--sev-ext)}
+table.mx td.hl{outline:3px solid var(--ink);outline-offset:1px}
+.mxwrap{overflow-x:auto}
+.runbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.today{display:grid;gap:10px;margin:0;padding-left:22px}.today li{padding-left:4px}.today li::marker{font-weight:700;color:var(--muted)}.today .btn{margin-right:10px}.today span{display:inline-block;margin-top:4px}
+.wssteps{display:grid;gap:10px}.wsstep{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--bg)}
+.wsstep .n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:700;border:2px solid var(--line);color:var(--muted)}.wsstep.done .n{border-color:var(--ok);color:var(--ok)}
+.wsstep p{margin:2px 0 0}.wsfield{display:grid;gap:6px}.wsfield textarea{min-height:84px}.model.sample{border-left:4px solid var(--muted);font-size:.97rem}
+a.pill{text-decoration:none}
+@media (max-width:560px){.wsstep{grid-template-columns:30px 1fr}.wsstep .btn{grid-column:1/-1}}
+.runbar .prog{flex:1;min-width:120px}
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.tile{border:1px solid var(--line);border-radius:9px;padding:12px;background:var(--bg)}
+.tile b{display:block;font-family:var(--display);font-size:1.6rem;font-variant-numeric:tabular-nums}
+table.tbl{border-collapse:collapse;width:100%;font-size:.92rem}
+table.tbl th,table.tbl td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
+table.tbl th{font-weight:700;color:var(--muted)}
+.tblwrap{overflow-x:auto}
+footer{color:var(--muted);font-size:.85rem;padding:0 0 40px}
+@media (max-width:600px){header.top{position:static}}
+@media print{header.top,footer,.noprint,nav{display:none!important}body{background:#fff;color:#000}.panel{border:none;padding:0}.fb{break-inside:avoid}}
+@media (prefers-reduced-motion:no-preference){.opt,.clue,.btn{transition:background .12s,border-color .12s}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap topin">
+  <div class="brand"><a href="index.html" class="small" style="text-decoration:none">← Unit 2 resources</a><b>Unit 2 Exam Prep</b><span>Creating Systems to Manage Information · BTEC L3 IT</span></div>
+  <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+  <div id="authbar" class="authbar" hidden></div>
+</div></header>
+<div class="wrap"><main id="app"></main>
+<footer>Original scenarios and questions written for West London College learners by J. Mall with AI assistance (Claude), November 2026. Not Pearson material: examiner advice is paraphrased from Pearson Principal Examiner reports (2022–2025). <span id="footnote">Your progress is saved only in this browser.</span></footer>
+</div>
+<script src="ep/mock.js"></script>
+<script src="ep/core.js"></script>
+<script src="ep/items-1.js"></script>
+<script src="ep/items-2.js"></script>
+<script src="ep/items-3.js"></script>
+<script src="ep/items-4.js"></script>
+<script src="ep/items-5.js"></script>
+<script src="ep/items-6.js"></script>
+<script src="ep/items-7.js"></script>
+<script src="ep/items-8.js"></script>
+<script src="ep/learn-b.js"></script>
+<script src="ep/ws.js"></script>
+<script src="ep/types.js"></script>
+<script>
+"use strict";
+/* ============ STORAGE ============ */
+const BASE_KEY="u2prep_v1";let KEY=BASE_KEY;
+let S={box:{},due:{},stat:{},log:[]};
+try{const raw=localStorage.getItem(KEY); if(raw){S=Object.assign(S,JSON.parse(raw));}}catch(e){}
+function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function save(){S.u=Date.now();saveLocal();if(typeof pushState==="function")pushState();}
+const DAY=86400000, GAPS=[0,0,1,3,7,16];
+function record(id,correct,conf){
+  const b=S.box[id]||1; let nb;
+  if(!correct) nb=1; else if(conf==="sure"||conf==="self") nb=Math.min(5,b+1); else nb=Math.max(2,b);
+  S.box[id]=nb; S.due[id]=Date.now()+GAPS[nb]*DAY;
+  const st=S.stat[id]||{c:0,w:0}; correct?st.c++:st.w++; S.stat[id]=st;
+  S.log.push({id,correct,conf,t:Date.now()}); if(S.log.length>500)S.log=S.log.slice(-500);
+  S.first=S.first||{};S.last=S.last||{};if(!S.first[id])S.first[id]=Date.now();S.last[id]=correct?1:0;
+  save();
+}
+/* Per-answer facts for the results sheet: seconds taken, which attempt, days since first seen, previous outcome. Read BEFORE record(). */
+function itemMeta(id,qStart){const st=S.stat[id],f=S.first&&S.first[id],l=S.last&&S.last[id];return {s:Math.max(0,Math.round((Date.now()-qStart)/1000)),n:(st?st.c+st.w:0)+1,d:f?Math.floor((Date.now()-f)/DAY):0,p:(l===0||l===1)?l:-1};}
+/* Kept out of practice until a student has met them in a final test, so the test can show whether they understand the topic or only remember the practice questions. */
+
+
+function practisable(){return ITEMS.filter(i=>!HOLD.has(i.id)||S.stat[i.id]);}
+function mastery(lo){const its=practisable().filter(i=>i.lo===lo); const m=its.filter(i=>(S.box[i.id]||0)>=3).length; return {m,n:its.length,seen:its.filter(i=>S.stat[i.id]).length};}
+function isDue(i){return S.stat[i.id] && (S.due[i.id]||0)<=Date.now() && (S.box[i.id]||1)<5;}
+
+/* ============ HELPERS ============ */
+const $=(s,r=document)=>r.querySelector(s);
+function el(tag,attrs={},html=""){const e=document.createElement(tag);for(const k in attrs){if(k==="class")e.className=attrs[k];else if(k.startsWith("on"))e.addEventListener(k.slice(2),attrs[k]);else e.setAttribute(k,attrs[k]);}if(html)e.innerHTML=html;return e;}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+const LET="ABCDEFGH";
+function matrixHTML(hp,hl){let h='<div class="mxwrap"><table class="mx" aria-label="Risk severity matrix"><tr><th>Probability ↓ / Size of loss →</th>'+LOSS.map(l=>"<th>"+l+"</th>").join("")+"</tr>";
+ PROBS.forEach(p=>{h+="<tr><th>"+p+"</th>"+SEV[p].map((s,i)=>'<td class="s-'+s+((p===hp&&LOSS[i]===hl)?' hl':'')+'">'+s+"</td>").join("")+"</tr>";});return h+"</table></div>";}
+function actLabel(a){return a==="5"?"Activity 5":a==="4"?"Activity 4":"Activity "+a;}
+
+/* ============ RENDERERS ============ */
+function head(item){
+  const m=el("div",{class:"qmeta"});
+  m.append(el("span",{class:"pill acc"},(+item.lo<=5?"Part A":"Part B")),el("span",{class:"pill"},actLabel(item.act)));
+  return m;
+}
+function feedback(ok,title,body,partial){const f=el("div",{class:"fb "+(partial?"part":ok?"ok":"no")});f.append(el("h4",{},title));if(body)f.append(el("div",{},body));return f;}
+function confRow(state,onChange){const r=el("div",{class:"conf",role:"group","aria-label":"How sure are you?"},"<span class='muted'>How sure are you?</span>");
+ [["sure","Sure"],["unsure","Not sure"],["guess","Guessing"]].forEach(([k,l])=>{const b=el("button",{type:"button","aria-pressed":"false",onclick:()=>{state.conf=k;[...r.querySelectorAll("button")].forEach(x=>{x.classList.toggle("on",x===b);x.setAttribute("aria-pressed",x===b);});if(onChange)onChange();}},l);r.append(b);});return r;}
+/* Nothing is pre-selected: the Check button stays off until the student has chosen an answer AND tapped how sure they are. */
+const CONF_HINT="Choose your answer and tap how sure you are.";
+
+function renderMCQ(item,box,done,multi){
+  const st={sel:multi?new Set():null,conf:null};
+  const upd=()=>{const has=multi?st.sel.size>0:st.sel!==null;chk.disabled=!(has&&st.conf);hint.hidden=!chk.disabled;};
+  if(item.ctx)box.append(el("div",{class:"ctx"},item.ctx));
+  box.append(el("div",{class:"qtext"},item.q+(multi?" <span class='muted small'>(select all that apply)</span>":"")));
+  const order=shuffle(item.opts.map((o,i)=>i));
+  const opts=el("div",{class:"opts"});const btns=[];
+  order.forEach((oi,k)=>{const b=el("button",{type:"button",class:"opt"},"<span class='key'>"+LET[k]+"</span><span>"+item.opts[oi]+"</span>");b.dataset.i=oi;
+    b.onclick=()=>{if(multi){st.sel.has(oi)?st.sel.delete(oi):st.sel.add(oi);b.classList.toggle("sel");}else{st.sel=oi;btns.forEach(x=>x.classList.toggle("sel",x===b));}upd();};
+    btns.push(b);opts.append(b);});
+  box.append(opts,confRow(st,()=>upd()));
+  const chk=el("button",{type:"button",class:"btn",disabled:"disabled"},"Check answer");
+  const hint=el("span",{class:"small muted confhint"},CONF_HINT);
+  const rw=el("div",{class:"row"});rw.append(chk,hint);box.append(rw);
+  chk.onclick=()=>{
+    if((!multi&&st.sel===null)||!st.conf)return;
+    hint.remove();
+    let ok;
+    if(multi){const a=new Set(item.ans);ok=a.size===st.sel.size&&[...a].every(x=>st.sel.has(x));}
+    else ok=st.sel===item.ans;
+    btns.forEach(b=>{const i=+b.dataset.i;b.disabled=true;const isAns=multi?item.ans.includes(i):i===item.ans;if(isAns)b.classList.add("right");else if(multi?st.sel.has(i):i===st.sel)b.classList.add("wrong");});
+    chk.remove();
+    if(!ok&&st.conf==="sure")box.append(el("div",{class:"hyper"},"You were sure and it was wrong. These are the mistakes most worth fixing: read the explanation, then say it back to yourself in your own words."));
+    let body=item.why; if(!ok&&!multi&&item.wrong&&item.wrong[st.sel])body="<p><b>Why not your choice:</b> "+item.wrong[st.sel]+"</p><p>"+item.why+"</p>";
+    box.append(feedback(ok,ok?"Correct":"Not quite",body));
+    done(ok,st.conf);
+  };
+}
+function renderMatrix(item,box,done){
+  const st={sel:null,conf:null};const rev=item.gen==="rev";const upd=()=>{chk.disabled=!(st.sel!==null&&st.conf);hint.hidden=!chk.disabled;};
+  const p=PROBS[Math.floor(Math.random()*3)],li=Math.floor(Math.random()*3),l=LOSS[li],s=SEV[p][li];
+  let q,opts,ans;
+  if(rev){ // pick a combo where answer unique given severity+loss
+    q="Risk severity is <b>"+s+"</b> and size of loss is <b>"+l+"</b>. Which probability gives that?";
+    opts=PROBS.slice(); ans=PROBS.filter(x=>SEV[x][li]===s);
+  }else{q="Probability: <b>"+p+"</b>. Size of loss: <b>"+l+"</b>. What risk severity goes in the template?";opts=["Low","Medium","High","Extreme"];ans=[s];}
+  box.append(el("div",{class:"qtext"},q+" <span class='muted small'>No peeking at the matrix.</span>"));
+  const o=el("div",{class:"opts"});const btns=[];
+  opts.forEach((x,k)=>{const b=el("button",{type:"button",class:"opt"},"<span class='key'>"+LET[k]+"</span><span>"+x+"</span>");b.onclick=()=>{st.sel=x;btns.forEach(y=>y.classList.toggle("sel",y===b));upd();};btns.push(b);o.append(b);});
+  box.append(o,confRow(st,()=>upd()));const chk=el("button",{type:"button",class:"btn",disabled:"disabled"},"Check answer");const hint=el("span",{class:"small muted confhint"},CONF_HINT);const mrw=el("div",{class:"row"});mrw.append(chk,hint);box.append(mrw);
+  chk.onclick=()=>{if(st.sel===null||!st.conf)return;hint.remove();const ok=ans.includes(st.sel);btns.forEach(b=>{b.disabled=true;const v=b.textContent.slice(1);if(ans.includes(v))b.classList.add("right");else if(v===st.sel)b.classList.add("wrong");});chk.remove();
+   if(!ok&&st.conf==="sure")box.append(el("div",{class:"hyper"},"Confident and wrong: this is exactly the error examiners report every year. Trace the row and column on the matrix below."));
+   box.append(feedback(ok,ok?"Correct":"Not quite","<p>Read across from <b>"+p+"</b> and up from <b>"+l+"</b>: they meet at <b>"+s+"</b>.</p>"+matrixHTML(p,l)+(rev&&ans.length>1?"<p class='small muted'>Here more than one probability gives this result; any of them counts.</p>":"")));done(ok,st.conf);};
+}
+function renderSort(item,box,done){
+  box.append(el("div",{class:"qtext"},item.q));const rows=[];const list=el("div",{class:"opts"});
+  shuffle(item.items).forEach((it,k)=>{const r=el("div",{class:"sortrow"});const id="s_"+item.id+"_"+k;
+   r.append(el("label",{for:id},it.t));const s=el("select",{id});s.append(el("option",{value:""},"Choose…"));item.buckets.forEach((b,i)=>s.append(el("option",{value:i},b)));
+   s.onchange=()=>{chk.disabled=rows.some(x=>x.s.value==="");};r.append(s);rows.push({r,s,it});list.append(r);});
+  box.append(list);const chk=el("button",{type:"button",class:"btn",disabled:"disabled"},"Check answers");box.append(chk);
+  chk.onclick=()=>{let n=0;rows.forEach(({r,s,it})=>{const ok=+s.value===it.b;if(ok)n++;r.classList.add(ok?"right":"wrong");s.disabled=true;r.append(el("div",{class:"why"},(ok?"":"<b>"+item.buckets[it.b]+".</b> ")+it.why));});chk.remove();
+   const frac=n/rows.length;box.append(feedback(frac===1,n+" of "+rows.length+" correct",frac===1?"All sorted.":"Read the reasons under the rows you got wrong.",frac>=.6&&frac<1));done(frac>=.8,"self");};
+}
+function renderOrder(item,box,done){
+  box.append(el("div",{class:"qtext"},item.q+" <span class='muted small'>Use the arrows.</span>"));let cur=shuffle(item.steps);
+  if(cur.join()===item.steps.join())cur=cur.reverse();
+  const list=el("div",{class:"opts"});
+  function draw(){list.innerHTML="";cur.forEach((t,i)=>{const r=el("div",{class:"ordrow"});r.append(el("span",{class:"key"},String(i+1)),el("span",{class:"t"},t));
+   const up=el("button",{type:"button","aria-label":"Move up"},"↑"),dn=el("button",{type:"button","aria-label":"Move down"},"↓");
+   up.onclick=()=>{if(i>0){[cur[i-1],cur[i]]=[cur[i],cur[i-1]];draw();}};dn.onclick=()=>{if(i<cur.length-1){[cur[i+1],cur[i]]=[cur[i],cur[i+1]];draw();}};
+   r.append(up,dn);list.append(r);});}
+  draw();box.append(list);const chk=el("button",{type:"button",class:"btn"},"Check order");box.append(chk);
+  chk.onclick=()=>{let n=0;[...list.children].forEach((r,i)=>{const ok=cur[i]===item.steps[i];if(ok)n++;r.classList.add(ok?"right":"wrong");r.querySelectorAll("button").forEach(b=>b.remove());});chk.remove();
+   box.append(feedback(n===cur.length,n+" of "+cur.length+" in the right place","<p><b>Correct order:</b></p><ol>"+item.steps.map(s=>"<li>"+s+"</li>").join("")+"</ol><p>"+item.why+"</p>",n>=cur.length/2&&n<cur.length));done(n===cur.length,"self");};
+}
+function renderWrite(item,box,done){
+  if(item.ctx)box.append(el("div",{class:"ctx"},item.ctx));box.append(el("div",{class:"qtext"},item.q));
+  const ta=el("textarea",{id:"w_"+item.id,"aria-label":"Your answer",placeholder:"Write your answer before you look at the model. Aim for 4–6 sentences."});box.append(ta);
+  const go=el("button",{type:"button",class:"btn"},"Compare with model answer");box.append(go);
+  go.onclick=()=>{if(ta.value.trim().length<40){go.textContent="Write a bit more first (at least a couple of sentences)";return;}
+   go.remove();ta.readOnly=true;const m=el("div",{class:"model"});m.append(el("h4",{},"Model answer"),el("div",{},item.model),el("h4",{},"Mark yourself: tick what YOUR answer does"));
+   const c=el("div",{class:"check"});const boxes=item.checklist.map((t,i)=>{const id="c_"+item.id+"_"+i;const l=el("label",{for:id});const cb=el("input",{type:"checkbox",id});l.append(cb,el("span",{},t));c.append(l);return cb;});
+   m.append(c);const sv=el("button",{type:"button",class:"btn"},"Save my self-mark");m.append(sv);box.append(m);
+   sv.onclick=()=>{const n=boxes.filter(b=>b.checked).length;boxes.forEach(b=>b.disabled=true);sv.remove();const ok=n/boxes.length>=.8;
+    box.append(feedback(ok,n+" of "+boxes.length+" criteria met",ok?"Strong answer. It will come back for review later.":"Rewrite the parts you didn’t tick, using the model as a guide but in your own words. This item will come back sooner.",!ok&&n>=boxes.length/2));done(ok,"self");};};
+}
+function renderChain(item,box,done){
+  box.append(el("h3",{},item.title+": find the security details"),el("div",{class:"qtext"},"Step 1. Tap every detail that creates a cyber security weakness. Leave the rest alone."));
+  const sc=el("div",{class:"scen"});const clues=[];
+  item.scen.forEach(seg=>{if(typeof seg==="string")sc.append(document.createTextNode(seg));else{const b=el("button",{type:"button",class:"clue","aria-pressed":"false"},seg.t);b.onclick=()=>{b.classList.toggle("sel");b.setAttribute("aria-pressed",b.classList.contains("sel"));};clues.push({b,seg});sc.append(b);}});
+  box.append(sc);const chk=el("button",{type:"button",class:"btn"},"Check my details");box.append(chk);let score=0,tot=0;
+  chk.onclick=()=>{chk.remove();let hit=0,miss=0,dec=0;const ul=el("ul",{class:"notes"});
+   clues.forEach(({b,seg})=>{const s=b.classList.contains("sel");b.disabled=true;b.classList.remove("sel");
+    if(seg.ok&&s){hit++;b.classList.add("hit");}else if(seg.ok){miss++;b.classList.add("miss");}else if(s){dec++;b.classList.add("decoy");}
+    if(seg.ok||s)ul.append(el("li",{},"<b>"+seg.t+":</b> "+seg.n));});
+   const need=clues.filter(c=>c.seg.ok).length;const ok1=miss===0&&dec===0;score+=ok1?1:0;tot++;
+   box.append(feedback(ok1,"Found "+hit+" of "+need+(dec?", plus "+dec+" that weren’t security issues":""),"<p class='small'>Green: found. Amber: missed. Red: not a cyber issue (examiners say these waste your time).</p>",!ok1&&hit>=need-1));box.append(ul);
+   let si=0;const next=()=>{if(si>=item.steps.length){box.append(el("div",{class:"model"},"<h4>Put it together</h4><div>"+item.model+"</div>"));done(score/tot>=.7,"self");return;}
+    const s=item.steps[si++];const sub=el("div",{class:"q"});sub.append(el("div",{class:"qtext"},"Step "+(si+1)+". "+s.q));
+    const o=el("div",{class:"opts"});const bs=[];s.opts.forEach((t,k)=>{const b=el("button",{type:"button",class:"opt"},"<span class='key'>"+LET[k]+"</span><span>"+t+"</span>");
+     b.onclick=()=>{bs.forEach((x,j)=>{x.disabled=true;if(j===s.ans)x.classList.add("right");else if(x===b)x.classList.add("wrong");});const ok=k===s.ans;score+=ok?1:0;tot++;sub.append(feedback(ok,ok?"Correct":"Not quite",s.why));next();};bs.push(b);o.append(b);});
+    sub.append(o);box.append(sub);};next();};
+}
+function renderItem(a,b,c){a=U2T.gen(a);if(U2T.has(a.type))return U2T.render(a,b,c);return renderItem0(a,b,c);}
+function renderItem0(item,box,done){
+  box.dataset.id=item.id;box.append(head(item));
+  const t=item.type;
+  if(t==="mcq")renderMCQ(item,box,done,false);else if(t==="multi")renderMCQ(item,box,done,true);
+  else if(t==="matrix")renderMatrix(item,box,done);else if(t==="sort")renderSort(item,box,done);
+  else if(t==="order")renderOrder(item,box,done);else if(t==="write")renderWrite(item,box,done);
+  else if(t==="chain")renderChain(item,box,done);
+}
+
+/* ============ SESSION RUNNER ============ */
+function newSid(){try{const a=new Uint8Array(9);crypto.getRandomValues(a);return Array.from(a,x=>x.toString(36).padStart(2,"0")).join("").slice(0,16);}catch(e){return (Date.now().toString(36)+Math.random().toString(36).slice(2)).slice(0,16);}}
+function runSession(title,queue,host,onExit){
+  host.innerHTML="";let i=0;const res=[];const start=Date.now();let saved=false;const sid=newSid();
+  LIVE={kind:"session",build:()=>res.length?practicePayload(title,res,queue.length,start,true,sid):null};
+  const panel=el("section",{class:"panel"});host.append(panel);
+  function show(){panel.innerHTML="";
+   if(i>=queue.length){return summary();}
+   const item=queue[i];const qStart=Date.now();
+   const bar=el("div",{class:"runbar"});const pg=el("div",{class:"prog"},"<i style='width:"+(i/queue.length*100)+"%'></i>");
+   bar.append(el("b",{},title),el("span",{class:"muted small"},"Question "+(i+1)+" of "+queue.length),pg,el("button",{type:"button",class:"btn ghost",onclick:()=>{summary();}},"Finish now"));
+   panel.append(bar);const qb=el("div",{class:"q"});panel.append(qb);
+   renderItem(item,qb,(ok,conf)=>{const meta=itemMeta(item.id,qStart);record(item.id,ok,conf);res.push({item,ok,conf,meta});
+     const nx=el("button",{type:"button",class:"btn"},i+1<queue.length?"Next question →":"See my results");nx.onclick=()=>{i++;show();window.scrollTo({top:0});};const rw=el("div",{class:"row"});rw.append(nx);qb.append(rw);nx.focus({preventScroll:true});});
+  }
+  function summary(){panel.innerHTML="";if(!saved){saved=true;LIVE=null;if(res.length)sendAttempt(practicePayload(title,res,queue.length,start,res.length<queue.length,sid));}const n=res.length,c=res.filter(r=>r.ok).length,hc=res.filter(r=>!r.ok&&r.conf==="sure").length,lucky=res.filter(r=>r.ok&&(r.conf==="guess"||r.conf==="unsure")).length;
+   panel.append(el("h2",{},title+": results"));
+   const s=el("div",{class:"sum"});s.append(el("div",{class:"tile"},"<b>"+c+"/"+n+"</b>correct"),el("div",{class:"tile"},"<b>"+hc+"</b>confident but wrong"),el("div",{class:"tile"},"<b>"+lucky+"</b>right but unsure"));panel.append(s);
+   panel.append(el("p",{class:"lede"},"Wrong answers and guesses come back soonest in <b>Review</b>. Items you got right and were sure about come back after longer gaps, which is what makes them stick."));
+   const wrong=res.filter(r=>!r.ok);if(wrong.length){panel.append(el("h3",{},"Look again at"));const ul=el("ul",{class:"warnlist"});wrong.forEach(r=>ul.append(el("li",{},"Activity "+r.item.lo+", "+actLabel(r.item.act)+": "+(r.item.q||r.item.title||"Risk matrix drill").replace(/<[^>]+>/g,"").slice(0,110))));panel.append(ul);}
+   const row=el("div",{class:"row"});row.append(el("button",{type:"button",class:"btn",onclick:onExit},"Back"),el("a",{class:"btn ghost",href:"#review"},"Go to Review"));panel.append(row);
+   panel.append(el("div",{class:"model"},"<h4>Reflect (30 seconds)</h4><div>Which one idea from this set would cost you the most marks if you forgot it in the exam? Write it on paper from memory now.</div>"));
+  }
+  show();
+}
+function pickMixed(n){
+  const pool=practisable();const due=shuffle(pool.filter(isDue));const fresh=shuffle(pool.filter(i=>!S.stat[i.id]));const rest=shuffle(pool.filter(i=>S.stat[i.id]&&!isDue(i)));
+  const w=lo=>LOS[lo].weight;const chosen=[];
+  const take=src=>{src.sort((a,b)=>w(b.lo)*Math.random()-w(a.lo)*Math.random());for(const it of src){if(chosen.length>=n)break;if(!chosen.includes(it))chosen.push(it);}};
+  take(due);take(fresh);take(rest);
+  // interleave: avoid same LO back-to-back
+  const out=[];let left=chosen.slice();while(left.length){const k=left.findIndex(x=>!out.length||x.lo!==out[out.length-1].lo);out.push(left.splice(k<0?0:k,1)[0]);}
+  return out;
+}
+
+/* ============ FINAL TEST (strict auto-marking) ============ */
+function skillOf(id){for(const k in SKILL)if(SKILL[k].includes(id))return k;return "Other";}
+const stripH=s=>String(s||"").replace(/<br\s*\/?>/g," ").replace(/<[^>]+>/g,"").replace(/\s+/g," ").trim();
+let TEST=null; // {name,group,items,i,resp:[],conf:[],start,end,timer}
+
+function buildTest(){
+  const out=[];
+  for(const lo in TEST_BLUEPRINT){
+    let n=TEST_BLUEPRINT[lo];
+    let pool=ITEMS.filter(i=>i.lo===lo&&i.type!=="write"&&i.type!=="matrix"&&!i.gen);
+    let pick=[];
+    // a few questions this student has never practised; the rest of the unseen held-back ones are saved for later tests
+    const fresh=shuffle(pool.filter(i=>HOLD.has(i.id)&&!S.stat[i.id])).slice(0,HOLD_PER_TEST[lo]||0);
+    pool=pool.filter(i=>!HOLD.has(i.id)||S.stat[i.id]);
+    if(lo==="C"){ // always 2 matrix lookups + 1 scenario chain
+      for(let k=0;k<2;k++){const p=PROBS[Math.floor(Math.random()*3)],li=Math.floor(Math.random()*3);pick.push({id:"C0"+(k+1),lo:"C",act:"1",type:"matrix",tp:p,tl:LOSS[li]});}
+      pick.push(shuffle(pool.filter(i=>i.type==="chain"))[0]);
+      pool=pool.filter(i=>i.type!=="chain");
+    }
+    if(lo==="E"){ // always include one Quayside reasoning item and the volatility order
+      pick.push(ITEMS.find(i=>i.id==="E01"));pick.push(shuffle(pool.filter(i=>["E08","E09","E10","E11"].includes(i.id)))[0]);pick.push(shuffle(pool.filter(i=>["E32","E33","E34"].includes(i.id)))[0]);
+      pool=pool.filter(i=>!pick.includes(i));
+    }
+    pick=pick.concat(fresh);
+    pick=pick.concat(shuffle(pool).slice(0,Math.max(0,n-pick.length)));
+    out.push(...pick);
+  }
+  // interleave outcomes
+  const res=[];let left=shuffle(out);while(left.length){const k=left.findIndex(x=>!res.length||x.lo!==res[res.length-1].lo);res.push(left.splice(k<0?0:k,1)[0]);}
+  return res;
+}
+function maxMarks(it){if(U2T.has(it.type))return U2T.max(it);return maxMarks0(it);}
+function maxMarks0(it){return it.type==="multi"||it.type==="order"?2:it.type==="sort"?3:it.type==="chain"?2+it.steps.length:1;}
+
+/* --- renderers with no feedback; each sets st.resp --- */
+function tRender(it,box,st){if(U2T.has(it.type)){box.dataset.id=it.id;box.append(head(it));return U2T.test(it,box,st);}return tRender0(it,box,st);}
+function tRender0(it,box,st){
+  box.dataset.id=it.id;box.append(head(it));
+  if(it.ctx)box.append(el("div",{class:"ctx"},it.ctx));
+  const T=it.type;
+  if(T==="mcq"||T==="multi"||T==="matrix"){
+    let opts,idxs;
+    if(T==="matrix"){box.append(el("div",{class:"qtext"},"Probability: <b>"+it.tp+"</b>. Size of loss: <b>"+it.tl+"</b>. What risk severity goes in the template?"));opts=["Low","Medium","High","Extreme"];idxs=[0,1,2,3];}
+    else{box.append(el("div",{class:"qtext"},it.q+(T==="multi"?" <span class='muted small'>(select all that apply: all must be right to score)</span>":"")));opts=it.opts;idxs=shuffle(it.opts.map((o,i)=>i));}
+    const o=el("div",{class:"opts"});const bs=[];if(T==="multi")st.resp=new Set();
+    idxs.forEach((oi,k)=>{const b=el("button",{type:"button",class:"opt"},"<span class='key'>"+LET[k]+"</span><span>"+opts[oi]+"</span>");
+      b.onclick=()=>{if(T==="multi"){st.resp.has(oi)?st.resp.delete(oi):st.resp.add(oi);b.classList.toggle("sel");st.ready=st.resp.size>0;}else{st.resp=T==="matrix"?opts[oi]:oi;bs.forEach(x=>x.classList.toggle("sel",x===b));st.ready=true;}st.onchange();};bs.push(b);o.append(b);});
+    box.append(o);
+  }else if(T==="sort"){
+    box.append(el("div",{class:"qtext"},it.q+" <span class='muted small'>(each wrong row cancels a right one)</span>"));st.resp=it.items.map(()=>null);const list=el("div",{class:"opts"});
+    shuffle(it.items.map((x,i)=>i)).forEach(ix=>{const r=el("div",{class:"sortrow"});const id="ts_"+it.id+"_"+ix;r.append(el("label",{for:id},it.items[ix].t));
+      const s=el("select",{id});s.append(el("option",{value:""},"Choose…"));it.buckets.forEach((b,i)=>s.append(el("option",{value:i},b)));
+      s.onchange=()=>{st.resp[ix]=s.value===""?null:+s.value;st.ready=st.resp.every(v=>v!==null);st.onchange();};r.append(s);list.append(r);});
+    box.append(list);
+  }else if(T==="order"){
+    box.append(el("div",{class:"qtext"},it.q+" <span class='muted small'>(must be perfect to score)</span>"));let cur=shuffle(it.steps);if(cur.join()===it.steps.join())cur=cur.reverse();st.resp=cur;st.ready=true;
+    const list=el("div",{class:"opts"});const draw=()=>{list.innerHTML="";cur.forEach((t,i)=>{const r=el("div",{class:"ordrow"});r.append(el("span",{class:"key"},String(i+1)),el("span",{class:"t"},t));
+      const up=el("button",{type:"button","aria-label":"Move up"},"↑"),dn=el("button",{type:"button","aria-label":"Move down"},"↓");
+      up.onclick=()=>{if(i>0){[cur[i-1],cur[i]]=[cur[i],cur[i-1]];draw();}};dn.onclick=()=>{if(i<cur.length-1){[cur[i+1],cur[i]]=[cur[i],cur[i+1]];draw();}};r.append(up,dn);list.append(r);});};
+    draw();box.append(list);st.onchange();
+  }else if(T==="chain"){
+    box.append(el("h3",{},it.title),el("div",{class:"qtext"},"Part 1. Tap every detail that creates a cyber security weakness. Details that aren’t security issues lose marks. Then lock your choice."));
+    const sc=el("div",{class:"scen"});const cl=[];st.resp={sel:[],steps:it.steps.map(()=>null)};
+    it.scen.forEach((seg,si)=>{if(typeof seg==="string")sc.append(document.createTextNode(seg));else{const b=el("button",{type:"button",class:"clue","aria-pressed":"false"},seg.t);b.onclick=()=>{b.classList.toggle("sel");b.setAttribute("aria-pressed",b.classList.contains("sel"));};cl.push({b,si});sc.append(b);}});
+    box.append(sc);const lock=el("button",{type:"button",class:"btn ghost"},"Lock my details and continue");box.append(lock);
+    lock.onclick=()=>{st.resp.sel=cl.filter(c=>c.b.classList.contains("sel")).map(c=>c.si);cl.forEach(c=>c.b.disabled=true);lock.remove();
+      it.steps.forEach((s,k)=>{const sub=el("div",{class:"q"});sub.append(el("div",{class:"qtext"},"Part "+(k+2)+". "+s.q));const o=el("div",{class:"opts"});const bs=[];
+        s.opts.forEach((t,j)=>{const b=el("button",{type:"button",class:"opt"},"<span class='key'>"+LET[j]+"</span><span>"+t+"</span>");b.onclick=()=>{st.resp.steps[k]=j;bs.forEach(x=>x.classList.toggle("sel",x===b));st.ready=st.resp.steps.every(v=>v!==null);st.onchange();};bs.push(b);o.append(b);});
+        sub.append(o);box.append(sub);});};
+  }
+}
+function markItem(it,r){if(U2T.has(it.type))return U2T.mark(it,r);return markItem0(it,r);}
+function markItem0(it,r){
+  const max=maxMarks(it),T=it.type;let got=0,your="No answer",right="",notes="";
+  if(T==="mcq"){right=it.opts[it.ans];if(r!==null&&r!==undefined){your=it.opts[r];got=r===it.ans?1:0;}notes=it.why;}
+  else if(T==="matrix"){const s=SEV[it.tp][LOSS.indexOf(it.tl)];right=s;if(r){your=r;got=r===s?1:0;}notes=it.tp+" + "+it.tl+" = "+s+" on the template matrix.";}
+  else if(T==="multi"){right=it.ans.map(i=>it.opts[i]).join("; ");if(r&&r.size){your=[...r].map(i=>it.opts[i]).join("; ");got=(r.size===it.ans.length&&it.ans.every(i=>r.has(i)))?2:0;}notes=it.why+" Strict marking: every correct option and no wrong ones.";}
+  else if(T==="sort"){let c=0,w=0;const rows=[];it.items.forEach((x,i)=>{const v=r?r[i]:null;if(v===x.b)c++;else{w++;rows.push("‘"+x.t+"’ is <b>"+it.buckets[x.b]+"</b>"+(v===null||v===undefined?" (left blank)":" not "+it.buckets[v])+". "+x.why);}});
+    got=Math.round(Math.max(0,c-w)/it.items.length*3);your=c+" of "+it.items.length+" rows right";right="All rows";notes=rows.length?rows.join("<br>"):"All rows correct.";}
+  else if(T==="order"){right=it.steps.join(" → ");if(r){your=r.join(" → ");got=r.join("|")===it.steps.join("|")?2:0;}notes=it.why;}
+  else if(T==="chain"){const segs=it.scen.map((s,i)=>({s,i})).filter(x=>typeof x.s!=="string");const sel=new Set(r?r.sel:[]);
+    const tru=segs.filter(x=>x.s.ok),hits=tru.filter(x=>sel.has(x.i)).length,dec=segs.filter(x=>!x.s.ok&&sel.has(x.i)).length;
+    const clue=Math.floor(Math.max(0,hits-dec)/tru.length*2);let st=0;it.steps.forEach((s,k)=>{if(r&&r.steps[k]===s.ans)st++;});got=clue+st;
+    your="Details: "+hits+" of "+tru.length+" found, "+dec+" non-issues picked. Follow-up parts: "+st+" of "+it.steps.length;right="All "+tru.length+" details, no extras, every part right";
+    notes="<b>Missed:</b> "+(tru.filter(x=>!sel.has(x.i)).map(x=>x.s.t).join("; ")||"none")+(dec?"<br><b>Not security issues:</b> "+segs.filter(x=>!x.s.ok&&sel.has(x.i)).map(x=>x.s.t).join("; "):"")+"<br>"+it.steps.map((s,k)=>(r&&r.steps[k]===s.ans?"✓ ":"✗ ")+stripH(s.q)+" Answer: "+s.opts[s.ans]+".").join("<br>");}
+  return {got,max,your,right,notes};
+}
+function fmtTime(ms){ms=Math.max(0,ms);const m=Math.floor(ms/60000),s=Math.floor(ms%60000/1000);return m+":"+String(s).padStart(2,"0");}
+
+function viewTest(){
+  if(TEST&&TEST.running){return drawTestQ();}
+  if(TEST&&TEST.done){return drawReport();}
+  const p=el("section",{class:"panel"});
+  p.append(el("h1",{},"Final test"),el("p",{class:"lede"},"A timed, auto-marked test across all eight activities, weighted the way the exam is. You get no feedback until the end. Then you get a full diagnostic: your score, which activities are weak, and every answer explained."));
+  p.append(el("div",{class:"model"},"<h4>Rules</h4><ul class='notes'><li>"+Object.values(TEST_BLUEPRINT).reduce((a,b)=>a+b,0)+" questions, "+TEST_MINUTES+" minutes. When time runs out the test is marked as it stands.</li><li>No going back. You can skip, but a skipped question scores 0.</li><li><b>Strict marking.</b> Multiple choice: right or nothing. ‘Select all’: every correct option and no wrong ones, or 0. Sorting: each wrong row cancels a right one. Ordering: must be perfect. Boards, grids and built expressions are marked point by point, like the mark scheme.</li><li>Say how sure you are for every question. The report shows where you were confident but wrong.</li><li>Each test includes a few questions that are not in the practice sets, to check you understand the topic and not only the questions.</li><li>Written answers can’t be auto-marked, so they aren’t in this test. This is not a predicted grade for the exam.</li></ul>"));
+  const g=el("div",{class:"grid2"});
+  const nl=el("label",{for:"t_name"},"<b>Your full name</b>");const ni=el("input",{id:"t_name",type:"text",autocomplete:"name",style:"font:inherit;padding:9px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);width:100%"});
+  const gl=el("label",{for:"t_group"},"<b>Group</b>");const gs=el("select",{id:"t_group",style:"font:inherit;padding:9px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);width:100%"});["Ealing","Southall","Other"].forEach(x=>gs.append(el("option",{value:x},x)));
+  const d1=el("div",{style:"display:grid;gap:6px"});d1.append(nl,ni);const d2=el("div",{style:"display:grid;gap:6px"});d2.append(gl,gs);g.append(d1,d2);p.append(g);
+  const msg=el("p",{class:"small",style:"color:var(--bad)"});const go=el("button",{type:"button",class:"btn"},"Start the test");p.append(msg,go);
+  if(AUTH.user){ni.value=AUTH.user.name;ni.readOnly=true;const gv=AUTH.user.group;if(gv&&![...gs.options].some(o=>o.value===gv))gs.append(el("option",{value:gv},esc(gv)));if(gv)gs.value=gv;gs.disabled=true;}
+  go.onclick=()=>{const n=ni.value.trim();if(!AUTH.user&&(n.length<3||!/\s/.test(n))){msg.textContent="Enter your first name and surname to start.";ni.focus();return;}
+    TEST={name:n,group:gs.value,items:buildTest(),i:0,resp:[],conf:[],start:Date.now(),running:true,sid:newSid()};TEST.end=TEST.start+TEST_MINUTES*60000;LIVE={kind:"test",build:()=>TEST&&TEST.running?testPayload(TEST,true):null};
+    TEST.timer=setInterval(()=>{const t=$("#t_clock");if(t)t.textContent=fmtTime(TEST.end-Date.now());if(Date.now()>=TEST.end)finishTest(true);},1000);render();};
+  app.append(p);
+}
+function drawTestQ(){
+  const it=TEST.items[TEST.i];const p=el("section",{class:"panel"});
+  const bar=el("div",{class:"runbar"});bar.append(el("b",{},esc(TEST.name)),el("span",{class:"muted small"},"Question "+(TEST.i+1)+" of "+TEST.items.length),
+    el("div",{class:"prog"},"<i style='width:"+(TEST.i/TEST.items.length*100)+"%'></i>"),el("span",{class:"pill acc"},"<span id='t_clock'>"+fmtTime(TEST.end-Date.now())+"</span> left"));
+  p.append(bar);const qb=el("div",{class:"q"});p.append(qb);
+  let sub=null;const st={resp:null,ready:false,conf:null,onchange:()=>upd()};
+  TEST.qStart=Date.now();tRender(it,qb,st);
+  const cr=el("div",{class:"conf"},"<span class='muted'>How sure are you?</span>");
+  [["sure","Sure"],["unsure","Not sure"],["guess","Guessing"]].forEach(([k,l])=>{const b=el("button",{type:"button"},l);b.onclick=()=>{st.conf=k;[...cr.querySelectorAll("button")].forEach(x=>x.classList.toggle("on",x===b));upd();};cr.append(b);});
+  qb.append(cr);
+  const row=el("div",{class:"row"});sub=el("button",{type:"button",class:"btn",disabled:"disabled"},TEST.i+1<TEST.items.length?"Submit and next":"Submit and finish");
+  const skip=el("button",{type:"button",class:"btn ghost"},"Skip (scores 0)");row.append(sub,skip);qb.append(row);
+  const hint=el("p",{class:"small muted"},"Answer the question and choose how sure you are to submit.");qb.append(hint);
+  function upd(){if(sub)sub.disabled=!(st.ready&&st.conf);}
+  const adv=(resp,conf)=>{TEST.meta=TEST.meta||[];TEST.meta[TEST.i]=itemMeta(it.id,TEST.qStart);TEST.resp[TEST.i]=resp;TEST.conf[TEST.i]=conf;TEST.i++;if(TEST.i>=TEST.items.length)finishTest(false);else{render();window.scrollTo({top:0});}};
+  sub.onclick=()=>adv(st.resp,st.conf);skip.onclick=()=>adv(null,"skip");
+  app.append(p);
+}
+function finishTest(timedOut){
+  if(!TEST||!TEST.running)return;clearInterval(TEST.timer);TEST.running=false;TEST.done=true;TEST.timedOut=timedOut;TEST.finished=Date.now();
+  TEST.marks=TEST.items.map((it,k)=>markItem(it,TEST.resp[k]));LIVE=null;sendAttempt(testPayload(TEST,false));
+  TEST.items.forEach((it,k)=>{if(TEST.resp[k]!==undefined&&TEST.resp[k]!==null){const m=TEST.marks[k];record(it.id,m.got===m.max,TEST.conf[k]==="sure"?"sure":"unsure");}});
+  if(location.hash!=="#test")location.hash="#test";else render();window.scrollTo({top:0});
+}
+function band(pc){return pc>=80?["Secure","var(--ok)"]:pc>=60?["Developing","var(--sev-med)"]:pc>=40?["At risk","var(--sev-high)"]:["Not yet secure","var(--bad)"];}
+function agg(keyFn){const o={};TEST.items.forEach((it,k)=>{const key=keyFn(it);if(!o[key])o[key]={g:0,m:0,n:0};o[key].g+=TEST.marks[k].got;o[key].m+=TEST.marks[k].max;o[key].n++;});return o;}
+function barRow(label,a){const pc=a.m?Math.round(a.g/a.m*100):0;const b=band(pc);return "<div class='bprow'><span>"+label+"<br><span class='muted small'>"+a.g+"/"+a.m+" marks · "+b[0]+"</span></span><div class='bar'><i style='width:"+pc+"%;background:"+b[1]+"'></i></div><span class='num'>"+pc+"%</span></div>";}
+function drawReport(){
+  const T=TEST;const got=T.marks.reduce((s,m)=>s+m.got,0),max=T.marks.reduce((s,m)=>s+m.max,0),pc=Math.round(got/max*100),b=band(pc);
+  const answered=T.resp.filter(r=>r!==null&&r!==undefined).length;
+  const confWrong=T.items.filter((it,k)=>T.conf[k]==="sure"&&T.marks[k].got<T.marks[k].max).length;
+  const sureRight=T.items.filter((it,k)=>T.conf[k]==="sure"&&T.marks[k].got===T.marks[k].max).length;
+  const sureAll=T.conf.filter(c=>c==="sure").length;
+  const unsureRight=T.items.filter((it,k)=>(T.conf[k]==="unsure"||T.conf[k]==="guess")&&T.marks[k].got===T.marks[k].max).length;
+  const mins=Math.round((T.finished-T.start)/60000);
+  const byLO=agg(it=>it.lo),byAct=agg(it=>actLabel(it.act)),bySk=agg(it=>skillOf(it.id));
+  const p=el("section",{class:"panel",id:"report"});
+  p.append(el("div",{class:"qmeta"},"<span class='pill acc'>Diagnostic report</span><span class='pill'>"+new Date(T.finished).toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"short"})+"</span><span class='pill'>"+esc(T.group)+"</span>"),
+    el("h1",{},esc(T.name)+": "+got+"/"+max+" ("+pc+"%)"),
+    el("p",{class:"lede"},"<b style='color:"+b[1]+"'>"+b[0]+".</b> "+answered+" of "+T.items.length+" questions answered in "+mins+" min"+(T.timedOut?" (time ran out)":"")+". Strict marking was applied. This score covers the knowledge and exam skills that can be auto-marked; it is not a predicted exam grade."));
+  const s=el("div",{class:"sum"});
+  s.append(el("div",{class:"tile"},"<b>"+pc+"%</b>overall"),el("div",{class:"tile"},"<b>"+confWrong+"</b>confident but wrong"),
+    el("div",{class:"tile"},"<b>"+(sureAll?Math.round(sureRight/sureAll*100):0)+"%</b>right when sure"),el("div",{class:"tile"},"<b>"+unsureRight+"</b>right but unsure"));p.append(s);
+  const lo=el("div",{class:"bp"});lo.innerHTML="<div class='taskhd'>By learning outcome</div>"+Object.keys(LOS).map(k=>byLO[k]?barRow(k+" · "+LOS[k].name,byLO[k]):"").join("")+
+    "<div class='taskhd'>By exam activity</div>"+Object.keys(byAct).sort().map(k=>barRow(k,byAct[k])).join("");p.append(lo);
+  const sk=Object.entries(bySk).map(([k,a])=>({k,a,pc:a.m?a.g/a.m:0})).sort((x,y)=>x.pc-y.pc);
+  const tw=el("div",{class:"tblwrap"});tw.innerHTML="<div class='taskhd'>By exam skill, weakest first</div><table class='tbl'><tr><th>Skill</th><th>Marks</th><th>%</th><th>Status</th></tr>"+sk.map(x=>{const pp=Math.round(x.pc*100),bb=band(pp);return "<tr><td>"+x.k+"</td><td>"+x.a.g+"/"+x.a.m+"</td><td>"+pp+"%</td><td style='color:"+bb[1]+";font-weight:700'>"+bb[0]+"</td></tr>";}).join("")+"</table>";p.append(tw);
+  // next steps
+  const weakLO=Object.keys(byLO).map(k=>({k,pc:byLO[k].g/byLO[k].m})).sort((a,b)=>a.pc-b.pc).filter(x=>x.pc<0.8).slice(0,3);
+  const ns=el("div",{class:"model"});let nh="<h4>Your next steps</h4><ol class='notes'>";
+  weakLO.forEach(x=>{nh+="<li>Activity "+x.k+" ("+LOS[x.k].name+", "+Math.round(x.pc*100)+"%): open <a href='#lo-"+x.k.toLowerCase()+"'>LO "+x.k+"</a>, do the recall cards without looking, then ‘Practise 10’.</li>";});
+  if(confWrong)nh+="<li>You were sure about "+confWrong+" wrong answer"+(confWrong>1?"s":"")+". Read those explanations below first: these are misunderstandings, not slips.</li>";
+  if(bySk["Risk matrix & template"]&&bySk["Risk matrix & template"].g<bySk["Risk matrix & template"].m)nh+="<li>You lost marks on the risk matrix, the error examiners report most. Do the <a href='#lo-c'>risk matrix drill</a> until you get 10 in a row.</li>";
+  if(!weakLO.length&&!confWrong)nh+="<li>Every outcome is at 80% or above. Move on to timed written practice: Activities 2, 4 and 5 carry most of the marks and can only be judged from your writing.</li>";
+  nh+="<li>Use <a href='#review'>Review</a> over the next week: the questions you missed are already scheduled.</li></ol>";ns.innerHTML=nh;p.append(ns);
+  const row=el("div",{class:"row noprint"});
+  const cp=el("button",{type:"button",class:"btn"},"Copy results for my teacher");const out=el("textarea",{"aria-label":"Results text",readonly:"readonly",style:"display:none;min-height:120px"});
+  const txt="Unit 2 final test – "+T.name+" ("+T.group+")\n"+new Date(T.finished).toLocaleString("en-GB")+"\nScore: "+got+"/"+max+" ("+pc+"%) – "+b[0]+(T.timedOut?" – time ran out":"")+"\nAnswered: "+answered+"/"+T.items.length+" · Confident but wrong: "+confWrong+"\n"+
+    Object.keys(LOS).filter(k=>byLO[k]).map(k=>"Activity "+k+": "+byLO[k].g+"/"+byLO[k].m+" ("+Math.round(byLO[k].g/byLO[k].m*100)+"%)").join("\n")+"\nWeakest skills: "+sk.slice(0,3).map(x=>x.k+" "+Math.round(x.pc*100)+"%").join("; ");
+  cp.onclick=async()=>{try{await navigator.clipboard.writeText(txt);cp.textContent="Copied. Paste it into Teams or email";}catch(e){out.style.display="block";out.value=txt;out.select();cp.textContent="Select the text below and copy it";}};
+  const pr=el("button",{type:"button",class:"btn ghost"},"Print or save as PDF");pr.onclick=()=>{try{window.print();}catch(e){}};
+  const again=el("button",{type:"button",class:"btn ghost"},"Take a new test");let armed=false;again.onclick=()=>{if(!armed){armed=true;again.textContent="Tap again: this report will be cleared";return;}TEST=null;render();};
+  row.append(cp,pr,again);p.append(row,out);
+  // answer review
+  const rv=el("div",{class:"q"});rv.append(el("h2",{},"Every answer, explained"));
+  T.items.forEach((it,k)=>{const m=T.marks[k];const full=m.got===m.max;const c=T.conf[k];
+    const d=el("div",{class:"fb "+(full?"ok":m.got>0?"part":"no")});
+    d.innerHTML="<h4>Q"+(k+1)+" · LO "+it.lo+" · "+actLabel(it.act)+" · "+m.got+"/"+m.max+(c==="sure"&&!full?" · <span style='color:var(--bad)'>confident but wrong</span>":"")+(c==="skip"?" · skipped":"")+"</h4>"+
+     "<div>"+(it.type==="matrix"?"Probability "+it.tp+", size of loss "+it.tl+": what severity?":it.type==="chain"?it.title+" scenario":stripH(it.q))+"</div>"+
+     "<div class='small'><b>Your answer:</b> "+m.your+"</div>"+(full?"":"<div class='small'><b>Correct:</b> "+m.right+"</div>")+"<div class='small'>"+m.notes+"</div>";
+    rv.append(d);});
+  p.append(rv);
+  app.append(p);
+}
+
+/* ============ SIGN-IN AND RESULTS TRACKING ============
+   Fill in the two values below after setup (see SETUP.md). Leave them empty and the site works
+   as before: no sign-in, progress kept only in the browser. */
+const CONFIG = {
+  GOOGLE_CLIENT_ID: "845964776078-t24aoaiduhqmf68h6kojap4l4rgeeqe0.apps.googleusercontent.com",   // e.g. "1234567890-abc.apps.googleusercontent.com"
+  SCRIPT_URL: "",         // e.g. "https://script.google.com/macros/s/AKfy.../exec"
+  REQUIRE_LOGIN: true     // true: students must sign in to use the site
+};
+const AUTH = { on: !!(CONFIG.GOOGLE_CLIENT_ID && CONFIG.SCRIPT_URL), ready: false, token: null, exp: 0, user: null, msg: "", busy: false, refreshTimer: null };
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+function jwtClaims(t) { try { let p = t.split(".")[1].replace(/-/g, "+").replace(/_/g, "/"); while (p.length % 4) p += "="; return JSON.parse(decodeURIComponent(escape(atob(p)))); } catch (e) { return {}; } }
+
+function api(action, data) {
+  if (!AUTH.on || !AUTH.token) return Promise.resolve({ ok: false, error: "no_token" });
+  return fetch(CONFIG.SCRIPT_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify({ token: AUTH.token, action, data }), redirect: "follow", credentials: "omit" })
+    .then(r => r.json()).catch(() => ({ ok: false, error: "network" }))
+    .then(r => { if (r && r.error === "expired") tokenExpired(); return r || { ok: false, error: "network" }; });
+}
+function tokenExpired() { AUTH.token = null; updateAuthBar(); try { google.accounts.id.prompt(); } catch (e) {} }
+
+function loadGIS() {
+  if (!AUTH.on) return;
+  const s = document.createElement("script"); s.src = "https://accounts.google.com/gsi/client"; s.async = true;
+  s.onload = () => {
+    try {
+      google.accounts.id.initialize({ client_id: CONFIG.GOOGLE_CLIENT_ID, callback: onCredential, auto_select: true, cancel_on_tap_outside: false, use_fedcm_for_prompt: true, itp_support: true });
+      AUTH.ready = true; if (!AUTH.user) { render(); google.accounts.id.prompt(); }
+    } catch (e) { AUTH.msg = "Google sign-in couldn’t start. Refresh the page to try again."; render(); }
+  };
+  s.onerror = () => { AUTH.msg = "Google sign-in couldn’t load. Check your internet connection, then refresh."; render(); };
+  document.head.append(s);
+}
+
+function onCredential(resp) {
+  const token = resp && resp.credential; if (!token) return;
+  const c = jwtClaims(token), email = String(c.email || "").toLowerCase();
+  // Silent refresh for the same person: keep going without a new login.
+  if (AUTH.user && AUTH.user.email === email) { setToken(token, c); flushOutbox(); pushState(); updateAuthBar(); return; }
+  if (AUTH.user && AUTH.user.email !== email) signOut(true);
+  setToken(token, c); AUTH.busy = true; AUTH.msg = ""; render();
+  api("login").then(r => {
+    AUTH.busy = false;
+    if (r.ok) {
+      AUTH.user = { email, name: r.name || c.name || email, group: r.group || "" };
+      useUserStore(email);
+      api("loadState").then(x => { if (x.ok && x.state && typeof x.state === "object" && (x.state.u || 0) > (S.u || 0)) { S = Object.assign({ box: {}, due: {}, stat: {}, log: [] }, x.state); saveLocal(); render(); } else pushState(); });
+      flushOutbox(); render();
+    } else {
+      AUTH.token = null;
+      AUTH.msg = r.error === "not_registered" ? "The Google account " + email + " isn’t registered for this site. Sign in with your college account, or ask your teacher to add this one."
+        : r.error === "network" ? "Couldn’t reach the results server. Check your connection and try again."
+        : "Sign-in didn’t work (" + r.error + "). Try again, or tell your teacher.";
+      try { google.accounts.id.disableAutoSelect(); } catch (e) {}
+      render();
+    }
+  });
+}
+function setToken(token, c) {
+  AUTH.token = token; AUTH.exp = (c.exp || 0) * 1000;
+  clearTimeout(AUTH.refreshTimer);
+  const wait = AUTH.exp - Date.now() - 120000;
+  if (wait > 0) AUTH.refreshTimer = setTimeout(() => { try { google.accounts.id.prompt(); } catch (e) {} }, wait);
+}
+function signOut(silent) {
+  if (!AUTH.user) return;
+  if (AUTH.token) { pushState(true); api("logout"); }
+  try { google.accounts.id.disableAutoSelect(); } catch (e) {}
+  try { localStorage.removeItem(KEY); } catch (e) {}   // progress is safe on the server; don't leave it on shared PCs
+  AUTH.user = null; AUTH.token = null; clearTimeout(AUTH.refreshTimer);
+  KEY = BASE_KEY; S = { box: {}, due: {}, stat: {}, log: [] };
+  if (!silent) { TEST = null; location.hash = "#home"; render(); }
+}
+
+/* Per-person storage, so two students on one PC never mix progress. */
+function useUserStore(email) {
+  KEY = BASE_KEY + "_" + email;
+  S = { box: {}, due: {}, stat: {}, log: [] };
+  try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(S, JSON.parse(raw)); } catch (e) {}
+}
+let pushTimer = null;
+function pushState(now) {
+  if (!AUTH.user || !AUTH.token) return;
+  clearTimeout(pushTimer);
+  const go = () => { const st = Object.assign({}, S, { log: (S.log || []).slice(-150) }); api("saveState", st); };
+  if (now) go(); else pushTimer = setTimeout(go, 4000);
+}
+
+/* Results outbox: nothing is lost if the connection drops or sign-in expires. */
+function outboxKey() { return "u2_outbox_" + (AUTH.user ? AUTH.user.email : "anon"); }
+function readOutbox() { try { return JSON.parse(localStorage.getItem(outboxKey()) || "[]"); } catch (e) { return OUTBOX_MEM; } }
+function writeOutbox(a) { OUTBOX_MEM = a; try { localStorage.setItem(outboxKey(), JSON.stringify(a)); } catch (e) {} }
+let OUTBOX_MEM = [], FLUSHING = false;
+function sendAttempt(data) {
+  if (!AUTH.on || !AUTH.user) return;
+  const a = readOutbox(); a.push(data); writeOutbox(a.slice(-50)); flushOutbox();
+}
+function flushOutbox() {
+  if (FLUSHING || !AUTH.token || !AUTH.user) return;
+  const a = readOutbox(); if (!a.length) { updateAuthBar(); return; }
+  FLUSHING = true;
+  api("attempt", a[0]).then(r => {
+    FLUSHING = false;
+    if (r.ok || r.error === "bad_request") { writeOutbox(readOutbox().slice(1)); flushOutbox(); }
+    updateAuthBar();
+  });
+}
+/* If a student closes the tab mid-session, record what they did. */
+let LIVE = null; // {data builder}
+window.addEventListener("pagehide", () => {
+  if (!AUTH.on || !AUTH.token || !LIVE) return;
+  const data = LIVE.build(); if (!data) return;
+  try { navigator.sendBeacon(CONFIG.SCRIPT_URL, new Blob([JSON.stringify({ token: AUTH.token, action: "attempt", data })], { type: "text/plain" })); } catch (e) {}
+});
+
+function loAgg(list) { const lo = {}; list.forEach(x => { const k = x.lo; lo[k] = lo[k] || { g: 0, m: 0 }; lo[k].g += x.g; lo[k].m += x.m; }); return lo; }
+function sessionKind(title) { return /matrix|drill/i.test(title) ? "drill" : /case/i.test(title) ? "case" : /sprint/i.test(title) ? "sprint" : /^review/i.test(title) ? "review" : "practice"; }
+function practicePayload(title, res, queueLen, start, partial, sid) {
+  const items = res.map(r => Object.assign({ id: r.item.id, lo: r.item.lo, g: r.ok ? 1 : 0, m: 1, c: r.conf }, r.meta || {}));
+  return { kind: sessionKind(title), title, questions: queueLen, answered: res.length, marks: items.filter(x => x.g).length, max: res.length,
+    confidentWrong: res.filter(r => !r.ok && r.conf === "sure").length, minutes: (Date.now() - start) / 60000, partial: !!partial, lo: loAgg(items), sid: sid || "",
+    items: items.map((x, q) => ({ id: x.id, g: x.g, m: x.m, c: x.c, s: x.s, n: x.n, d: x.d, p: x.p, q })) };
+}
+function testPayload(T, abandoned) {
+  const marks = T.items.map((it, k) => T.marks ? T.marks[k] : (T.resp[k] !== undefined ? markItem(it, T.resp[k]) : { got: 0, max: maxMarks(it) }));
+  const items = T.items.map((it, k) => Object.assign({ id: it.id, lo: it.lo, g: marks[k].got, m: marks[k].max, c: (T.resp[k] === undefined || T.resp[k] === null) ? (T.conf[k] === "skip" ? "skip" : "none") : (T.conf[k] || "none") }, (T.meta && T.meta[k]) || {}));
+  return { kind: abandoned ? "abandoned" : "test", title: "Final test", questions: T.items.length, answered: T.resp.filter(r => r !== null && r !== undefined).length,
+    marks: items.reduce((s, x) => s + x.g, 0), max: items.reduce((s, x) => s + x.m, 0), confidentWrong: items.filter(x => x.c === "sure" && x.g < x.m).length,
+    minutes: ((T.finished || Date.now()) - T.start) / 60000, partial: !!abandoned, timedOut: !!T.timedOut, lo: loAgg(items), sid: T.sid || "", items: items.map((x, q) => ({ id: x.id, g: x.g, m: x.m, c: x.c, s: x.s, n: x.n, d: x.d, p: x.p, q })) };
+}
+
+/* Header: who is signed in, saving status, sign out. */
+function updateAuthBar() {
+  const fn = document.getElementById("footnote"); if (fn && AUTH.on) fn.textContent = "When you are signed in, your progress and results are saved to your teacher\u2019s results sheet.";
+  const bar = document.getElementById("authbar"); if (!bar) return;
+  bar.innerHTML = ""; if (!AUTH.on || !AUTH.user) { bar.hidden = true; return; }
+  bar.hidden = false;
+  const who = el("span", { class: "small" }); who.textContent = AUTH.user.name + (AUTH.user.group ? " · " + AUTH.user.group : "");
+  const pending = readOutbox().length;
+  const status = el("span", { class: "pill" + (AUTH.token ? "" : " warn"), id: "savestate" });
+  status.textContent = !AUTH.token ? "Sign in again to save" : pending ? "Saving… (" + pending + ")" : "All results saved";
+  bar.append(who, status);
+  if (!AUTH.token) {
+    const b = el("div", { id: "reauth" }); bar.append(b);
+    try { google.accounts.id.renderButton(b, { theme: "outline", size: "small", text: "signin", shape: "rectangular" }); } catch (e) {}
+  }
+  if (!(TEST && TEST.running)) {
+    const out = el("button", { type: "button", class: "btn ghost small", id: "signout" }, "Sign out");
+    out.onclick = () => signOut(false); bar.append(out);
+  }
+}
+
+function viewLogin() {
+  const p = el("section", { class: "panel" });
+  p.append(el("h1", {}, "Sign in to start revising"),
+    el("p", { class: "lede" }, "Use your <b>college Google account</b> (ending <b>@wlc.ac.uk</b>). If your college account isn’t working, your teacher can add a personal Google account for you."));
+  const box = el("div", { id: "gbtn", style: "min-height:44px" }); p.append(box);
+  const msg = el("p", { class: "small", role: "status", style: "color:var(--bad)" }); msg.textContent = AUTH.msg; p.append(msg);
+  if (AUTH.busy) { const w = el("p", { class: "small muted" }); w.textContent = "Checking your account…"; p.append(w); }
+  else if (!AUTH.ready && !AUTH.msg) { const w = el("p", { class: "small muted" }); w.textContent = "Loading Google sign-in…"; p.append(w); }
+  p.append(el("div", { class: "model" }, "<h4>What is saved, and who sees it</h4><ul class='notes'><li>Your name, email and group, when you sign in and out, and the questions you answer: your answers’ marks, how sure you were, scores and time spent.</li><li>It is saved in a Google Sheet that only your teacher can open. It is used to see how you are doing and to help you prepare for the exam. It is not shared with anyone else.</li><li>Your progress is also saved, so you can carry on from any device.</li><li>Your Google password never comes to this site. Google only tells it your name and email.</li></ul>"));
+  app.append(p);
+  if (AUTH.ready) { try { google.accounts.id.renderButton(box, { theme: "filled_blue", size: "large", text: "signin_with", shape: "rectangular", width: 280 }); } catch (e) {} }
+}
+
+/* ============ VIEWS ============ */
+const app=$("#app");
+const NAV=[["home","Home"],["decode","Decode"],["lo-1","1"],["lo-2","2"],["lo-3","3"],["lo-4","4"],["lo-5","5"],["lo-6","6"],["lo-7","7"],["lo-8","8"],["write","Exam answers"],["sprint","Mixed sprint"],["review","Review"],["test","Final test"],["plan","Revision plan"]];
+function nav(cur){const t=$("#tabs");t.innerHTML="";if(AUTH.on&&CONFIG.REQUIRE_LOGIN&&!AUTH.user)return;if(TEST&&TEST.running){t.append(el("span",{class:"pill acc"},"Test in progress"));return;}NAV.forEach(([h,l])=>{const a=el("a",{href:"#"+h},l);if(h===cur)a.classList.add("on");if(h.startsWith("lo-"))a.title=LOS[h.slice(3).toUpperCase()].name;t.append(a);});}
+
+function viewHome(){
+  const p1=el("section",{class:"panel"});
+  p1.append(el("h1",{},"Get the marks the examiners are looking for"),el("p",{class:"lede"},"<b>New here?</b> Start with the <a href='#plan'>6-week revision plan</a>."),
+   el("p",{class:"lede"},"Full notes, "+(ITEMS.length-HOLD.size)+" practice questions, written-answer practice for all five exam activities and a strictly marked final test, covering all five learning outcomes, built from the 2022–2025 Unit 2 papers, mark grids and examiner reports. The marks are concentrated in the security plan, the forensic analysis and the improvements report, so those outcomes get the most practice."),
+   el("p",{class:"lede"},"<b>How to use it:</b> before each section, try to recall the key ideas without looking. Answer, say how sure you are, read the feedback. Come back to <b>Review</b> every few days."));
+  const dueN=ITEMS.filter(isDue).length,nx=wsNext(),untouched=Object.keys(LOS).filter(k=>mastery(k).seen===0);
+  const todo=el("ol",{class:"today"});
+  todo.append(el("li",{},"<a class='btn' href='#sprint'>Today’s practice: 12 mixed questions</a><span class='small muted'>Picked for you from all five outcomes, so you don’t get stuck on one.</span>"));
+  todo.append(el("li",{},"<a class='btn ghost' href='#review'>Review what’s due ("+dueN+")</a><span class='small muted'>Getting a question right again on a later day is what makes it stick.</span>"));
+  todo.append(el("li",{},"<a class='btn ghost' href='"+(nx?"#write-"+nx.act:"#write")+"'>"+(nx?"Exam answers: "+nx.name.replace(/^Activity (\d): /,"Activity $1, "):"Exam answers: all steps done, practise again")+"</a><span class='small muted'>The exam is written. Learn the template, mark like an examiner, then write.</span>"));
+  p1.append(el("h2",{},"What to do today"),todo);
+  if(untouched.length&&untouched.length<5)p1.append(el("p",{class:"small",id:"nudge"},"<b>Not started yet:</b> outcome"+(untouched.length>1?"s ":" ")+untouched.join(", ")+". The mixed practice will bring "+(untouched.length>1?"them":"it")+" in."));
+  const r=el("div",{class:"row"});r.append(el("a",{class:"btn ghost",href:"#test"},"Take the final test"));p1.append(r);
+
+  const p2=el("section",{class:"panel"});p2.append(el("h2",{},"Where the 80 marks are"));
+  const bp=el("div",{class:"bp"});let last="";
+  BLUEPRINT.forEach(b=>{if(b.task!==last){bp.append(el("div",{class:"taskhd"},b.task+(b.task==="Part A"?": risk assessment & security plan · 43 marks":": forensic incident analysis · 37 marks")));last=b.task;}
+   const row=el("div",{class:"bprow"});row.append(el("span",{},b.act+"<br><span class='muted small'>Uses LO "+b.lo+"</span>"),el("div",{class:"bar"},"<i class='"+(b.b?"b":"")+"' style='width:"+(b.m/20*100)+"%'></i>"),el("span",{class:"num"},b.m));bp.append(row);});
+  p2.append(bp,el("p",{class:"small muted"},"Activities 2 and 5 are worth 20 marks each, a quarter of the paper apiece."));
+
+  const p3=el("section",{class:"panel"});p3.append(el("h2",{},"Learning outcomes"));
+  const g=el("div",{class:"grid3"});Object.keys(LOS).forEach(k=>{const L=LOS[k],m=mastery(k);const a=el("a",{class:"locard",href:"#lo-"+k.toLowerCase()});
+   a.append(el("div",{class:"k"},k),el("b",{},L.name),el("span",{class:"small muted"},L.acts),el("div",{class:"prog","aria-label":"Mastery"},"<i style='width:"+(m.m/m.n*100)+"%'></i>"),el("span",{class:"small muted"},m.m+" of "+m.n+" secure · "+m.seen+" tried"));g.append(a);});
+  p3.append(g);
+  const pp=el("section",{class:"panel"});pp.append(el("h2",{},"What comes up again and again"),el("p",{class:"lede"},"Topics in the papers and examiner reports for the 7 series from January 2022 to June 2025. The top row appeared every time: expect them in your exam."));
+  const tops=[["wifi","Wi-Fi and wireless security","A, B"],["passwords","Passwords and authentication","A"],["malware","Malware","A"],["email","Email and phishing","A"],["mobile","Phones, tablets and apps","B"],["backup","Backups","A, D"],["policies","Security policies","D"],["incidents","Incident handling","D, E"],["os","Operating systems and patching","A"],["server","Servers","B"],["router","Routers","B"],["firewall","Firewalls","A, B"],["usb","USB and removable media","A"],["gdpr","Data protection law","A"],["wpa","WEP/WPA/WPA2/WPA3","A"],["encrypt","Encryption","A"],["cma","Computer Misuse Act","A"],["cameras","Cameras, CCTV and IoT","A, B"],["photos","Photos and images as evidence","E"],["logs","Logs as evidence","E"],["vpn","VPNs and remote access","B"],["cloud","Cloud services","B"],["esp","External service providers","D"]];
+  const tw2=el("div",{class:"tblwrap"});tw2.innerHTML="<table class='tbl'><tr><th>Topic</th><th>Series</th><th>Learn it in</th></tr>"+tops.map(t=>"<tr><td>"+t[1]+"</td><td><div class='bar' style='max-width:160px'><i style='width:"+(FREQ[t[0]]/7*100)+"%'></i></div><span class='small muted'>"+FREQ[t[0]]+" of 7</span></td><td>LO "+t[2]+"</td></tr>").join("")+"</table>";
+  pp.append(tw2,el("p",{class:"small muted"},"Counted by whether the topic is mentioned in that series\u2019 paper or examiner report. Every paper is a small organisation with a scenario you haven\u2019t seen, so learn the ideas, not past answers."));
+
+  const p4=el("section",{class:"panel"});p4.append(el("h2",{},"What examiners keep marking down"),el("p",{class:"lede"},"Paraphrased from Pearson’s Principal Examiner reports, 2022 to 2025. Every one of these is practised somewhere on this site."));
+  const ul=el("ol",{class:"warnlist"});WARNINGS.forEach(w=>ul.append(el("li",{},w)));p4.append(ul);
+  app.append(p1,pp,p2,p3,p4);
+}
+function viewLO(k){
+  const L=LOS[k],items=practisable().filter(i=>i.lo===k),m=mastery(k);
+  const p1=el("section",{class:"panel"});p1.append(el("div",{class:"qmeta"},"<span class='pill acc'>Activity "+k+"</span><span class='pill'>"+L.acts+"</span>"),el("h1",{},L.name),el("p",{class:"lede"},L.why),
+   el("p",{class:"small muted"},m.m+" of "+m.n+" items secure · "+items.length+" items in this outcome"));
+  const host=el("div");
+  const r=el("div",{class:"row"});
+  const start=(title,q)=>{runSession(title,q,host,()=>{render();});host.scrollIntoView({block:"start"});};
+  r.append(el("button",{type:"button",class:"btn",onclick:()=>start("Activity "+k+" practice",shuffle(items).slice(0,10))},"Practise 10 questions"),
+   el("button",{type:"button",class:"btn ghost",onclick:()=>start("Activity "+k+" full set",items.slice())},"Do all "+items.length+" in order"));
+  if(k==="C")r.append(el("button",{type:"button",class:"btn ghost",onclick:()=>start("Risk matrix drill",Array.from({length:10},(_,j)=>({id:"C0"+(1+j%4),lo:"C",act:"1",type:"matrix",gen:j%3===2?"rev":true})))},"Risk matrix drill (10)"));
+  if(k==="E")r.append(el("button",{type:"button",class:"btn ghost",onclick:()=>start("Quayside case",items.filter(i=>["E06","E07","E08","E09","E10","E11","E13","E15","E19","E20","E21"].includes(i.id)))},"Work the Quayside case"),el("button",{type:"button",class:"btn ghost",onclick:()=>start("Millbrook case",items.filter(i=>["E32","E33","E34","E35","E36","E37"].includes(i.id)))},"Work the Millbrook case"));
+  p1.append(r);
+  const p2=el("section",{class:"panel"});p2.append(el("h2",{},"Recall first: test yourself before you read"),el("p",{class:"lede"},"Say or write the answer to each prompt before you open it. Struggling to remember is part of what makes it stick."));
+  const cs=el("div",{class:"cards"});L.cards.forEach(c=>{const d=el("div",{class:"fc"});d.append(el("div",{class:"front"},c.f));const back=el("div",{class:"back"},c.b==="MATRIX"?matrixHTML():c.b);
+   const b=el("button",{type:"button",class:"btn ghost","aria-expanded":"false"},"Show answer");b.onclick=()=>{d.classList.toggle("open");const o=d.classList.contains("open");b.textContent=o?"Hide answer":"Show answer";b.setAttribute("aria-expanded",o);};
+   d.append(b,back);cs.append(d);});p2.append(cs);
+  const p3=el("section",{class:"panel"});p3.append(el("h2",{},"Learn: everything in LO "+k),el("p",{class:"lede"},"The full content for this outcome. Tags show how many of the 7 exam series analysed (Jan 2022 to Jun 2025) featured the topic: red means almost every paper."));
+  LEARN[k].forEach((sec,ix)=>{const d=el("details",{class:"fc"});if(ix===0)d.open=true;d.append(el("summary",{class:"front",style:"cursor:pointer"},sec.h+(sec.f?fq(sec.f):"")));
+   d.append(el("div",{style:"display:grid;gap:8px"},(sec.b==="MATRIX"?matrixHTML():sec.b)+"<p class='small'><b>In the exam:</b> "+sec.ex+"</p>"));p3.append(d);});
+  app.append(p1,host,p2,p3);
+}
+function viewSprint(){
+  const host=el("div");app.append(host);
+  const intro=el("section",{class:"panel"});intro.append(el("h1",{},"Mixed sprint"),el("p",{class:"lede"},"Twelve questions shuffled across all five outcomes, weighted towards the high-mark activities and towards anything due for review. Mixing topics feels harder than doing one at a time, and that is why it works better in the exam: you have to decide which idea applies."));
+  const b=el("button",{type:"button",class:"btn"},"Start");b.onclick=()=>runSession("Mixed sprint",pickMixed(12),host,()=>render());intro.append(b);host.append(intro);
+}
+function viewReview(){
+  const due=ITEMS.filter(isDue);const host=el("div");app.append(host);
+  const p=el("section",{class:"panel"});p.append(el("h1",{},"Review"),el("p",{class:"lede"},"Questions come back on a schedule: wrong or guessed answers the same day, then after 1, 3, 7 and 16 days as you keep getting them right and feeling sure."));
+  const s=el("div",{class:"sum"});const PR=practisable(),seen=PR.filter(i=>S.stat[i.id]).length,sec=PR.filter(i=>(S.box[i.id]||0)>=3).length;
+  s.append(el("div",{class:"tile"},"<b>"+due.length+"</b>due now"),el("div",{class:"tile"},"<b>"+seen+"/"+PR.length+"</b>tried"),el("div",{class:"tile"},"<b>"+sec+"</b>secure"));p.append(s);
+  const r=el("div",{class:"row"});
+  const b=el("button",{type:"button",class:"btn"},due.length?"Review "+Math.min(due.length,15)+" due items":"Nothing due: do a mixed sprint");
+  b.onclick=()=>{if(!due.length){location.hash="#sprint";return;}runSession("Review",pickMixed(0).concat(shuffle(due).slice(0,15)),host,()=>render());};r.append(b);
+  const rs=el("button",{type:"button",class:"btn ghost"},"Reset my progress");let armed=false;rs.onclick=()=>{if(!armed){armed=true;rs.textContent="Tap again to erase all progress";return;}S={box:{},due:{},stat:{},log:[]};save();render();};r.append(rs);p.append(r);
+  const tw=el("div",{class:"tblwrap"});let h="<table class='tbl'><tr><th>Outcome</th><th>Tried</th><th>Secure</th><th>Weakest items</th></tr>";
+  Object.keys(LOS).forEach(k=>{const its=ITEMS.filter(i=>i.lo===k);const weak=its.filter(i=>S.stat[i.id]&&S.stat[i.id].w>0).sort((a,b)=>S.stat[b.id].w-S.stat[a.id].w).slice(0,3).map(i=>i.id).join(", ")||"–";
+   h+="<tr><td><b>"+k+"</b> "+LOS[k].short+"</td><td>"+its.filter(i=>S.stat[i.id]).length+"/"+its.length+"</td><td>"+its.filter(i=>(S.box[i.id]||0)>=3).length+"</td><td>"+weak+"</td></tr>";});
+  tw.innerHTML=h+"</table>";p.append(tw);host.append(p);
+}
+function viewPlan(){
+  const p=el("section",{class:"panel"});
+  p.innerHTML=`<h1>Your 6-week revision plan</h1>
+<p class="lede">About 30–40 minutes, four or five times a week. Every session has the same shape: <b>recall, practise, review</b>. Spreading it out like this is what makes it stick: cramming in the last week feels productive but is forgotten fast.</p>
+<div class="tblwrap"><table class="tbl">
+<tr><th>Week</th><th>Focus</th><th>Do this</th><th>You’re ready to move on when…</th></tr>
+<tr><td><b>1</b></td><td>LO A: threats, impacts, laws, measures</td><td>Recall cards without looking, then read the notes. Two ‘Practise 10’ sets. End of week: <a href="#review">Review</a>.</td><td>You can explain each threat type with a real example and name the five laws.</td></tr>
+<tr><td><b>2</b></td><td>LO B networks + LO C risk assessment</td><td>Do the risk matrix drill every session until you get 10 in a row. Work all four scenario ‘find the details’ questions in LO C.</td><td>You never misread the matrix and can write a full chain from detail to severity.</td></tr>
+<tr><td><b>3</b></td><td>LO C security plan and management report</td><td>Do every LO C write-your-own question. Practise the 8 headings from memory. Start each session with a <a href="#sprint">mixed sprint</a>.</td><td>You can write one complete Activity 2 measure, all 8 headings, in about 15 minutes.</td></tr>
+<tr><td><b>4</b></td><td>LO E forensics</td><td>Work the Quayside case, then the Millbrook case. Learn the template headings and the order of volatility.</td><td>You can write an overall conclusion that rejects two alternatives with reasons.</td></tr>
+<tr><td><b>5</b></td><td>LO D documentation + Activity 5</td><td>LO D practice and notes. Sort mistakes into the three Activity 5 areas. Take the <a href="#test">final test</a> once.</td><td>You can name the policy, the change and why it prevents a repeat for any weakness.</td></tr>
+<tr><td><b>6</b></td><td>Everything, mixed</td><td>Final test again, then practise your weakest outcomes from the report. Review every day. Do a timed past paper from college.</td><td>Final test 80%+ and no outcome below 60%.</td></tr>
+</table></div>
+<h2>Each session (30–40 minutes)</h2>
+<ol class="notes">
+<li><b>5 min: recall.</b> Open one outcome. Try every recall card before opening it. Write down anything you couldn’t remember.</li>
+<li><b>20 min: practise.</b> One ‘Practise 10’ set or a mixed sprint. Be honest about how sure you are: it decides when questions come back.</li>
+<li><b>5 min: fix.</b> Read the notes for anything you got wrong, then explain it out loud in your own words.</li>
+<li><b>5 min: review.</b> Clear what’s due in <a href="#review">Review</a>.</li>
+</ol>
+<h2>Why this works</h2>
+<ul class="notes">
+<li><b>Testing yourself beats re-reading.</b> Pulling an answer out of memory strengthens it far more than reading it again.</li>
+<li><b>Gaps help.</b> Coming back after a few days, when it’s a bit harder to remember, makes it last. That’s why Review spaces questions out.</li>
+<li><b>Mixing topics</b> feels harder, but the exam is mixed, so you practise choosing the right idea.</li>
+<li><b>Confident mistakes are gold.</b> When you were sure and wrong, the correction sticks well if you read the explanation properly.</li>
+<li><b>Write, then compare.</b> Writing your own answer before seeing the model shows you exactly what you’re missing.</li>
+</ul>
+<h2>In the exam</h2>
+<ul class="notes">
+<li>Read the whole scenario first and highlight every IT detail and every thing it rules out.</li>
+<li>Use every template heading, in order. If one barely applies, say why.</li>
+<li>Check every risk severity against the matrix before moving on.</li>
+<li>Only cyber security threats. Malware counts once.</li>
+<li>Reports need a title, introduction, sub-headed sections and a conclusion.</li>
+<li>Part B: use the client brief as evidence, give each item a conclusion about the cause, and always write an overall conclusion that rejects the alternatives.</li>
+<li>Spell technical terms correctly.</li>
+</ul>`;
+  app.append(p);
+}
+
+/* ============ EXAM ANSWERS: learn the template, mark like an examiner, build an answer, write your own ============
+   Teaching and practice only. Nothing here feeds the readiness figures; results are saved as kind "workshop". */
+/* ---- Exam answers: views and tasks ---- */
+function wsState(a){S.ws=S.ws||{};return S.ws[a]=S.ws[a]||{};}
+function wsSend(act,step,marks,max,start){sendAttempt({kind:"workshop",title:"Exam answers · Act "+act+" · "+step,questions:max,answered:max,marks,max,confidentWrong:0,minutes:(Date.now()-start)/60000,partial:false,lo:{},sid:newSid(),items:[]});}
+function wsDone(a){const st=(S.ws||{})[a]||{};return ["how","mark","build","write"].filter(k=>st[k]).length;}
+function wsNext(){for(const w of WS){if(wsDone(w.act)<4)return w;}return null;}
+function viewWrite(h){
+  const m=/^write-([1-8])$/.exec(h);if(m)return viewWriteAct(WS.find(w=>w.act===+m[1]));
+  const p=el("section",{class:"panel"});
+  p.append(el("h1",{},"Exam answers"),el("p",{class:"lede"},"The exam is written. You type your answers into templates, and examiners mark them against bands. This section teaches that: how each template is filled in, what each band looks like, and then you write your own."),
+   el("p",{class:"lede"},"For each activity: <b>1</b> see a model answer, <b>2</b> mark three answers like an examiner, <b>3</b> build an answer from parts, <b>4</b> write one yourself, mark it and download it."));
+  const g=el("div",{class:"grid3"});
+  WS.forEach(w=>{const d=wsDone(w.act);const a=el("a",{class:"locard",href:"#write-"+w.act});a.append(el("div",{class:"k"},String(w.act)),el("b",{},w.name.replace(/^Activity \d: /,"")),el("span",{class:"small muted"},w.marks+" marks"),
+    el("div",{class:"prog","aria-label":"Steps done"},"<i style='width:"+(d/4*100)+"%'></i>"),el("span",{class:"small muted"},d+" of 4 steps done"));g.append(a);});
+  p.append(g,el("p",{class:"small muted"},"Activities 2 and 5 carry 20 marks each: start there if time is short. Your marks here are practice only and are not part of your test scores."));
+  app.append(p);
+}
+function viewWriteAct(w){
+  const st=wsState(w.act);const host=el("div");
+  const p=el("section",{class:"panel"});
+  p.append(el("div",{class:"qmeta"},"<a class='pill' href='#write'>← All activities</a><span class='pill acc'>"+w.marks+" marks</span>"),el("h1",{},w.name));
+  const d=el("details",{class:"fc"});d.append(el("summary",{class:"front",style:"cursor:pointer"},"The scenario for this practice"),el("div",{class:"ctx"},w.scen));p.append(d);
+  const tb=el("div",{class:"tblwrap"});tb.innerHTML="<table class='tbl'><tr><th>Band</th><th>Marks</th><th>What the examiner sees</th></tr>"+w.bands.map(b=>"<tr><td><b>"+b[0]+"</b></td><td>"+b[1]+"</td><td>"+b[2]+"</td></tr>").join("")+"</table>";
+  p.append(el("h2",{},"What each band looks like"),tb,el("p",{class:"small muted"},"Summarised from Pearson’s mark grid for this activity."));
+  const steps=el("div",{class:"wssteps"});
+  const stepBox=(n,key,title,desc,btn,fn)=>{const b=el("div",{class:"wsstep"+(st[key]?" done":"")});b.append(el("div",{class:"n"},st[key]?"✓":String(n)));const t=el("div");t.append(el("b",{},title),el("p",{class:"small muted"},desc+(st[key]&&Array.isArray(st[key])?" Last time: "+st[key][0]+" of "+st[key][1]+".":"")));
+    const go=el("button",{type:"button",class:"btn"+(st[key]?" ghost":"")},st[key]?btn+" again":btn);go.onclick=()=>{fn();host.scrollIntoView({block:"start"});};b.append(t,go);steps.append(b);};
+  const back=()=>render();
+  stepBox(1,"how","See how it’s filled in","Each box of the template, what it needs and a model entry.","Show me",()=>wsHow(w,host,back));
+  stepBox(2,"mark","Mark it like an examiner","Three answers. You choose the band, then see the examiner’s reasons.","Start marking",()=>wsMark(w,host,back));
+  stepBox(3,"build","Build an answer","Put the parts of an answer where they earn marks.","Start building",()=>wsBuild(w,host,back));
+  stepBox(4,"write","Write it yourself","About "+w.mins+" minutes. Type into the template, compare with a model, mark yourself and download it.","Start writing",()=>wsWrite(w,host,back));
+  p.append(el("h2",{},"Four steps"),steps);
+  app.append(p,host);
+}
+function wsHow(w,host,back){
+  host.innerHTML="";const p=el("section",{class:"panel"});const st=wsState(w.act);
+  p.append(el("h2",{},"How the template is filled in"),el("p",{class:"lede"},"Read what each box needs, then cover the model entry and say your own before you look."),el("div",{class:"ctx"},w.scen));
+  const tb=el("div",{class:"tblwrap"});tb.innerHTML="<table class='tbl'><tr><th>Template box</th><th>What it needs</th><th>Model entry</th></tr>"+w.how.map(h=>"<tr><td><b>"+h[0]+"</b></td><td>"+h[1]+"</td><td>"+h[2]+"</td></tr>").join("")+"</table>";p.append(tb);
+  const b=el("button",{type:"button",class:"btn"},"I’ve read it: next step");b.onclick=()=>{if(!st.how){st.how=1;save();wsSend(w.act,"See it",1,1,Date.now());}back();location.hash="#write-"+w.act;};
+  const r=el("div",{class:"row"});r.append(b);p.append(r);host.append(p);
+}
+function wsMark(w,host,back){
+  host.innerHTML="";const p=el("section",{class:"panel"});host.append(p);const start=Date.now();const list=shuffle(w.mark.slice());let i=0,got=0;const res=[];
+  function show(){p.innerHTML="";if(i>=list.length)return fin();const s=list[i];
+    p.append(el("div",{class:"runbar"},"<b>Mark it: "+w.name+"</b><span class='muted small'>Answer "+(i+1)+" of "+list.length+"</span>"));
+    const q=el("div",{class:"q"});q.dataset.ws=s.id;const d=el("details",{class:"fc"});d.append(el("summary",{class:"front",style:"cursor:pointer"},"Show the scenario"),el("div",{class:"ctx"},w.scen));
+    q.append(d,el("div",{class:"qtext"},"A learner wrote this. If their whole answer were like it, which band would it be in?"),el("div",{class:"model sample"},s.text));
+    const o=el("div",{class:"opts"});let sel=null;const bs=[];
+    w.bands.forEach((b,k)=>{const x=el("button",{type:"button",class:"opt"},"<span class='key'>"+(k+1)+"</span><span><b>"+b[0]+"</b> ("+b[1]+"): "+b[2]+"</span>");x.onclick=()=>{sel=k;bs.forEach(y=>y.classList.toggle("sel",y===x));chk.disabled=false;};bs.push(x);o.append(x);});
+    const chk=el("button",{type:"button",class:"btn",disabled:"disabled"},"Check my band");const rw=el("div",{class:"row"});rw.append(chk);q.append(o,rw);p.append(q);
+    chk.onclick=()=>{const diff=Math.abs(sel-s.band),pts=diff===0?2:diff===1?1:0;got+=pts;res.push({s,sel,pts});chk.remove();
+      bs.forEach((x,k)=>{x.disabled=true;if(k===s.band)x.classList.add("right");else if(k===sel)x.classList.add("wrong");});
+      q.append(feedback(pts===2,pts===2?"Yes: "+w.bands[s.band][0]:pts===1?"Close. The examiner would say "+w.bands[s.band][0]:"Not this time. The examiner would say "+w.bands[s.band][0],"<p><b>Why:</b></p><ul>"+s.why.map(t=>"<li>"+t+"</li>").join("")+"</ul><p><b>To improve it:</b> "+s.up+"</p>",pts===1));
+      const nx=el("button",{type:"button",class:"btn"},i+1<list.length?"Next answer →":"See how I did");nx.onclick=()=>{i++;show();window.scrollTo({top:host.offsetTop-10});};const r2=el("div",{class:"row"});r2.append(nx);q.append(r2);nx.focus({preventScroll:true});};
+  }
+  function fin(){const max=list.length*2;const st=wsState(w.act);st.mark=[got,max];save();wsSend(w.act,"Mark it",got,max,start);
+    p.append(el("h2",{},"Marking: "+got+" of "+max),el("p",{class:"lede"},got===max?"You marked all three as the examiner would. You know what each band looks like.":"2 points for the exact band, 1 if you were one band out. Re-read the reasons for any you missed: they are what to copy in your own answers."));
+    const ul=el("ul",{class:"notes"});res.forEach(r=>ul.append(el("li",{},"You said "+w.bands[r.sel][0]+"; examiner: <b>"+w.bands[r.s.band][0]+"</b>. "+r.s.why[0])));p.append(ul);
+    const r=el("div",{class:"row"});r.append(el("button",{type:"button",class:"btn",onclick:back},"Back to the steps"));p.append(r);}
+  show();
+}
+function wsBuild(w,host,back){
+  host.innerHTML="";const p=el("section",{class:"panel"});host.append(p);const start=Date.now();const it=w.build;
+  p.append(el("div",{class:"runbar"},"<b>Build it: "+w.name+"</b>"));const d=el("details",{class:"fc"});d.append(el("summary",{class:"front",style:"cursor:pointer"},"Show the scenario"),el("div",{class:"ctx"},w.scen));p.append(d);
+  const q=el("div",{class:"q"});q.dataset.ws=it.id;p.append(q);
+  const done=()=>{const tot=(it.items||it.steps).length;const right=q.querySelectorAll(".sortrow.right,.ordrow.right").length;const st=wsState(w.act);st.build=[right,tot];save();wsSend(w.act,"Build it",right,tot,start);
+    const r=el("div",{class:"row"});r.append(el("button",{type:"button",class:"btn",onclick:back},"Back to the steps"));q.append(r);};
+  if(it.type==="sort")renderSort(it,q,done);else renderOrder(it,q,done);
+}
+function wsBand(w,share){const n=w.bands.length;return w.bands[Math.min(n-1,Math.floor(share*n-1e-9)<0?0:Math.floor(share*n-1e-9))];}
+function rtfEsc(t){return String(t).replace(/[\\{}]/g,"\\$&").replace(/\r?\n/g,"\\line ").replace(/[^\x00-\x7f]/g,c=>"\\u"+c.charCodeAt(0)+"?");}
+function wsRtf(w,vals){const tx=x=>x.replace(/<[^>]+>/g,"").replace(/&amp;/g,"&");
+  return "{\\rtf1\\ansi\\ansicpg1252\\deff0{\\fonttbl{\\f0 Arial;}}\\f0\\fs22 {\\b\\fs28 Unit 2 "+rtfEsc(w.name)+"}\\par "+rtfEsc("Practice answer: "+tx(w.write.task))+"\\par\\par "+w.write.fields.map((f,k)=>"{\\b "+rtfEsc(f)+"}\\par "+rtfEsc(vals[k]||"")+"\\par\\par ").join("")+"}";}
+function wsWrite(w,host,back){
+  host.innerHTML="";const p=el("section",{class:"panel"});host.append(p);const T=w.write;const start=Date.now();
+  const clock=el("span",{class:"pill acc"},"0:00");const tm=setInterval(()=>{if(!document.body.contains(clock)){clearInterval(tm);return;}clock.textContent=fmtTime(Date.now()-start);},1000);
+  const bar=el("div",{class:"runbar"});bar.append(el("b",{},"Write it: "+w.name),el("span",{class:"muted small"},"Aim for about "+w.mins+" minutes"),clock);p.append(bar);
+  const q=el("div",{class:"q"});q.dataset.ws=T.id;p.append(q);
+  q.append(el("div",{class:"ctx"},w.scen),el("div",{class:"qtext"},T.task),el("p",{class:"small muted"},"Type into every box, as you will in the exam. Don’t look back at the model entries: this is the practice that counts."));
+  const tas=T.fields.map((f,k)=>{const id="wsf_"+w.act+"_"+k;const wrap=el("div",{class:"wsfield"});const ta=el("textarea",{id,rows:"3"});wrap.append(el("label",{for:id},"<b>"+f+"</b>"),ta);q.append(wrap);return {ta,wrap};});
+  const msg=el("p",{class:"small",style:"color:var(--bad)","aria-live":"polite"});const go=el("button",{type:"button",class:"btn"},"Compare with the model answer");const r0=el("div",{class:"row"});r0.append(go);q.append(msg,r0);
+  go.onclick=()=>{const empty=tas.filter(x=>x.ta.value.trim().length<8).length;if(empty){msg.textContent="Write something in every box first ("+empty+" still "+(empty===1?"needs":"need")+" an answer).";return;}
+    clearInterval(tm);msg.remove();r0.remove();const vals=tas.map(x=>x.ta.value);
+    tas.forEach((x,k)=>{x.ta.readOnly=true;x.wrap.append(el("div",{class:"model"},"<h4>Model answer</h4><div>"+T.model[k]+"</div>"));});
+    const m=el("div",{class:"model"});m.append(el("h4",{},"Mark yourself: tick only what YOUR answer does"));const c=el("div",{class:"check"});
+    const boxes=T.checklist.map((t,k)=>{const id="wsc_"+w.act+"_"+k;const l=el("label",{for:id});const cb=el("input",{type:"checkbox",id});l.append(cb,el("span",{},t));c.append(l);return cb;});
+    const sv=el("button",{type:"button",class:"btn"},"Save my self-mark");m.append(c,sv);q.append(m);
+    sv.onclick=()=>{const n=boxes.filter(b=>b.checked).length,tot=boxes.length;boxes.forEach(b=>b.disabled=true);sv.remove();const bd=wsBand(w,n/tot);const st=wsState(w.act);st.write=[n,tot];save();wsSend(w.act,"Write it",n,tot,start);
+      q.append(feedback(n===tot,n+" of "+tot+" ticked: about "+bd[0],"<p>If your whole answer were like this, it would sit around <b>"+bd[0]+" ("+bd[1]+")</b>. "+(n===tot?"Now do the same at this depth for every part of the task.":"Rewrite the parts you didn’t tick, in your own words, then try again another day.")+"</p><p class='small muted'>This is your own estimate, not an examiner’s mark.</p>",n<tot&&n>=tot/2));
+      const dl=el("button",{type:"button",class:"btn ghost"},"Download my answer (.rtf)");dl.onclick=()=>{try{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([wsRtf(w,vals)],{type:"application/rtf"}));a.download="Unit2_Activity"+w.act+"_my_answer.rtf";document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);dl.textContent="Downloaded. Open it in Word";}catch(e){dl.textContent="Download didn’t work here: copy your text instead";}};
+      const r=el("div",{class:"row"});r.append(dl,el("button",{type:"button",class:"btn",onclick:back},"Back to the steps"));q.append(r);};
+  };
+}
+
+function render(){
+  if(LIVE&&LIVE.kind==="session"){const d=LIVE.build();LIVE=null;if(d)sendAttempt(d);}
+  let h=(location.hash||"#home").slice(1);app.innerHTML="";
+  if(AUTH.on&&CONFIG.REQUIRE_LOGIN&&!AUTH.user){nav("");updateAuthBar();viewLogin();return;}if(TEST&&TEST.running&&h!=="test"){h="test";try{history.replaceState(null,"","#test");}catch(e){}}
+  const valid=NAV.map(n=>n[0]);const hv=/^write-[1-8]$/.test(h)?"write":h;const v=valid.includes(hv)?hv:"home";nav(v);
+  if(v==="home")viewHome();else if(v.startsWith("lo-"))viewLO(v.slice(3).toUpperCase());else if(v==="write")viewWrite(h);else if(v==="sprint")viewSprint();else if(v==="review")viewReview();else if(v==="test")viewTest();else if(v==="decode")viewDecode();else viewPlan();
+  updateAuthBar();
+}
+window.addEventListener("hashchange",()=>{render();window.scrollTo({top:0});});
+render();loadGIS();
+</script>
+<script src="ep/override.js"></script>
+</body>
+</html>
