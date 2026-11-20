@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 2 Formula Decoder: exam wording → Access formula</title>
+<style>
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --ink:#152132; --muted:#566476; --line:#d5dbe3; --accent:#0f6e6e; --accent-soft:#dff1ef; --on-accent:#ffffff;
+  --ok:#23704a; --ok-soft:#e2f2e9; --bad:#b4232a; --bad-soft:#fbe7e7; --warn:#a2630f; --warn-soft:#fbf0dc; --hl:#fff1b8;
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif; --body:"Source Sans 3","Segoe UI",Roboto,Arial,sans-serif; --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#0e141c; --surface:#16202c; --ink:#e5eaf1; --muted:#9ba8b8; --line:#2b3746; --accent:#5fd0c8; --accent-soft:#1a3533; --on-accent:#0b1220;
+  --ok:#5cc58b; --ok-soft:#14301f; --bad:#ff7b7b; --bad-soft:#3a1719; --warn:#e5ad4f; --warn-soft:#3a2a10; --hl:#4a3f12;}}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
+h1,h2,h3{font-family:var(--display);line-height:1.2;margin:0;text-wrap:balance}
+h1{font-size:1.8rem;font-weight:800} h2{font-size:1.3rem} h3{font-size:1.05rem}
+p{margin:0} a{color:var(--accent)} button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:920px;margin:0 auto;padding:0 18px}
+header.top{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.topin{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:10px 0}
+.brand b{font-family:var(--display);font-weight:800;display:block} .brand span{font-size:.8rem;color:var(--muted)}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+nav.tabs button{padding:6px 11px;border-radius:7px;border:1px solid var(--line);font-weight:600;font-size:.9rem;background:var(--bg);cursor:pointer}
+nav.tabs button.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+main{padding:24px 0 60px;display:grid;gap:20px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;display:grid;gap:14px}
+.lede{color:var(--muted);max-width:68ch} .muted{color:var(--muted)} .small{font-size:.88rem}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:var(--on-accent);font-weight:700;cursor:pointer}
+.btn.ghost{background:var(--surface);color:var(--accent)} .btn.ghost:hover{background:var(--accent-soft)}
+.btn:disabled{background:var(--bg);border-color:var(--line);color:var(--muted);cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:99px;border:1px solid var(--accent);color:var(--accent)}
+.pill.b{border-color:var(--warn);color:var(--warn)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;counter-reset:s}
+.steps div{border:1px solid var(--line);border-radius:10px;padding:12px 12px 12px 44px;position:relative;background:var(--bg)}
+.steps div::before{counter-increment:s;content:counter(s);position:absolute;left:12px;top:12px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-weight:800;font-size:.8rem;display:grid;place-items:center}
+.groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.gcard{border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:8px;background:var(--bg)}
+.bar{height:8px;border-radius:9px;background:var(--line);overflow:hidden} .bar i{display:block;height:100%;background:var(--ok)}
+.paper{border-left:5px solid var(--accent);background:var(--bg);border-radius:0 10px 10px 0;padding:14px 16px;font-size:1.08rem}
+.paper .lab{display:block;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.paper.apply{border-left-color:var(--warn)}
+mark{background:var(--hl);color:inherit;padding:0 2px;border-radius:3px}
+.where{font-size:.92rem;color:var(--muted)} .where b{color:var(--ink)}
+input.ans{width:100%;font-family:var(--mono);font-size:1rem;padding:12px;border:2px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+input.ans:focus{border-color:var(--accent);outline:none}
+code,.mono{font-family:var(--mono);font-size:.92em;background:var(--accent-soft);padding:1px 6px;border-radius:5px;word-break:break-word}
+.fb{border-radius:10px;padding:14px;display:grid;gap:8px}
+.fb.right{background:var(--ok-soft);border:1px solid var(--ok)} .fb.wrong{background:var(--bad-soft);border:1px solid var(--bad)} .fb.almost{background:var(--warn-soft);border:1px solid var(--warn)}
+.fb .v{font-weight:800}.fb.right .v{color:var(--ok)}.fb.wrong .v{color:var(--bad)}.fb.almost .v{color:var(--warn)}
+.trap{font-size:.95rem} .trap b{color:var(--bad)}
+.opts{display:grid;gap:8px}
+.opt{text-align:left;padding:11px 14px;border:2px solid var(--line);border-radius:8px;background:var(--surface);cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--accent)} .opt.ok{border-color:var(--ok);background:var(--ok-soft)} .opt.no{border-color:var(--bad);background:var(--bad-soft)}
+.prog{display:flex;gap:4px;flex-wrap:wrap} .prog i{width:18px;height:6px;border-radius:4px;background:var(--line)} .prog i.r{background:var(--ok)} .prog i.w{background:var(--bad)} .prog i.c{background:var(--accent)}
+table.ref{width:100%;border-collapse:collapse;font-size:.93rem}
+table.ref th,table.ref td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;vertical-align:top}
+table.ref th{font-family:var(--display);font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+table.ref tr.gh td{background:var(--accent-soft);font-weight:800;font-family:var(--display)}
+.cover .fx{filter:blur(6px);cursor:pointer;user-select:none} .cover .fx.show{filter:none}
+.kbd{font-size:.8rem;color:var(--muted)}
+@media print{
+  header.top,.noprint{display:none!important} body{background:#fff;color:#000;font-size:11pt}
+  .panel{border:none;padding:0} .cover .fx{filter:none!important} table.ref{font-size:9.5pt} tr{break-inside:avoid}
+  code,.mono{background:none;padding:0}
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap topin">
+  <div class="brand"><b>Unit 2 Formula Decoder</b><span>Exam wording → Access formula → apply it</span></div>
+  <nav class="tabs" id="tabs"></nav>
+</div></header>
+<div class="wrap"><main id="app"></main></div>
+<script>
+/* Unit 2 Formula Decoder — item bank.
+   Wording is paraphrased / original scenarios modelled on recurring Pearson 31761H patterns (2022–2025).
+   F = write-the-formula item, M = multiple-choice item. eq:true = must start with "=" (control source / report text box). */
+const GROUPS = {
+  v:  {part:"A", label:"Validation", act:"Activity 2 · table validation"},
+  q:  {part:"A", label:"Queries", act:"Activity 3 · queries"},
+  r:  {part:"A", label:"Reports", act:"Activity 3 · report"},
+  f1: {part:"B", label:"Form 1: add a record", act:"Activity 6 · Form 1"},
+  f2: {part:"B", label:"Form 2: calculations & look-ups", act:"Activity 6 · Form 2"}
+};
+const F = (id,g,say,cue,where,ans,why,trap,apply,eq) => ({id,g,type:"f",say,cue,where,ans,why,trap,apply,eq:!!eq});
+const M = (id,g,say,cue,q,opts,ok,why,trap,apply) => ({id,g,type:"m",say,cue,q,opts,ok,why,trap,apply});
+
+const ITEMS = [
+/* ---------------- PART A · ACTIVITY 2 · VALIDATION ---------------- */
+F("v1","v",`A record will not save if the member's surname is not present.`,["is not present"],
+ `Validation Rule of the Surname field (tblMember)`,
+ [`Is Not Null`,`Not Null`],
+ `"Not present" = presence check. The top tier in the mark scheme is a validation rule PLUS Validation Text, e.g. "You must enter a surname".`,
+ `Required = Yes on its own only reaches the "Correct" tier. Never put a presence check on the primary key.`,
+ {say:`Part B link: Form 1 must not save a new class if the class name box (txtClassName) is empty. Write the If condition for the Save macro.`,
+  where:`If condition in the Save button's macro`, ans:[`IsNull([txtClassName])`,`[txtClassName] Is Null`],
+  note:`Same idea, different place: in Part B the check lives in the macro, so you use the function IsNull().`}),
+
+F("v2","v",`A booking will not save if the number of guests is below the accepted range (1), or above the accepted range (8).`,["below the accepted range","above the accepted range"],
+ `Validation Rule of the Guests field`,
+ [`Between 1 And 8`,`>=1 And <=8`,`<=8 And >=1`],
+ `Two "range" lines about one field = one range rule. Add Validation Text such as "Guests must be from 1 to 8".`,
+ `Between is inclusive. >1 And <8 would wrongly block 1 and 8. No Validation Text drops it a tier.`,
+ {say:`A lesson will not save if its length is below 30 minutes or above 90 minutes.`, where:`Validation Rule of LessonMinutes`,
+  ans:[`Between 30 And 90`,`>=30 And <=90`,`<=90 And >=30`]}),
+
+F("v3","v",`A record will not save if the date joined is in the future.`,["in the future"],
+ `Validation Rule of the DateJoined field`,
+ [`<=Date()`],
+ `Date() is always today's date. "Not in the future" = today or earlier.`,
+ `<Date() would block someone who joined today. Never type a fixed date: it goes out of date.`,
+ {say:`A pupil's date of birth must be before today.`, where:`Validation Rule of DOB`, ans:[`<Date()`]}),
+
+F("v4","v",`A record will not save if the phone number is not in the correct format: exactly 11 digits.`,["not in the correct format","exactly 11 digits"],
+ `Input Mask of the Phone field (Short Text)`,
+ [`00000000000`],
+ `In an input mask, 0 = a digit that MUST be entered. Eleven 0s = exactly 11 digits.`,
+ `Phone must be Short Text, not Number (Number drops the leading 0, and a format check on a Number field earns nothing). 9 means an optional digit, so it would not force 11.`,
+ {say:`A membership code must be two capital letters followed by four digits, e.g. SW1234.`, where:`Input Mask of MemberCode`, ans:[`>LL0000`],
+  note:`> forces capitals, L = a letter that must be entered, 0 = a digit that must be entered.`}),
+
+F("v5","v",`The surname must begin with a single upper case letter, followed by no more than 14 lower case letters.`,["single upper case letter","no more than 14 lower case letters"],
+ `Input Mask of the Surname field`,
+ [`>L<??????????????`],
+ `> = make capital, L = one letter required, < = make the rest lower case, ? = an optional letter. Fourteen ? = up to 14 more letters.`,
+ `Using 14 L's would force exactly 14 letters. Count your ?s.`,
+ {say:`The town must start with one capital letter followed by up to 9 lower case letters.`, where:`Input Mask of Town`, ans:[`>L<?????????`]}),
+
+F("v6","v",`A record will not save if the membership type is not Gold, Silver or Bronze.`,["not Gold, Silver or Bronze"],
+ `Validation Rule of MembershipType`,
+ [`In ("Gold","Silver","Bronze")`,`"Gold" Or "Silver" Or "Bronze"`,`="Gold" Or ="Silver" Or ="Bronze"`],
+ `A fixed list of allowed words = value lookup. In( ) or Or both work. A Lookup Wizard value list with Limit To List = Yes is also accepted.`,
+ `"Gold, Silver, Bronze" inside ONE pair of quotes is one long word to Access. Each word needs its own quotes.`,
+ {say:`A result will not save if the grade is not Pass, Merit or Distinction.`, where:`Validation Rule of Grade`,
+  ans:[`In ("Pass","Merit","Distinction")`,`"Pass" Or "Merit" Or "Distinction"`,`="Pass" Or ="Merit" Or ="Distinction"`]}),
+
+M("v7","v",`A booking will not save if the Coach ID is invalid.`,["ID is invalid"],
+ `What do you set up on the CoachID field in tblBooking?`,
+ [`Lookup Wizard to tblCoach, with Limit To List = Yes`,`Lookup Wizard to tblCoach, with Limit To List = No`,`Validation Rule: Is Not Null`,`Input Mask: 0000`],0,
+ `"ID is invalid" = table lookup on the foreign key. Top tier = a lookup to the table where it is the primary key, Limit To List = Yes, with the table name visible in your Row Source screenshot.`,
+ `Limit To List = No only reaches "Correct". A typed value list is the wrong type of check.`,
+ {say:`A result will not save if the Swimmer ID is invalid.`, q:`Which table does the lookup on SwimmerID in tblResult point to?`,
+  opts:[`tblSwimmer, where SwimmerID is the primary key`,`tblResult itself`,`tblEvent`,`No table: type a value list`],ok:0}),
+
+F("v8","v",`(Not stated in the paper: you choose it.) The class code is always exactly 5 characters. Write a length check.`,["exactly 5 characters"],
+ `Validation Rule of ClassCode`,
+ [`Len([ClassCode])=5`],
+ `The length check is never asked for directly: you pick a suitable field. Either cut the Field Size from 255 to suit the data, or use Len().`,
+ `Field Size 5 on its own still allows 3 characters. Len()=5 forces exactly 5. Field Size only applies to Short Text.`,
+ {say:`Player codes are always exactly 6 characters.`, where:`Validation Rule of PlayerCode`, ans:[`Len([PlayerCode])=6`]}),
+
+/* ---------------- PART A · ACTIVITY 3 · QUERIES ---------------- */
+F("q1","q",`Display parties with a party size of at least 35.`,["at least 35"],
+ `Criteria row under PartySize`,
+ [`>=35`],
+ `"At least 35" means 35 counts too: greater than or equal to.`,
+ `>35 leaves out exactly 35. Examiners name this off-by-one slip.`,
+ {say:`Show members who have attended at least 12 sessions.`, where:`Criteria under Sessions`, ans:[`>=12`]}),
+
+F("q2","q",`Display rooms with no more than 2 beds.`,["no more than 2"],
+ `Criteria row under Beds`,
+ [`<=2`],
+ `"No more than 2" = 2 or fewer: less than or equal to.`,
+ `<2 leaves out rooms with exactly 2 beds.`,
+ {say:`Show orders with no more than 5 items.`, where:`Criteria under Items`, ans:[`<=5`]}),
+
+F("q3","q",`List products with fewer than 10 in stock.`,["fewer than 10"],
+ `Criteria row under Stock`,
+ [`<10`],
+ `"Fewer than", "less than" and "under" are strictly below, so 10 itself is NOT included.`,
+ `<=10 would include 10. Read the exact words: "fewer than" vs "no more than".`,
+ {say:`Find staff who earn more than 30000.`, where:`Criteria under Salary`, ans:[`>30000`]}),
+
+F("q4","q",`Show all bookings for a kayak or a canoe.`,["kayak or a canoe"],
+ `Criteria row under BoatType`,
+ [`"Kayak" Or "Canoe"`,`"Canoe" Or "Kayak"`,`In ("Kayak","Canoe")`,`In ("Canoe","Kayak")`],
+ `Two values on the same field = OR. Type both in one Criteria cell with Or, or put one on the Criteria row and one on the "or:" row.`,
+ `"Kayak" And "Canoe" finds nothing: one booking can't be both.`,
+ {say:`Show customers from Leeds or York.`, where:`Criteria under Town`,
+  ans:[`"Leeds" Or "York"`,`"York" Or "Leeds"`,`In ("Leeds","York")`,`In ("York","Leeds")`]}),
+
+F("q5","q",`Show flowers that are any shade of pink.`,["any shade of pink"],
+ `Criteria row under Colour`,
+ [`Like "*pink*"`],
+ `* stands for any characters. *pink* finds "pink", "pale pink", "hot pink".`,
+ `="pink" only finds exactly "pink". Like "pink*" misses "pale pink".`,
+ {say:`Show members whose surname begins with M.`, where:`Criteria under Surname`, ans:[`Like "M*"`]}),
+
+F("q6","q",`Show sessions held on 14 February 2026.`,["on 14 February 2026"],
+ `Criteria row under SessionDate`,
+ [`#14/02/2026#`,`=#14/02/2026#`,`#14/2/2026#`],
+ `Dates go between # signs.`,
+ `Putting a date in "quotes" makes it text.`,
+ {say:`Show bookings made after 1 September 2025.`, where:`Criteria under BookingDate`, ans:[`>#01/09/2025#`,`>#1/9/2025#`,`>#01/9/2025#`,`>#1/09/2025#`]}),
+
+F("q7","q",`Show lessons that took place in 2025.`,["in 2025"],
+ `Criteria row under LessonDate`,
+ [`Between #01/01/2025# And #31/12/2025#`,`Between #1/1/2025# And #31/12/2025#`,`>=#01/01/2025# And <=#31/12/2025#`,`>=#1/1/2025# And <=#31/12/2025#`],
+ `A whole year is a date range: 1 January to 31 December. (Another way: a calculated field Year([LessonDate]) with 2025 as its criteria.)`,
+ `Typing just 2025 under a date field finds nothing.`,
+ {say:`Show payments made in March 2026.`, where:`Criteria under PaymentDate`,
+  ans:[`Between #01/03/2026# And #31/03/2026#`,`Between #1/3/2026# And #31/3/2026#`,`>=#01/03/2026# And <=#31/03/2026#`]}),
+
+M("q8","q",`Display the members sorted from youngest to oldest.`,["youngest to oldest"],
+ `How do you sort the DOB field?`,
+ [`Descending`,`Ascending`,`Sort on Surname instead`,`No sort needed`],0,
+ `The youngest person has the LATEST (biggest) date of birth, so youngest first = DOB descending.`,
+ `Ascending puts the oldest first. Examiners name this trap.`,
+ {say:`Display the members from oldest to youngest.`, q:`How do you sort DOB?`, opts:[`Descending`,`Ascending`,`Sort on Surname instead`,`No sort needed`], ok:1}),
+
+F("q9","q",`Add a field that shows the words "Still Spaces" if the number booked is less than the capacity.`,["the words","if"],
+ `Field row of a new column (calculated field)`,
+ [`Status: IIf([Booked]<[Capacity],"Still Spaces","")`,`IIf([Capacity]>[Booked],"Still Spaces","")`],
+ `"Show the words X if…" = IIf(test, "X", ""). Put a name and a colon in front (Status:) so the column isn't called Expr1.`,
+ `Forgetting the third part (what to show otherwise). Leaving the name as Expr1 loses presentation marks.`,
+ {say:`Show the word "Poor" if a student's score is below 40.`, where:`Field row of a new column`,
+  ans:[`IIf([Score]<40,"Poor","")`,`IIf([Score]<40,"Poor"," ")`]}),
+
+F("q10","q",`Show each price increased by 10%.`,["increased by 10%"],
+ `Field row of a new column`,
+ [`NewPrice: [Price]*1.1`,`[Price]*1.10`,`[Price]+[Price]*0.1`,`[Price]*110/100`,`[Price]+[Price]*10/100`,`[Price]+([Price]*0.1)`],
+ `Increased by 10% = 110% of the price = × 1.1.`,
+ `[Price]*0.1 gives only the 10%, not the new price. [Price]+10 adds £10.`,
+ {say:`Show 75% of each room's capacity.`, where:`Field row of a new column`, ans:[`[Capacity]*0.75`,`[Capacity]*75/100`]}),
+
+F("q11","q",`Each empty room loses the hotel £90. Show the money lost for each day.`,["£90","each"],
+ `Field row of a new column`,
+ [`Lost: [EmptyRooms]*90`,`90*[EmptyRooms]`],
+ `"£X each time / for each" = multiply the count by X.`,
+ `Typing the answer for one row as a number. It must be a calculation that works for every row.`,
+ {say:`Show the cost of each order line (quantity times unit price).`, where:`Field row of a new column`, ans:[`[Quantity]*[UnitPrice]`,`[UnitPrice]*[Quantity]`]}),
+
+F("q12","q",`Show each member's age in years.`,["age"],
+ `Field row of a new column`,
+ [`Age: Int((Date()-[DOB])/365.25)`,`DateDiff("yyyy",[DOB],Date())`],
+ `Date()-[DOB] = days alive. ÷ 365.25 = years. Int() chops off the decimal.`,
+ `A fixed date instead of Date(). DateDiff("yyyy") counts calendar years, so it can be one too high before the birthday.`,
+ {say:`Show how many years since each coach's last training (field LastTraining).`, where:`Field row of a new column`,
+  ans:[`Int((Date()-[LastTraining])/365.25)`,`DateDiff("yyyy",[LastTraining],Date())`]}),
+
+F("q13","q",`Group the members by the month of their birthday.`,["month of their birthday"],
+ `Field row of a new column`,
+ [`Month([DOB])`],
+ `Month() pulls the month number (1–12) out of a date. You can then Group By it.`,
+ `Grouping on DOB itself gives one group per person.`,
+ {say:`Show the year of each booking (BookingDate).`, where:`Field row of a new column`, ans:[`Year([BookingDate])`]}),
+
+M("q14","q",`Show the number of members for each club.`,["the number of","for each"],
+ `Which query feature do you use?`,
+ [`Totals query: Group By on Club, Count on MemberID`,`Sort Club ascending`,`Criteria >0 under MemberID`,`Totals query: Sum on Club`],0,
+ `"Number of … for each …" = a Totals (Σ) query. Group By the "each" field, Count the thing being counted.`,
+ `Sum adds values together. It doesn't count rows.`,
+ {say:`Show the total amount paid by each customer.`, q:`Which Totals settings?`,
+  opts:[`Group By CustomerID, Sum on Amount`,`Group By CustomerID, Count on Amount`,`Group By Amount, Sum on CustomerID`,`No Totals: sort by Amount`],ok:0}),
+
+M("q15","q",`Show the date of birth of the oldest member.`,["oldest"],
+ `Which aggregate on DOB?`,
+ [`Min`,`Max`,`Count`,`Avg`],0,
+ `Oldest person = earliest date = the smallest date = Min.`,
+ `Max gives the youngest. Examiners name this error.`,
+ {say:`Show the most recent booking date.`, q:`Which aggregate on BookingDate?`, opts:[`Min`,`Max`,`Count`,`Avg`], ok:1}),
+
+F("q16","q",`Show the number of times each member did not attend.`,["number of times","did not attend"],
+ `Field row of a new column in a Totals query (Total row: Expression)`,
+ [`Sum(IIf([Attended]=False,1,0))`,`Sum(IIf([Attended]=No,1,0))`,`Sum(IIf(Not [Attended],1,0))`,`Sum(IIf([Attended]=0,1,0))`],
+ `IIf turns each "did not attend" row into 1 (otherwise 0). Sum adds up the 1s. Examiners noted only learners who used an If got this fully right.`,
+ `Count([Attended]) counts every row, attended or not.`,
+ {say:`Show how many sessions each member has paid for (Paid is a Yes/No field).`, where:`Field row of a new column (Total: Expression)`,
+  ans:[`Sum(IIf([Paid]=True,1,0))`,`Sum(IIf([Paid]=Yes,1,0))`,`Sum(IIf([Paid],1,0))`,`Sum(IIf([Paid]=-1,1,0))`]}),
+
+/* ---------------- PART A · ACTIVITY 3 · REPORT ---------------- */
+F("r1","r",`In the report, for each coach, calculate the total hours coached.`,["for each coach","total"],
+ `Text box in the CoachID Footer (group footer)`,
+ [`=Sum([Hours])`],
+ `"For each X" = the group footer for X. Sum adds the hours in that group only.`,
+ `In the Report Footer it gives ONE overall total. Calculations in the wrong band is a named error.`,
+ {say:`For each class, show the number of pupils.`, where:`Text box in the ClassID Footer`, ans:[`=Count(*)`,`=Count([PupilID])`]},true),
+
+M("r2","r",`At the end of the report, show the overall average score for all students.`,["overall","end of the report"],
+ `Which band does the =Avg([Score]) text box go in?`,
+ [`Report Footer`,`Group Footer`,`Page Footer`,`Detail`],0,
+ `"Overall" = the whole report = Report Footer.`,
+ `Page Footer repeats on every page. Detail repeats on every row.`,
+ {say:`For each region, show the average sale.`, q:`Which band?`, opts:[`Report Footer`,`Group Footer (Region Footer)`,`Page Footer`,`Detail`], ok:1}),
+
+/* ---------------- PART B · ACTIVITY 6 · FORM 1 ---------------- */
+F("f1","f1",`The forename must be present before the record is saved.`,["must be present"],
+ `If condition in the Save button's macro (text box txtForename)`,
+ [`IsNull([txtForename])`,`[txtForename] Is Null`],
+ `In Part B, validation must be in a macro (or code) on the form. IsNull() is True when the box is empty, so the If shows a MessageBox and stops.`,
+ `A validation rule in the table, or Required = Yes, doesn't count. The table must not be changed.`,
+ {say:`The coach must be chosen from the combo box (cboCoach).`, where:`If condition in the Save macro`, ans:[`IsNull([cboCoach])`,`[cboCoach] Is Null`]}),
+
+F("f2","f1",`Both the forename and the surname must be present.`,["both","must be present"],
+ `One If condition in the Save macro (txtForename, txtSurname)`,
+ [`IsNull([txtForename]) Or IsNull([txtSurname])`,`IsNull([txtSurname]) Or IsNull([txtForename])`,`[txtForename] Is Null Or [txtSurname] Is Null`,`[txtSurname] Is Null Or [txtForename] Is Null`],
+ `The error must show if EITHER box is empty, so use Or. (Two separate If blocks is also fine.)`,
+ `And only fires when BOTH are empty, so a half-filled form still saves. Examiners saw exactly this mistake.`,
+ {say:`Neither the date (txtDate) nor the member (cboMember) can be left blank.`, where:`One If condition in the Save macro`,
+  ans:[`IsNull([txtDate]) Or IsNull([cboMember])`,`IsNull([cboMember]) Or IsNull([txtDate])`,`[txtDate] Is Null Or [cboMember] Is Null`]}),
+
+F("f3","f1",`The age entered must be from 5 to 16.`,["from 5 to 16"],
+ `If condition in the Save macro that catches a BAD age (txtAge)`,
+ [`[txtAge]<5 Or [txtAge]>16`,`[txtAge]>16 Or [txtAge]<5`,`Not [txtAge] Between 5 And 16`,`Not ([txtAge] Between 5 And 16)`],
+ `The If catches the error, so test for OUTSIDE the range: under 5 or over 16.`,
+ `[txtAge]<5 And [txtAge]>16 can never be true, so nothing is ever caught.`,
+ {say:`The number of guests (txtGuests) must be from 1 to 8.`, where:`If condition that catches a bad value`,
+  ans:[`[txtGuests]<1 Or [txtGuests]>8`,`[txtGuests]>8 Or [txtGuests]<1`,`Not [txtGuests] Between 1 And 8`,`Not ([txtGuests] Between 1 And 8)`]}),
+
+M("f4","f1",`On Form 1, the surname must start with a capital letter followed by lower case letters. The table must not be changed.`,["must not be changed"],
+ `Where does this format check go?`,
+ [`Input Mask on the form's txtSurname box`,`Input Mask on the Surname field in the table`,`Validation Text in the table`,`Nowhere: Access does it automatically`],0,
+ `A format check can be an input mask on the form control, e.g. >L<??????????????.`,
+ `Editing the table design breaks "the table must not be changed".`,
+ {say:`On Form 1 the forename must be present.`, q:`Where does this check go?`,
+  opts:[`In the Save macro: If IsNull(…) → MessageBox → Stop`,`Validation Rule on the form's text box`,`Required = Yes in the table`,`An input mask`],ok:0,
+  note:`For presence, examiners don't accept a validation rule on the form control. It must be in the macro or code.`}),
+
+M("f5","f1",`The form must show error messages for invalid data, only save valid data, and then be ready for the next record.`,["only save valid data"],
+ `Where does the Save (or append) step go in the macro?`,
+ [`After all the If checks, so it only runs when none fail (each failed check shows a MessageBox then StopMacro)`,`At the top, before the checks`,`Inside the first If block`,`In the form's On Load event`],0,
+ `Order: check → message → stop for each rule; THEN save, confirm "Record saved", clear the form.`,
+ `Save placed where it runs even when a check fails is a named fault.`,
+ {say:`After a valid record is saved…`, q:`What should the macro do next?`,
+  opts:[`Show a "Record saved" message and go to a new, empty record`,`Close Access`,`Run the checks again`,`Nothing`],ok:0}),
+
+M("f6","f1",`The Member ID must be shown on the form, but the user must not be able to change it.`,["shown","not be able to change"],
+ `Which property do you set on the ID box?`,
+ [`Enabled = No`,`Visible = No`,`Tab Stop = Yes`,`Delete its Control Source`],0,
+ `Enabled = No shows the value but greys it out so it can't be edited.`,
+ `Visible = No hides it, but it must be shown. Overwriting the AutoNumber's Control Source breaks the form.`,
+ {say:`On Form 2 the total cost is generated automatically.`, q:`How do you stop users typing over it?`,
+  opts:[`Enabled = No (or Locked = Yes)`,`Visible = No`,`Tab Stop = Yes`,`Default Value = 0`],ok:0}),
+
+/* ---------------- PART B · ACTIVITY 6 · FORM 2 ---------------- */
+F("g1","f2",`When the form opens it must show the most recent review year (ReviewYear in tblReview).`,["most recent"],
+ `Control Source of txtYear`,
+ [`=DMax("[ReviewYear]","tblReview")`,`=DMax("ReviewYear","tblReview")`],
+ `"Most recent / latest / highest" from a table, on a form = DMax("field","table").`,
+ `Max() works in queries and reports, not as a stand-alone form control source. Use the domain function DMax.`,
+ {say:`Show next season's year: the highest year in tblSeason (SeasonYear) plus one.`, where:`Control Source of txtNextSeason`,
+  ans:[`=DMax("[SeasonYear]","tblSeason")+1`,`=DMax("SeasonYear","tblSeason")+1`]},true),
+
+F("g2","f2",`When a client is chosen in the combo box (cboClient), show the total they have spent (Amount in tblPayment).`,["client is chosen","total"],
+ `Control Source of txtTotalSpent`,
+ [`=DSum("[Amount]","tblPayment","[ClientID]=" & [cboClient])`,`=DSum("Amount","tblPayment","ClientID=" & [cboClient])`],
+ `The third part is the criteria: only rows for the client picked in the combo box.`,
+ `Leave out the criteria and you get everyone's total. That's a named error (not tied to the selected record). If the ID is text, add single quotes: "[ClientID]='" & [cboClient] & "'".`,
+ {say:`When a member is chosen (cboMember), show how many bookings they have made (tblBooking).`, where:`Control Source of txtBookings`,
+  ans:[`=DCount("*","tblBooking","[MemberID]=" & [cboMember])`,`=DCount("[BookingID]","tblBooking","[MemberID]=" & [cboMember])`,`=DCount("[MemberID]","tblBooking","[MemberID]=" & [cboMember])`,`=DCount("*","tblBooking","MemberID=" & [cboMember])`]},true),
+
+F("g3","f2",`Show the average age of all members (Age in qryMemberAge).`,["average"],
+ `Control Source of txtAvgAge`,
+ [`=DAvg("[Age]","qryMemberAge")`,`=DAvg("Age","qryMemberAge")`],
+ `Average from a table or query, on a form = DAvg("field","table or query").`,
+ `Avg([Age]) on its own only works in a query or report.`,
+ {say:`Show the date of birth of the youngest member (DOB in tblMember).`, where:`Control Source of txtYoungest`,
+  ans:[`=DMax("[DOB]","tblMember")`,`=DMax("DOB","tblMember")`],
+  note:`Trap: youngest = the LATEST date of birth = DMax, not DMin.`},true),
+
+F("g4","f2",`When a coach is chosen in cboCoach, show that coach's phone number (Phone in tblCoach).`,["coach is chosen","phone number"],
+ `Control Source of txtPhone`,
+ [`=DLookup("[Phone]","tblCoach","[CoachID]=" & [cboCoach])`,`=DLookup("Phone","tblCoach","CoachID=" & [cboCoach])`],
+ `DLookup fetches ONE value. The criteria ties it to the coach in the combo box.`,
+ `No criteria = it shows the first coach's phone whatever you choose.`,
+ {say:`When a member is chosen (cboMember), show their email (Email in tblMember).`, where:`Control Source of txtEmail`,
+  ans:[`=DLookup("[Email]","tblMember","[MemberID]=" & [cboMember])`,`=DLookup("Email","tblMember","MemberID=" & [cboMember])`]},true),
+
+F("g5","f2",`Show the message "Arrange monthly meetings" if the grade entered (txtGrade) is 3.`,["message","if"],
+ `Control Source of txtAction`,
+ [`=IIf([txtGrade]=3,"Arrange monthly meetings","")`],
+ `Same IIf as in queries: IIf(test, "message", ""). On a form, it starts with =.`,
+ `Missing the third part, or forgetting the quotes around the message.`,
+ {say:`Show "Win" if home goals (txtHome) are more than away goals (txtAway), otherwise "Not a win".`, where:`Control Source of txtResult`,
+  ans:[`=IIf([txtHome]>[txtAway],"Win","Not a win")`,`=IIf([txtAway]<[txtHome],"Win","Not a win")`]},true),
+
+F("g6","f2",`The new review date is today.`,["today"],
+ `Control Source (or Default Value) of txtReviewDate`,
+ [`=Date()`],
+ `Date() = today's date, with no time.`,
+ `Now() adds the time too. A typed date goes out of date tomorrow.`,
+ {say:`The next review is exactly one year from today.`, where:`Control Source of txtNextReview`,
+  ans:[`=DateAdd("yyyy",1,Date())`,`=Date()+365`],
+  note:`DateAdd("yyyy",1,Date()) is exact. Date()+365 is a day out in a leap year.`},true),
+
+F("g7","f2",`Show the new fee after a 15% discount (fee in txtFee).`,["15% discount"],
+ `Control Source of txtNewFee`,
+ [`=[txtFee]*0.85`,`=[txtFee]-[txtFee]*0.15`,`=[txtFee]*85/100`,`=[txtFee]*(1-0.15)`,`=[txtFee]-([txtFee]*0.15)`],
+ `15% off leaves 85%, so × 0.85.`,
+ `[txtFee]*0.15 is only the discount, not the new fee.`,
+ {say:`Show the price including 20% VAT (price in txtPrice).`, where:`Control Source of txtTotal`,
+  ans:[`=[txtPrice]*1.2`,`=[txtPrice]+[txtPrice]*0.2`,`=[txtPrice]*120/100`,`=[txtPrice]+([txtPrice]*0.2)`]},true)
+];
+
+/* ---------- answer checking ---------- */
+function norm(s){
+  return String(s)
+    .replace(/[“”″]/g,'"').replace(/[‘’′]/g,"'").replace(/'/g,'"')
+    .replace(/ /g,' ').toLowerCase()
+    .replace(/\s+/g,'')
+    .replace(/[\[\]]/g,'')
+    .replace(/^[a-z][a-z0-9_]*:(?!=)/,'')   /* strip "Alias:" */
+    .replace(/^=(?=[^=])/,'')                /* strip leading = for matching */
+    .replace(/;+$/,'');
+}
+/* returns "right" | "noeq" (right but missing = on a control source) | "wrong" */
+function check(item, input, answers, needEq){
+  const n = norm(input);
+  if(!n) return "empty";
+  const ok = answers.some(a => norm(a) === n);
+  if(!ok) return "wrong";
+  if(needEq && !String(input).trim().replace(/^[A-Za-z][A-Za-z0-9_]*\s*:\s*/,'').startsWith("=")) return "noeq";
+  return "right";
+}
+if(typeof module!=="undefined") module.exports={ITEMS,GROUPS,norm,check};
+
+</script>
+<script>
+(function(){
+const $ = s => document.querySelector(s);
+const app = $("#app");
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const code = s => `<code>${esc(s)}</code>`;
+const byId = id => ITEMS.find(i => i.id === id);
+const shuffle = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+
+/* ---------- progress (this browser only) ---------- */
+const KEY = "u2fd_v1";
+let store = {s:{}};
+try { const raw = localStorage.getItem(KEY); if(raw) store = JSON.parse(raw) || {s:{}}; if(!store.s) store.s = {}; } catch(e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch(e) {} };
+function record(id, ok){
+  const r = store.s[id] || {r:0,w:0};
+  ok ? r.r++ : r.w++; r.last = ok ? "r" : "w"; store.s[id] = r; save();
+}
+const misses = () => ITEMS.filter(i => store.s[i.id] && store.s[i.id].last === "w").map(i => i.id);
+const mastered = g => ITEMS.filter(i => i.g === g && store.s[i.id] && store.s[i.id].last === "r").length;
+
+function hl(say, cues){
+  let h = esc(say);
+  (cues||[]).forEach(c => { const e = esc(c); const i = h.toLowerCase().indexOf(e.toLowerCase());
+    if(i > -1) h = h.slice(0,i) + "<mark>" + h.slice(i, i+e.length) + "</mark>" + h.slice(i+e.length); });
+  return h;
+}
+const gLabel = g => { const G = GROUPS[g]; return `<span class="pill ${G.part==="B"?"b":""}">Part ${G.part} · ${esc(G.label)}</span>`; };
+
+/* ---------- nav ---------- */
+const TABS = [["home","Start"],["ref","Reference table"]];
+function nav(cur){
+  $("#tabs").innerHTML = TABS.map(([k,l]) => `<button type="button" data-v="${k}" class="${k===cur?"on":""}">${l}</button>`).join("");
+  $("#tabs").querySelectorAll("button").forEach(b => b.onclick = () => b.dataset.v === "home" ? home() : ref());
+}
+
+/* ---------- home ---------- */
+function home(){
+  nav("home"); window.scrollTo(0,0);
+  const miss = misses();
+  const gcards = Object.keys(GROUPS).map(g => {
+    const n = ITEMS.filter(i => i.g === g).length, m = mastered(g);
+    return `<div class="gcard">${gLabel(g)}<div class="muted small">${esc(GROUPS[g].act)} · ${n} cards</div>
+      <div class="bar"><i style="width:${Math.round(m/n*100)}%"></i></div><div class="small muted">${m} of ${n} right last time</div>
+      <div><button type="button" class="btn ghost" data-g="${g}">Practise these</button></div></div>`;
+  }).join("");
+  app.innerHTML = `
+  <section class="panel">
+    <h1>Exam wording → formula → apply it</h1>
+    <p class="lede">The paper never says "type Between 1 And 8". It says something like "will not save if the number is above the accepted range". This page trains you to turn the paper's words into the exact Access formula, then use it again in a new situation.</p>
+    <div class="steps">
+      <div><b>Read the wording.</b> Find the words that decide it. Stuck? Tap <i>Show the key words</i>.</div>
+      <div><b>Type the formula</b> from memory before you look. Trying first, even if you're wrong, is what makes it stick.</div>
+      <div><b>Check it.</b> You'll see the model answer, why it works and the trap examiners see.</div>
+      <div><b>Apply it</b> to a new scenario. If you can do that, you really know it.</div>
+    </div>
+    <p class="small muted">Best order: practise one section at a time first, then <b>Mixed 12</b> (mixing them up is harder, but that's what the real exam does). Come back in a day or two for <b>Review my misses</b>.</p>
+  </section>
+  <section class="panel">
+    <div class="row">
+      <button type="button" class="btn" id="mixA">Mixed 12: Part A</button>
+      <button type="button" class="btn" id="mixB">Mixed 10: Part B</button>
+      <button type="button" class="btn" id="mixAll">Mixed 12: everything</button>
+      <button type="button" class="btn ghost" id="rev" ${miss.length?"":"disabled"}>Review my misses (${miss.length})</button>
+    </div>
+    <div class="groups">${gcards}</div>
+    <p class="small muted">Your progress is saved in this browser only. <button type="button" class="btn ghost" id="reset" style="padding:3px 10px;font-size:.8rem">Reset</button></p>
+  </section>`;
+  app.querySelectorAll("[data-g]").forEach(b => b.onclick = () => run(GROUPS[b.dataset.g].label, ITEMS.filter(i => i.g === b.dataset.g).map(i => i.id)));
+  const pick = (f,n) => shuffle(ITEMS.filter(f)).slice(0,n).map(i => i.id);
+  $("#mixA").onclick = () => run("Mixed: Part A", pick(i => GROUPS[i.g].part === "A", 12));
+  $("#mixB").onclick = () => run("Mixed: Part B", pick(i => GROUPS[i.g].part === "B", 10));
+  $("#mixAll").onclick = () => run("Mixed: everything", pick(() => true, 12));
+  $("#rev").onclick = () => run("Review my misses", shuffle(misses()));
+  $("#reset").onclick = () => { if(window.confirm && !confirm("Clear your saved progress on this device?")) return; store = {s:{}}; save(); home(); };
+}
+
+/* ---------- reference table ---------- */
+function ref(){
+  nav("ref"); window.scrollTo(0,0);
+  let rows = "";
+  Object.keys(GROUPS).forEach(g => {
+    rows += `<tr class="gh"><td colspan="3">Part ${GROUPS[g].part} · ${esc(GROUPS[g].act)}</td></tr>`;
+    ITEMS.filter(i => i.g === g).forEach(i => {
+      const ans = i.type === "f" ? code(i.ans[0]) : esc(i.opts[i.ok]);
+      const where = i.type === "f" ? esc(i.where) : esc(i.q);
+      rows += `<tr><td>${hl(i.say,i.cue)}</td><td class="fx">${ans}</td><td class="small">${where}</td></tr>`;
+    });
+  });
+  app.innerHTML = `<section class="panel cover" id="refp">
+    <h1>Reference table</h1>
+    <p class="lede noprint">Formulas are blurred so you can test yourself: say the answer, then tap to check. Highlighted words are the clues.</p>
+    <div class="row noprint">
+      <button type="button" class="btn ghost" id="tog">Show all formulas</button>
+      <button type="button" class="btn ghost" id="pr">Print / save as PDF</button>
+    </div>
+    <table class="ref"><thead><tr><th>The paper says…</th><th>You write…</th><th>Where it goes</th></tr></thead><tbody>${rows}</tbody></table>
+  </section>`;
+  app.querySelectorAll(".fx").forEach(td => td.onclick = () => td.classList.toggle("show"));
+  $("#tog").onclick = () => { const p = $("#refp"); p.classList.toggle("cover"); $("#tog").textContent = p.classList.contains("cover") ? "Show all formulas" : "Cover formulas"; };
+  $("#pr").onclick = () => window.print();
+}
+
+/* ---------- practice session ---------- */
+function run(title, ids){
+  if(!ids.length) return home();
+  nav("");
+  const slots = ids.map(id => ({id, retry:false, res:null}));
+  let k = 0;
+
+  function bar(){ return `<div class="prog">${slots.map((s,i)=>`<i class="${s.res===true?"r":s.res===false?"w":i===k?"c":""}"></i>`).join("")}</div>`; }
+
+  function card(){
+    window.scrollTo(0,0);
+    if(k >= slots.length) return end();
+    const slot = slots[k], it = byId(slot.id);
+    let stage = 1, s1 = null, hint = false;
+
+    function paint(){
+      const A = it.apply, onApply = stage === 2;
+      const say = onApply ? A.say : it.say;
+      const isM = it.type === "m";
+      const prompt = isM ? `<p><b>${esc(onApply ? A.q : it.q)}</b></p>` : `<p class="where">Where it goes: <b>${esc(onApply ? A.where : it.where)}</b></p>`;
+      app.innerHTML = `<section class="panel">
+        <div class="row" style="justify-content:space-between">${gLabel(it.g)}<span class="small muted">${esc(title)} · ${k+1} of ${slots.length}${slot.retry?" · second go":""}</span></div>
+        ${bar()}
+        ${onApply ? `<div class="paper"><span class="lab">The paper said</span>${hl(it.say,it.cue)}</div>` : ""}
+        <div class="paper ${onApply?"apply":""}"><span class="lab">${onApply?"Step 2 · Apply it: new situation":"Step 1 · The paper says"}</span><span id="say">${!onApply && hint ? hl(say,it.cue) : esc(say)}</span></div>
+        ${prompt}
+        <div id="inp"></div>
+        <div id="fb"></div>
+      </section>`;
+      if(isM){
+        const opts = onApply ? A.opts : it.opts, ok = onApply ? A.ok : it.ok;
+        const order = shuffle(opts.map((_,i)=>i));
+        $("#inp").innerHTML = `<div class="opts">${order.map(i=>`<button type="button" class="opt" data-i="${i}">${esc(opts[i])}</button>`).join("")}</div>
+          ${!onApply ? `<div class="row"><button type="button" class="btn ghost" id="hint">Show the key words</button></div>` : ""}`;
+        app.querySelectorAll(".opt").forEach(b => b.onclick = () => {
+          const right = +b.dataset.i === ok;
+          app.querySelectorAll(".opt").forEach(x => { x.disabled = true; if(+x.dataset.i === ok) x.classList.add("ok"); });
+          if(!right) b.classList.add("no");
+          feedback(right ? "right" : "wrong", esc(opts[ok]));
+        });
+      } else {
+        $("#inp").innerHTML = `<input class="ans" id="a" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type the exact formula or setting…">
+          <div class="row" style="margin-top:10px"><button type="button" class="btn" id="chk">Check</button>
+          ${!onApply ? `<button type="button" class="btn ghost" id="hint">Show the key words</button>` : ""}
+          <button type="button" class="btn ghost" id="idk">I don't know: show me</button><span class="kbd">Enter = check</span></div>`;
+        const a = $("#a"); a.focus();
+        const go = (giveUp) => {
+          const ans = onApply ? A.ans : it.ans;
+          let r = giveUp ? "wrong" : check(it, a.value, ans, it.eq);
+          if(r === "empty"){ a.focus(); return; }
+          a.disabled = true; $("#chk").disabled = true; $("#idk").disabled = true; const h = $("#hint"); if(h) h.disabled = true;
+          feedback(r, code(ans[0]), ans.length > 1 ? ans.slice(1) : null, !giveUp && r === "wrong");
+        };
+        $("#chk").onclick = () => go(false);
+        $("#idk").onclick = () => go(true);
+        a.onkeydown = e => { if(e.key === "Enter"){ e.preventDefault(); go(false); } };
+      }
+      const h = $("#hint"); if(h) h.onclick = () => { hint = true; $("#say").innerHTML = hl(it.say, it.cue); h.disabled = true; };
+    }
+
+    function feedback(r, modelHtml, alts, canSelf){
+      const onApply = stage === 2, A = it.apply;
+      const verdict = r === "right" ? "Correct." : r === "noeq" ? "Almost: the formula is right, but a form or report text box must start with =" : "Not yet.";
+      let html = `<div class="fb ${r==="right"?"right":r==="noeq"?"almost":"wrong"}"><div class="v">${verdict}</div>
+        <div>Model answer: ${modelHtml}</div>`;
+      if(alts) html += `<div class="small muted">Also accepted: ${alts.map(code).join(" · ")}</div>`;
+      if(!onApply){
+        html += `<div>${esc(it.why)}</div><div class="trap"><b>Trap:</b> ${esc(it.trap)}</div>`;
+      } else if(A.note){ html += `<div>${esc(A.note)}</div>`; }
+      html += `</div><div class="row">`;
+      if(canSelf) html += `<button type="button" class="btn ghost" id="self">Mine means the same: count it</button>`;
+      html += `<button type="button" class="btn" id="next">${onApply ? (k+1 < slots.length ? "Next card →" : "Finish →") : "Step 2: apply it →"}</button></div>`;
+      $("#fb").innerHTML = html;
+      let ok = r === "right";
+      const nx = $("#next"); nx.focus();
+      const sb = $("#self"); if(sb) sb.onclick = () => { ok = true; sb.disabled = true; sb.textContent = "Counted. Check it really matches the model."; nx.focus(); };
+      nx.onclick = () => {
+        if(!onApply){ s1 = ok; stage = 2; paint(); return; }
+        const clean = s1 && ok;
+        slot.res = clean;
+        record(it.id, clean);
+        if(!clean && !slot.retry){ slots.splice(Math.min(k+4, slots.length), 0, {id:it.id, retry:true, res:null}); }
+        k++; card();
+      };
+    }
+    paint();
+  }
+
+  function end(){
+    window.scrollTo(0,0);
+    const firsts = slots.filter(s => !s.retry), right = firsts.filter(s => s.res).length;
+    const wrongIds = [...new Set(slots.filter(s => s.res === false).map(s => s.id))];
+    app.innerHTML = `<section class="panel"><h1>${right} of ${firsts.length} right first time</h1>
+      ${bar()}
+      <p class="lede">${right === firsts.length ? "Every card right. Try a mixed set next, or come back in a couple of days to check it's still there." : "The cards you missed came back once during the set. They're saved for <b>Review my misses</b>: do that tomorrow, not straight away. The gap is what makes it stick."}</p>
+      ${wrongIds.length ? `<table class="ref"><thead><tr><th>Missed</th><th>Model answer</th></tr></thead><tbody>${wrongIds.map(id => { const i = byId(id); return `<tr><td>${hl(i.say,i.cue)}</td><td>${i.type==="f"?code(i.ans[0]):esc(i.opts[i.ok])}</td></tr>`; }).join("")}</tbody></table>` : ""}
+      <div class="row"><button type="button" class="btn" id="h">Back to start</button><button type="button" class="btn ghost" id="again">Same set again</button></div></section>`;
+    $("#h").onclick = home;
+    $("#again").onclick = () => run(title, shuffle(firsts.map(s => s.id)));
+  }
+  card();
+}
+
+home();
+})();
+
+</script>
+</body>
+</html>
